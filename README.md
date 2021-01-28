@@ -17,3 +17,12 @@ Location samples: https://github.com/android/location-samples/tree/432d3b72b8c05
 Geofencing: https://developer.android.com/training/location/geofencing  
 Wifi RTT: https://developer.android.com/guide/topics/connectivity/wifi-rtt  
 Bluetooth: https://developer.android.com/guide/topics/connectivity/bluetooth
+
+Weekly Plans
+Week 1
+1. Creating the component & modules using Dagger Hilt
+2. Doing up the use cases
+3. Figma designs
+4. Research on the libraries that would be used in prototyping (done)
+5. Reading up on content for the Q&A updates
+6. Start writing up the report (read the rubrics & plan how to write it)
