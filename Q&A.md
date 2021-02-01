@@ -1,11 +1,3 @@
-Conversion notes:
-
-* Docs to Markdown version 1.0β29
-* **Thu Jan 28 2021 07:21:38 GMT-0800** (PST)
-* Source doc: FAQ (Title: Mobile app for BLE and WiFi mapping and testing for indoor tracking)
------>
-
-
 Project scope:
 
 To develop a mobile app and associated backend to keep Wifi/BLE data (e.g. MAC addresses) and location information tag to the WiFi/BLE data.
@@ -36,13 +28,13 @@ A1: Look for any multi-storey buildings, and for this project, need to only use 
 
 A2: The Android app needs to be developed as part of this project. Once we do the first WiFi/BLE mapping, we’ll be able to mark the mapped data to the location. As the WiFi/BLE information is unique (not all the time), then the app, while in testing mode, will be able to know which location/floors that it is on. There shall be least 2 operational modes: the BLE/WiFi mapping model, and the test mode.
 
-**Q3:** I would like to ask about the information on the wireless APs (for example: 802.11-2016 FTM, signal strength and coverage, number of APs) and any restrictions on Android phone model (bluetooth devices). And is it only restricted to only BLE and WiFi mapping (are we graded if we implement things that go beyond these)
+**Q3:** I would like to ask about the information on the wireless APs (for example: 802.11-2016 FTM, signal strength and coverage, number of APs) and any restrictions on Android phone model (bluetooth devices). And is it only restricted to only BLE and WiFi mapping (are we graded if we implement things that go beyond these)`
 
 A3: In later versions of Android, the OS will throttle the scanning of WiFi. Only in version 8 and before that there is no throttling (need to check this).
 
 For WiFi scanning,  need to only use those “fixed” APs, and not hotspots (enabled on phones).
 
-**Follow up: **Hi Prof/ Mr. Client: Thanks for your prompt reply! But you have not answered the last question: is it only restricted to BLE and WiFi mapping? (e.g. RFID)
+**Follow up: **Hi Prof / Mr. Client: Thanks for your prompt reply! But you have not answered the last question: is it only restricted to BLE and WiFi mapping? (e.g. RFID)
 
 A3: Yes, only BLE and WiFi.
 
@@ -108,6 +100,32 @@ A14: Only the Wifi/BLE identifier and the locations, not the actual travelling d
 
 **Q15**: How do we verify the accuracy of the WiFi/BLE? Is there some ground truth for reference?
 
-A15: By measuring on site. For his project, we’ll define few locations (depending on floor size) to measure, and then do measurement for these 10 locations to determine the reported location vs the actual locations.
+A15: By measuring on site. For his project, we’ll define a few locations (depending on floor size) to measure, and then do measurement for these 10 locations to determine the reported location vs the actual locations.
 
 Q16: May i know what’s the difference between mapping and testing mode?
+
+A16: Mapping mode is to collect data and tag to location. Testing mode is to test the data and location collected.
+
+Q17: What kind of database is needed? Is there any specific requirement other than “the data is able to transfer to and from the backend”? Is the database provided if there are requirements, in order to standardize with the client’s standards?
+
+A17: Any database as long as can store the WiFi/BLE MAC address, and location info.
+
+Q18: Can we use a GPS module?
+
+A18: GPS will not work indoor.
+
+Q19: What if there are changes in the locations/IDs of the wifi AP or BLE beacons? Should we have an option to modify or change the current mapping?
+
+A19: The Wifi AP/BLE do not normally moved. But if there is a case where there are changes, then the radio mapping needs to be redone.
+
+Q20: Is BaaS (like Firebase) acceptable/sufficient for storage/database?
+
+A20: Yes
+
+Q21: What should be the output of the algorithm and conclusion from the testing?
+
+A21: During actual testing, we can see that the location of the assets are shown on the mobile app to be within 5 meters. If the 5 meter is not achieved, then need to find out the reasons (E.g Wifi AP not sufficient, etc)
+
+Q22. The project description stated to evaluate multiple algorithms, do we pick one based on literature survey or after implementing during development? Do we need to provide an option to select for different methods on the app?
+
+A22: Read all the available literatures on indoor tracking, and then decide on the best one that is able to achieve the objectives, which is accuracy within 5m of the actual location and the location shown on the mobile app.
