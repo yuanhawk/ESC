@@ -17,22 +17,3 @@ Location samples: https://github.com/android/location-samples/tree/432d3b72b8c05
 Geofencing: https://developer.android.com/training/location/geofencing  
 Wifi RTT: https://developer.android.com/guide/topics/connectivity/wifi-rtt  
 Bluetooth: https://developer.android.com/guide/topics/connectivity/bluetooth
-
-### Articles
-* https://www.researchgate.net/publication/237046557_WiFi_Positioning_A_Survey
-* https://www.researchgate.net/publication/232652924_WIFI-based_indoor_positioning_system
-* https://ieeexplore.ieee.org/document/8692423
-* https://arxiv.org/pdf/1709.01015.pdf
-* https://www.hindawi.com/journals/misy/2016/2083094/
-* https://www.researchgate.net/publication/316613991_Indoor_Positioning_System_using_Bluetooth_Low_Energy
-* https://link.springer.com/chapter/10.1007/978-3-319-31165-4_18
-
-
-Weekly Plans
-Week 1
-1. Creating the component & modules using Dagger Hilt
-2. Doing up the use cases
-3. Figma designs
-4. Research on the libraries that would be used in prototyping (done)
-5. Reading up on content for the Q&A updates
-6. Start writing up the report (read the rubrics & plan how to write it)
