@@ -6,18 +6,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.databinding.FragmentMapBinding
 
 @AndroidEntryPoint
 class MapFragment : Fragment() {
+
+    private lateinit var binding: FragmentMapBinding
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -38,8 +41,9 @@ class MapFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
