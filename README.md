@@ -9,6 +9,10 @@ Or the 3d map is using the camera to show the location
 
 ### Google Docs for Project Meeting 1 (Week 3 Thur)
 https://docs.google.com/document/d/1BcXvbY9EATK2xfdKmMKJOBGerMGPtfZPofNwiZGg8hE/edit?usp=sharing  
+
+### Google Docs for Problem Set 1
+https://docs.google.com/document/d/1EBp8VzvfgznfbWD9oXOoQ3x81-BpsnLw56h63oVhYno/edit?usp=sharing  
+
 ### Useful links
 Kotlin code labs: https://developer.android.com/courses/kotlin-android-fundamentals/toc  
 Dagger: https://medium.com/@harivigneshjayapalan/dagger-2-for-android-beginners-introduction-be6580cb3edb  
