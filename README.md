@@ -13,6 +13,9 @@ https://docs.google.com/document/d/1BcXvbY9EATK2xfdKmMKJOBGerMGPtfZPofNwiZGg8hE/
 ### Google Docs for Problem Set 1
 https://docs.google.com/document/d/1EBp8VzvfgznfbWD9oXOoQ3x81-BpsnLw56h63oVhYno/edit?usp=sharing  
 
+### Google Docs for Project Meeting 2
+https://docs.google.com/document/d/1OLphdt8EI0vNxMHMzzCHkT-oHys2xFqU33vJDfavnM8/edit?usp=sharing
+
 ### Useful linkssss
 Kotlin code labs: https://developer.android.com/courses/kotlin-android-fundamentals/toc  
 Dagger: https://medium.com/@harivigneshjayapalan/dagger-2-for-android-beginners-introduction-be6580cb3edb  
