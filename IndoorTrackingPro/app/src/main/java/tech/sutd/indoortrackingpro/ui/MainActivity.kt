@@ -1,6 +1,9 @@
 package tech.sutd.indoortrackingpro.ui
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -9,6 +12,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
+import tech.sutd.indoortrackingpro.core.WifiService
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
 
 @AndroidEntryPoint
@@ -18,6 +22,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startService(Intent(this@MainActivity, WifiService::class.java))
         with(binding) {
             val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
             mapFragment?.getMapAsync(callback)
