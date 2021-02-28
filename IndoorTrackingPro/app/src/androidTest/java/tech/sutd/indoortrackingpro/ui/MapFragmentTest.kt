@@ -27,6 +27,6 @@ class MapFragmentTest {
 
     @Test
     fun testMapFragment() {
-        onView(withId(R.id.activity_main)).check(matches(isDisplayed()))
+        onView(withId(R.layout.activity_main)).check(matches(isDisplayed()))
     }
 }
