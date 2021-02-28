@@ -8,11 +8,31 @@
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity">
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".ui.MapFragment" />
+=======
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            map:cameraBearing="112.5"
+            map:cameraTargetLat="1.3521"
+            map:cameraTargetLng="103.8198"
+            map:cameraTilt="30"
+            map:cameraZoom="13"
+            map:mapType="normal"
+            map:uiCompass="false"
+            map:uiRotateGestures="true"
+            map:uiScrollGestures="false"
+            map:uiTiltGestures="true"
+            map:uiZoomControls="false"
+            map:uiZoomGestures="true"/> />
+>>>>>>> origin/master
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
