@@ -10,21 +10,24 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
+import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
 
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity(), OnMapReadyCallback {
-
-
+class MainActivity : BaseActivity() {
+    private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        with(binding) {
+
 
             val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-            mapFragment?.getMapAsync(this)
+            mapFragment?.getMapAsync(callback)
         }
+    }
+
 
 
 
@@ -38,13 +41,14 @@ class MainActivity : BaseActivity(), OnMapReadyCallback {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
-    override fun onMapReady(googleMap : GoogleMap) {
+        private val callback =  OnMapReadyCallback {  googleMap ->
             val singapore = LatLng(1.3521, 103.8198)
             googleMap.addMarker(MarkerOptions().position(singapore).title("Marker in Singapore"))
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(singapore))
 
-    }
+        }
 
-    }
+
+}
 
 
