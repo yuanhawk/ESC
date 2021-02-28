@@ -1,0 +1,118 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+apply from: "$rootDir/dependencies.gradle"
+
+android {
+    compileSdkVersion versions.compileSdk
+
+    defaultConfig {
+        applicationId "tech.sutd.indoortrackingpro"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    // android supports
+    implementation "com.google.android.material:material:$versions.material"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
+
+    // core
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.core:core-ktx:$versions.kotlin"
+    implementation "androidx.appcompat:appcompat:$versions.appcompat"
+
+    // gmaps
+    implementation "com.google.android.gms:play-services-maps:$versions.maps"
+
+    // fragment
+    implementation "androidx.fragment:fragment-ktx:$versions.fragment"
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$versions.hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$versions.hilt"
+    kapt "androidx.hilt:hilt-compiler:$versions.hilt_compiler"
+
+    // viewmodel
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.viewmodel"
+
+    // workmanager
+    implementation "androidx.hilt:hilt-work:$versions.workmanager"
+    implementation "androidx.work:work-runtime-ktx:$versions.work"
+
+    // lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$versions.lifecycle"
+
+    // test
+    androidTestImplementation "androidx.test:core:$versions.core"
+    testImplementation "junit:junit:$versions.junit"
+    androidTestImplementation "androidx.test:runner:$versions.runner"
+
+    // assertions
+    androidTestImplementation "androidx.test.ext:junit:$versions.junit_android"
+    androidTestImplementation "androidx.test.ext:truth:$versions.runner"
+
+    androidTestImplementation "androidx.arch.core:core-testing:$versions.core_test"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
+
+    // fragment-test
+    // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
+    debugImplementation("androidx.fragment:fragment-testing:$versions.fragment") {
+        exclude group:'androidx.test', module:'monitor'
+    }
+
+    // mockito
+    testImplementation "io.mockk:mockk:$versions.mockk"
+
+    // espresso
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-accessibility:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-web:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$versions.espresso"
+
+    // hilt-test
+    testImplementation "com.google.dagger:hilt-android-testing:$versions.hilt"
+    kaptTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.hilt"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
+
+    // navigation-test
+    androidTestImplementation "androidx.navigation:navigation-testing:$versions.navigation"
+}

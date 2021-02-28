@@ -1,0 +1,57 @@
+ext.versions = [
+        minSdk               : 24,
+        compileSdk           : 30,
+        versionCode          : 1,
+        versionName          : '1.0.0',
+
+        // gradle plugins
+        gradle_build         : '4.1.2',
+
+        // support library
+        material      : '1.3.0',
+        constraint    : '2.0.4',
+        kotlin        : '1.3.2',
+        appcompat     : '1.2.0',
+        google        : '4.3.4',
+
+        // gmaps
+        maps          : '17.0.0',
+
+        // fragment
+        fragment      : '1.3.0',
+
+        // db
+        realm         : '6.0.1',
+
+        // hilt
+        hilt          : '2.30.1-alpha',
+
+        // hilt_compiler
+        hilt_compiler : '1.0.0-alpha03',
+
+        // viewmodel
+        viewmodel     : '1.0.0-alpha03',
+
+        // workmanager
+        workmanager   : '1.0.0-alpha03',
+
+        // lifecycle
+        lifecycle     : '2.3.0',
+
+        // work
+        work          : '2.5.0',
+
+        // test
+        core          : '1.3.0',
+        runner        : '1.3.0',
+        junit         : '4.13.2',
+
+        // assertion
+        junit_android : '1.1.2',
+
+        core_test     : '2.1.0',
+        coroutine     : '1.4.1',
+
+        espresso      : '3.3.0',
+        mockk       : '1.10.4'
+]
