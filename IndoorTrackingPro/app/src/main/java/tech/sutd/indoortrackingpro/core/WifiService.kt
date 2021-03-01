@@ -14,14 +14,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WifiService @Inject constructor(
-    @ApplicationContext val context: Context,
-    val wifiManager: WifiManager
-) : Service() {
-
+class WifiService : Service() {
     private val TAG = "WifiService"
 
     private lateinit var results: List<ScanResult>
+
+    private lateinit var wifiManager: WifiManager
+
 
     val wifiScanReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -34,13 +33,22 @@ class WifiService @Inject constructor(
     @SuppressWarnings("deprecation")
     override fun onCreate() {
         super.onCreate()
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
-        context.registerReceiver(wifiScanReceiver, intentFilter)
+
+        wifiManager = getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val intentFilter = IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        registerReceiver(wifiScanReceiver, intentFilter)
+
 
         val success = wifiManager.startScan()
         if (!success) scanFailure()
     }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(wifiScanReceiver)
+    }
+
 
     private fun scanFailure() {
         results = wifiManager.scanResults
@@ -49,7 +57,13 @@ class WifiService @Inject constructor(
 
     private fun scanSuccess() {
         results = wifiManager.scanResults
-        Log.d(TAG, "scanSuccess: $results")
+
+        for (scanResults in results) {
+            val ssid = scanResults.SSID
+            val level = scanResults.level
+            Log.d(TAG, "scanSuccess: $ssid, $level")
+        }
+
     }
 
     override fun onBind(intent: Intent?): IBinder? {
