@@ -23,9 +23,11 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         WorkManager.getInstance(this).enqueue(
             OneTimeWorkRequest.from(
                 WifiWorker::class.java))
+
 
         with(binding) {
             val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?

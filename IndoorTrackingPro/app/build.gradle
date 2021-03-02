@@ -6,7 +6,8 @@ plugins {
 }
 
 apply from: "$rootDir/dependencies.gradle"
-
+apply plugin: 'realm-android'
+apply plugin: 'com.android.application'
 android {
     compileSdkVersion versions.compileSdk
 
@@ -45,11 +46,11 @@ android {
 }
 
 dependencies {
-
+    compile 'io.realm:android-adapters:2.0.0'
     // android supports
     implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
-
+    implementation 'com.google.android.material:material:1.3.0'
     // core
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$versions.kotlin"
