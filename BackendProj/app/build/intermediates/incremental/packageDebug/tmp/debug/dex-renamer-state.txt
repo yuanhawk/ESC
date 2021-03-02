@@ -1,7 +1,0 @@
-#Wed Feb 24 22:48:19 SGT 2021
-base.0=/Users/lance/Documents/SUTDclass/50003_Elements_of_Software_Construction/Project_myrepo/BackendProj/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
-path.1=classes.dex
-renamed.1=classes2.dex
-path.0=classes.dex
-renamed.0=classes.dex
-base.1=/Users/lance/Documents/SUTDclass/50003_Elements_of_Software_Construction/Project_myrepo/BackendProj/app/build/intermediates/dex/debug/mergeProjectDexDebug/classes.dex
