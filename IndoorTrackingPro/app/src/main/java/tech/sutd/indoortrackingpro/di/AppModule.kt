@@ -3,6 +3,7 @@ package tech.sutd.indoortrackingpro.di
 import android.content.Context
 import android.net.wifi.WifiManager
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
@@ -11,6 +12,7 @@ import dagger.hilt.components.SingletonComponent
 @Module
 object AppModule {
 
+    @Provides
     fun provideWifiManager(@ApplicationContext context: Context): WifiManager =
         context.getSystemService(Context.WIFI_SERVICE) as WifiManager
 }

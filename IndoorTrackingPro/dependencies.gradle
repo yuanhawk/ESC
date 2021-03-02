@@ -26,9 +26,6 @@ ext.versions = [
         // hilt
         hilt          : '2.30.1-alpha',
 
-        // hilt_compiler
-        hilt_compiler : '1.0.0-alpha03',
-
         // viewmodel
         viewmodel     : '1.0.0-alpha03',
 
