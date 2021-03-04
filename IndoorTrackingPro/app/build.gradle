@@ -2,13 +2,13 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'realm-android'
     id 'dagger.hilt.android.plugin'
 }
 
 apply from: "$rootDir/dependencies.gradle"
-apply plugin: 'realm-android'
-apply plugin: 'com.android.application'
 android {
+    ext.kotlin_version = "1.4.31"
     compileSdkVersion versions.compileSdk
 
     defaultConfig {
@@ -19,6 +19,7 @@ android {
         versionName versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "tech.sutd.indoortrackingpro.CustomTestRunner"
     }
 
     packagingOptions {
@@ -39,10 +40,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     buildFeatures {
         dataBinding true
     }
+    hilt {
+        enableTransformForLocalTests = true
+    }
+
 }
 
 dependencies {
@@ -52,7 +56,7 @@ dependencies {
     // android supports
     implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
-    implementation 'com.google.android.material:material:1.3.0'
+
     // core
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$versions.kotlin"
@@ -66,7 +70,6 @@ dependencies {
 
     // hilt
     implementation "com.google.dagger:hilt-android:$versions.hilt"
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     kapt "com.google.dagger:hilt-android-compiler:$versions.hilt"
     kapt "androidx.hilt:hilt-compiler:$versions.hilt_compiler"
 
@@ -86,6 +89,7 @@ dependencies {
     // test
     androidTestImplementation "androidx.test:core:$versions.core"
     testImplementation "junit:junit:$versions.junit"
+    androidTestImplementation "androidx.test:rules:$versions.runner"
     androidTestImplementation "androidx.test:runner:$versions.runner"
 
     // assertions
