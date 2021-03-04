@@ -27,10 +27,10 @@ ext.versions = [
         hilt          : '2.30.1-alpha',
 
         // viewmodel
-        viewmodel     : '1.0.0-alpha03',
+        viewmodel     : '1.0.0-alpha02',
 
         // workmanager
-        workmanager   : '1.0.0-alpha03',
+        workmanager   : '1.0.0-alpha02',
 
         // lifecycle
         lifecycle     : '2.3.0',

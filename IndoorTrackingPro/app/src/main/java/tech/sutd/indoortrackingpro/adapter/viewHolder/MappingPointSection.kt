@@ -17,20 +17,16 @@ import tech.sutd.indoortrackingpro.model.MappingPoint
  */
 class MappingPointSection(sectionParameters: SectionParameters?) : Section(sectionParameters) {
     private var mappingPoints = ArrayList<MappingPoint>()
-    override fun getContentItemsTotal(): Int {
-        return mappingPoints.size
-    }
+    override fun getContentItemsTotal(): Int = mappingPoints.size
 
-    override fun getItemViewHolder(view: View): RecyclerView.ViewHolder {
-        return MappingPointViewHolder(view)
-    }
+    override fun getItemViewHolder(view: View): RecyclerView.ViewHolder = MappingPointViewHolder(view)
 
     override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         val viewHolder = holder as MappingPointViewHolder
         viewHolder.x.text = mappingPoints[position].latitude.toString()
         viewHolder.y.text = mappingPoints[position].longitude.toString()
     }
-    class MappingPointViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class MappingPointViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val x: TextView = itemView.findViewById(R.id.item_mp_x)
         val y: TextView = itemView.findViewById(R.id.item_mp_y)
     }

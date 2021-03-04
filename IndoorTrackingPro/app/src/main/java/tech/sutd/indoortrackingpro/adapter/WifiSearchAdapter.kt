@@ -11,31 +11,29 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.databinding.ItemWifisearchBinding
 
-class WifiSearchAdapter(var wifiList: ArrayList<ScanResult> = ArrayList()): RecyclerView.Adapter<WifiSearchAdapter.WifiSearchViewHolder>(){
+class WifiSearchAdapter(
+    var wifiList: ArrayList<ScanResult> = ArrayList()
+): RecyclerView.Adapter<WifiSearchAdapter.WifiSearchViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WifiSearchViewHolder {
-        var itemLayout: LinearLayout =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_wifisearch, parent, false) as LinearLayout
-        return WifiSearchViewHolder(itemLayout)
+        val binding = DataBindingUtil.inflate<ItemWifisearchBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.item_wifisearch, parent, false
+        )
+        return WifiSearchViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: WifiSearchViewHolder, position: Int) {
-        holder.mac.text = wifiList[position].BSSID
-        holder.ssid.text = wifiList[position].SSID
-        holder.rssi.text = wifiList[position].level.toString()
-
+        holder.binding.mac.text = wifiList[position].BSSID
+        holder.binding.ssid.text = wifiList[position].SSID
+        holder.binding.rssi.text = wifiList[position].level.toString()
     }
 
-    override fun getItemCount(): Int {
-        return wifiList.size
-    }
+    override fun getItemCount(): Int = wifiList.size
 
-    class WifiSearchViewHolder(v: LinearLayout): RecyclerView.ViewHolder(v) {
-        var mac: TextView = v.findViewById(R.id.wifi_mac)
-        var ssid: TextView = v.findViewById(R.id.wifi_ssid)
-        var rssi: TextView = v.findViewById(R.id.wifi_rssi)
-
-    }
+    inner class WifiSearchViewHolder(var binding: ItemWifisearchBinding) : RecyclerView.ViewHolder(binding.root)
 }

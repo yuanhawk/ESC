@@ -15,11 +15,11 @@ import tech.sutd.indoortrackingpro.model.AccessPoint
  * Use io.github.luizgrp lib to show access points and mapping points in different section inside a common recycler view
  *
  */
-class AccessPointSection(sectionParameters: SectionParameters) : Section(sectionParameters) {
+class AccessPointSection(
+    sectionParameters: SectionParameters
+) : Section(sectionParameters) {
     private var accessPoints = ArrayList<AccessPoint>()
-    override fun getContentItemsTotal(): Int {
-        return accessPoints.size
-    }
+    override fun getContentItemsTotal(): Int = accessPoints.size
 
     override fun getItemViewHolder(view: View): RecyclerView.ViewHolder {
         return AccessPointViewHolder(view)
