@@ -1,46 +1,34 @@
 package tech.sutd.indoortrackingpro.data
 
-import android.content.Context
-import androidx.test.core.app.ActivityScenario
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
+import android.net.wifi.WifiManager
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import org.hamcrest.CoreMatchers.`is`
-import org.junit.Assert.*
+import junit.framework.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import tech.sutd.indoortrackingpro.ui.MainActivity
 import javax.inject.Inject
 
+@HiltAndroidTest
 class WifiWorkerTest {
 
-    private lateinit var context: Context
-    private lateinit var workManager: WorkManager
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var wifiManager: WifiManager
 
     @Before
     fun init() {
-        context = ApplicationProvider.getApplicationContext()
-        workManager = WorkManager.getInstance(context)
+        hiltRule.inject()
     }
 
     @Test
-    fun testWifiWorker() {
-        val request = OneTimeWorkRequestBuilder<WifiWorker>()
-            .build()
-
-        // Enqueue and wait for result. This also runs the Worker synchronously
-        // because we are using a SynchronousExecutor.
-        workManager.enqueue(request).result.get()
-        // Get WorkInfo and outputData
-        val workInfo = workManager.getWorkInfoById(request.id).get()
-
-        // Assert
-        assertThat(workInfo.state, `is`(WorkInfo.State.SUCCEEDED))
+    fun testScanResult() {
+        val results = wifiManager.scanResults
+        for (result in results) {
+            assertNotNull(result.SSID)
+            assertNotNull(result.level)
+        }
     }
 }
