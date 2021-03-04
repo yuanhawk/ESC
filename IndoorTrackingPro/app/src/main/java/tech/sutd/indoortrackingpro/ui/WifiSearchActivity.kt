@@ -32,7 +32,7 @@ class WifiSearchActivity(): AppCompatActivity(){
     private  lateinit var wifiSearchAdapter: WifiSearchAdapter
     @Suppress("DEPRECATION")
     private val handler = Handler()
-
+    //TODO: Use wifiService
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ class WifiSearchActivity(): AppCompatActivity(){
 
     override fun onResume() {
 
-        if (!wifiManager.isWifiEnabled) wifiManager.isWifiEnabled = true
+        //if (!wifiManager.isWifiEnabled) wifiManager.isWifiEnabled = true
         registerReceiver(wifiReceiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
         //TODO: Deprecation
         handler.postDelayed({
@@ -89,7 +89,12 @@ class WifiSearchActivity(): AppCompatActivity(){
 
     }
     inner class WifiSearchReceiver(): BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
+        override fun onReceive(context: Context, intent: Intent) {
+            val success = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)
+            if (!success){
+                Log.v(TAG, "scan failed")
+                return
+            }
             scanResultList = wifiManager.scanResults as ArrayList<ScanResult>
             Collections.sort(scanResultList, object : Comparator<ScanResult> {
                 override fun compare(o1: ScanResult?, o2: ScanResult?): Int {
@@ -106,7 +111,7 @@ class WifiSearchActivity(): AppCompatActivity(){
             wifiSearchAdapter.notifyDataSetChanged()
             val wifiCount = scanResultList.size
             Log.v(TAG, "Wi-Fi Scan Results ... Count:$wifiCount")
-            for (i in 0..wifiCount) {
+            for (i in 0..wifiCount - 1) {
                 Log.v(TAG, "  BSSID       =" + scanResultList[i].BSSID)
                 Log.v(TAG, "  SSID        =" + scanResultList[i].SSID)
                 Log.v(TAG, "  Capabilities=" + scanResultList[i].capabilities)
@@ -119,8 +124,8 @@ class WifiSearchActivity(): AppCompatActivity(){
 
     override fun onDestroy() {
         super.onDestroy()
-        if (wifiManager.isWifiEnabled) {
+        /*if (wifiManager.isWifiEnabled) {
             wifiManager.isWifiEnabled = false
-        }
+        }*/
     }
 }

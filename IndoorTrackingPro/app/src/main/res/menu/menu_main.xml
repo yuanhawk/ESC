@@ -8,8 +8,12 @@
         android:orderInCategory="100"
         android:title="Search Wifi"
         app:showAsAction="never" />
-    
 
+    <item
+        android:id="@+id/project_detail_menu_button"
+        android:orderInCategory="100"
+        android:title="detail"
+        app:showAsAction="never" />
     <!-- we are in res/menu/menu_main.xml -->
 
 

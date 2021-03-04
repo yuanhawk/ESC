@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "tech.sutd.indoortrackingpro"
-        minSdkVersion versions.minSdk
+        minSdkVersion 23
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName
@@ -47,6 +47,8 @@ android {
 
 dependencies {
     compile 'io.realm:android-adapters:2.0.0'
+    //Adapter used in the account detail page
+    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:2.1.0'
     // android supports
     implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"

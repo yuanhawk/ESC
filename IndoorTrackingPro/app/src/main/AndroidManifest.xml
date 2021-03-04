@@ -48,6 +48,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.WifiSearchActivity"/>
+        <activity android:name=".ui.ProjectDetail"></activity>
     </application>
 
 </manifest>
