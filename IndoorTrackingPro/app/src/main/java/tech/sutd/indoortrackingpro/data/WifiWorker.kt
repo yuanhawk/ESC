@@ -31,19 +31,23 @@ class WifiWorker @AssistedInject constructor(
         Log.d(TAG, "scanFailure: $results")
     }
 
-    private fun scanSuccess() {
+    private fun scanSuccess(): Data {
         results = wifiManager.scanResults
         for (scanResults in results) {
             val ssid = scanResults.SSID
             val level = scanResults.level
             Log.d(TAG, "scanSuccess: $ssid, $level")
         }
+        val data = Data.Builder()
+            .putString("scanResults", results.toString())
+            .build()
         workManager.enqueue(workRequest)
+        return data
     }
 
     override fun doWork(): Result {
         val success = wifiManager.startScan()
-        if (success) scanSuccess()
+        if (success) return Result.success(scanSuccess())
         else scanFailure()
         return Result.success()
     }

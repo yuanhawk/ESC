@@ -121,4 +121,9 @@ dependencies {
     kaptTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.hilt"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
+
+    // work-test
+    androidTestImplementation "androidx.work:work-runtime:$versions.work"
+    androidTestImplementation "androidx.work:work-testing:$versions.work"
+    androidTestImplementation "androidx.work:work-runtime-ktx:$versions.work"
 }
