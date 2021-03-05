@@ -18,7 +18,7 @@
             tools:context=".ui.MapFragment" />
 
         <FrameLayout
-            android:id="@+id/fl_wrapper"
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/bottom_navigation" />
