@@ -44,14 +44,14 @@ class MainActivity : BaseActivity() {
          * user has installed Google Play services and returned to the app.
          */
         val markerLoc = LatLng((1.340701176012829 + 1.3413275446492632) / 2 , (103.9618445759041 + 103.96312593771422) /2 )
-        val circleOptions = CircleOptions()
-                .center(markerLoc)
-                .radius(1.0).strokeColor(Color.BLUE)
-                .fillColor(Color.argb(128, 0, 0, 255))
+//        val circleOptions = CircleOptions()
+//                .center(markerLoc)
+//                .radius(1.0).strokeColor(Color.BLUE)
+//                .fillColor(Color.argb(128, 0, 0, 255))
 
 
-
-        val circle = googleMap.addCircle(circleOptions)
+//
+//        val circle = googleMap.addCircle(circleOptions)
 
 
 
