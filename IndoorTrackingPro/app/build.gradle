@@ -2,22 +2,24 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'realm-android'
     id 'dagger.hilt.android.plugin'
 }
 
 apply from: "$rootDir/dependencies.gradle"
-
 android {
+    ext.kotlin_version = "1.4.31"
     compileSdkVersion versions.compileSdk
 
     defaultConfig {
         applicationId "tech.sutd.indoortrackingpro"
-        minSdkVersion versions.minSdk
+        minSdkVersion 23
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "tech.sutd.indoortrackingpro.CustomTestRunner"
     }
 
     packagingOptions {
@@ -38,14 +40,19 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     buildFeatures {
         dataBinding true
     }
+    hilt {
+        enableTransformForLocalTests = true
+    }
+
 }
 
 dependencies {
-
+    compile 'io.realm:android-adapters:2.0.0'
+    //Adapter used in the account detail page
+    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:2.1.0'
     // android supports
     implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
@@ -70,8 +77,9 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.viewmodel"
 
     // workmanager
-    implementation "androidx.hilt:hilt-work:$versions.workmanager"
     implementation "androidx.work:work-runtime-ktx:$versions.work"
+    implementation "androidx.hilt:hilt-work:$versions.workmanager"
+    kapt "androidx.hilt:hilt-compiler:$versions.workmanager"
 
     // lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
@@ -81,6 +89,7 @@ dependencies {
     // test
     androidTestImplementation "androidx.test:core:$versions.core"
     testImplementation "junit:junit:$versions.junit"
+    androidTestImplementation "androidx.test:rules:$versions.runner"
     androidTestImplementation "androidx.test:runner:$versions.runner"
 
     // assertions
@@ -113,6 +122,8 @@ dependencies {
     androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.hilt"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
 
-    // navigation-test
-    androidTestImplementation "androidx.navigation:navigation-testing:$versions.navigation"
+    // work-test
+    androidTestImplementation "androidx.work:work-runtime:$versions.work"
+    androidTestImplementation "androidx.work:work-testing:$versions.work"
+    androidTestImplementation "androidx.work:work-runtime-ktx:$versions.work"
 }
