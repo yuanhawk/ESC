@@ -32,17 +32,12 @@ class MainActivity : BaseActivity() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
         // val homeFragment = supportFragmentManager.findFragmentById(R.id.home) as SupportMapFragment
-//        val trackingFragment = TrackingFragment()
-//        val mappingFragment = MappingFragment()
 
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.ic_home_button -> supportFragmentManager.beginTransaction().
-                replace(R.id.fragment_container, HomeFragment()).commit()
-                R.id.ic_mapping_button -> mapFragment?.let { it1 ->
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, it1).commit()
-                }
+                R.id.ic_home_button -> beginTransaction(HomeFragment())
+                R.id.ic_mapping_button -> beginTransaction(MappingFragment())
 //                R.id.ic_tracking_button -> supportFragmentManager.beginTransaction().
 //                replace(R.id.fragment_container, homeFragment).commit()
             }
@@ -74,10 +69,4 @@ class MainActivity : BaseActivity() {
         googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
-
-    private fun makeCurrentFragment(fragment: Fragment) =
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, fragment)
-            commit()
-        }
 }
