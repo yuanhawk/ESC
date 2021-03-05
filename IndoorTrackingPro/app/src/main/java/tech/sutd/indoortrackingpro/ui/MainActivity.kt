@@ -2,12 +2,13 @@ package tech.sutd.indoortrackingpro.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
@@ -15,6 +16,7 @@ import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
 import tech.sutd.indoortrackingpro.ui.fragments.HomeFragment
 import tech.sutd.indoortrackingpro.ui.fragments.MappingFragment
 import tech.sutd.indoortrackingpro.ui.fragments.TrackingFragment
+
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -24,21 +26,25 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding) {
-            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-            mapFragment?.getMapAsync(callback)
+//            HomeFragment()
         }
 
-        val homeFragment = HomeFragment()
-        val trackingFragment = TrackingFragment()
-        val mappingFragment = MappingFragment()
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
+        // val homeFragment = supportFragmentManager.findFragmentById(R.id.home) as SupportMapFragment
+//        val trackingFragment = TrackingFragment()
+//        val mappingFragment = MappingFragment()
 
-        makeCurrentFragment(homeFragment)
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.ic_home_button -> makeCurrentFragment(homeFragment)
-                R.id.ic_tracking_button -> makeCurrentFragment(trackingFragment)
-                R.id.ic_mapping_button -> makeCurrentFragment(mappingFragment)
+                R.id.ic_home_button -> supportFragmentManager.beginTransaction().
+                replace(R.id.fragment_container, HomeFragment()).commit()
+                R.id.ic_mapping_button -> mapFragment?.let { it1 ->
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, it1).commit()
+                }
+//                R.id.ic_tracking_button -> supportFragmentManager.beginTransaction().
+//                replace(R.id.fragment_container, homeFragment).commit()
             }
             true
         }
@@ -71,7 +77,7 @@ class MainActivity : BaseActivity() {
 
     private fun makeCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fl_wrapper, fragment)
+            replace(R.id.fragment_container, fragment)
             commit()
         }
 }
