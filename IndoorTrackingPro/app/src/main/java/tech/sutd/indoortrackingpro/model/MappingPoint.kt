@@ -8,11 +8,11 @@ import io.realm.annotations.PrimaryKey
 import java.util.*
 
 
-class MappingPoint(): RealmObject() {
-    @PrimaryKey
-    var id: String = UUID.randomUUID().toString()
-    var timeStamp: Date = Date()
-    var coordinate: Coordinate = Coordinate()
-    var accessPointSignalRecorded: RealmList<AccessPoint> = RealmList()
+open class MappingPoint(
+    @PrimaryKey var id: String = UUID.randomUUID().toString(),
+    var timeStamp: Date = Date(),
+    var longitude: Double = 0.0,
+    var latitude: Double = 0.0,
+    var accessPointSignalRecorded: RealmList<AccessPoint> = RealmList()): RealmObject() {
 
 }

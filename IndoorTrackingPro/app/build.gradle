@@ -2,23 +2,24 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'realm-android'
     id 'dagger.hilt.android.plugin'
 }
 
 apply from: "$rootDir/dependencies.gradle"
-apply plugin: 'realm-android'
-apply plugin: 'com.android.application'
 android {
+    ext.kotlin_version = "1.4.31"
     compileSdkVersion versions.compileSdk
 
     defaultConfig {
         applicationId "tech.sutd.indoortrackingpro"
-        minSdkVersion versions.minSdk
+        minSdkVersion 23
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "tech.sutd.indoortrackingpro.CustomTestRunner"
     }
 
     packagingOptions {
@@ -39,18 +40,23 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     buildFeatures {
         dataBinding true
     }
+    hilt {
+        enableTransformForLocalTests = true
+    }
+
 }
 
 dependencies {
     compile 'io.realm:android-adapters:2.0.0'
+    //Adapter used in the account detail page
+    implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:2.1.0'
     // android supports
     implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
-    implementation 'com.google.android.material:material:1.3.0'
+
     // core
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$versions.kotlin"
@@ -83,6 +89,7 @@ dependencies {
     // test
     androidTestImplementation "androidx.test:core:$versions.core"
     testImplementation "junit:junit:$versions.junit"
+    androidTestImplementation "androidx.test:rules:$versions.runner"
     androidTestImplementation "androidx.test:runner:$versions.runner"
 
     // assertions
@@ -114,4 +121,9 @@ dependencies {
     kaptTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.hilt"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
+
+    // work-test
+    androidTestImplementation "androidx.work:work-runtime:$versions.work"
+    androidTestImplementation "androidx.work:work-testing:$versions.work"
+    androidTestImplementation "androidx.work:work-runtime-ktx:$versions.work"
 }

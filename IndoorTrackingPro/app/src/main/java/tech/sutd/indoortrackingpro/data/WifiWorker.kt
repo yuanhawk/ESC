@@ -9,17 +9,17 @@ import androidx.work.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 @HiltWorker
 class WifiWorker @AssistedInject constructor(
-        @Assisted val appContext: Context,
-        @Assisted workerParams: WorkerParameters,
+    @Assisted val appContext: Context,
+    @Assisted workerParams: WorkerParameters,
+    private val wifiManager: WifiManager,
+    private val workManager: WorkManager
 ) : Worker(appContext, workerParams) {
 
     private val TAG = "WifiWorker"
     private lateinit var results: List<ScanResult>
-    private lateinit var wifiManager: WifiManager
 
     val workRequest = OneTimeWorkRequestBuilder<WifiWorker>()
             .setInitialDelay(10, TimeUnit.SECONDS)
@@ -31,20 +31,23 @@ class WifiWorker @AssistedInject constructor(
         Log.d(TAG, "scanFailure: $results")
     }
 
-    private fun scanSuccess() {
+    private fun scanSuccess(): Data {
         results = wifiManager.scanResults
         for (scanResults in results) {
             val ssid = scanResults.SSID
             val level = scanResults.level
             Log.d(TAG, "scanSuccess: $ssid, $level")
         }
-        WorkManager.getInstance(appContext).enqueue(workRequest)
+        val data = Data.Builder()
+            .putString("scanResults", results.toString())
+            .build()
+        workManager.enqueue(workRequest)
+        return data
     }
 
     override fun doWork(): Result {
-        wifiManager = appContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val success = wifiManager.startScan()
-        if (success) scanSuccess()
+        if (success) return Result.success(scanSuccess())
         else scanFailure()
         return Result.success()
     }

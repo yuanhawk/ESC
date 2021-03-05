@@ -2,18 +2,21 @@ package tech.sutd.indoortrackingpro.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
 
-open class AccessPoint(): RealmObject(), Parcelable{
+open class AccessPoint(
     @PrimaryKey
-    var id : String = UUID.randomUUID().toString()
+    var id : String = UUID.randomUUID().toString(),
     //RealmObject requires null type, cannot be lateinit
-    var mac: String = "";
-    var ssid: String = "";
-    var rssi: Double = 0.0;
+    var mac: String = "",
+    var ssid: String = "",
+    var rssi: Double = 0.0):RealmObject(), Parcelable{
+
+
 
     constructor(other: AccessPoint): this(){
         this.id = other.id;

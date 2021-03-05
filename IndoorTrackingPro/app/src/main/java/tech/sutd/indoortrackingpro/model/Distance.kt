@@ -1,7 +1,7 @@
 package tech.sutd.indoortrackingpro.model
 
-class Distance(var distance: Double = 0.0,
-        var mappingPointCoordinate: Coordinate): Comparable<Distance>{
+class Distance(var distance: Double,
+        var coordinate: Coordinate): Comparable<Distance>{
 
 
     override fun compareTo(other: Distance): Int {
