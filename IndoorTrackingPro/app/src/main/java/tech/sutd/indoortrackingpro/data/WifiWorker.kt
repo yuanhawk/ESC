@@ -39,7 +39,7 @@ class WifiWorker @AssistedInject constructor(
             Log.d(TAG, "scanSuccess: $ssid, $level")
         }
         val data = Data.Builder()
-            .putString("scanResults", results.toString())
+            .putStringArray("scanResults", arrayOf(results.toTypedArray().toString()))
             .build()
         workManager.enqueue(workRequest)
         return data
