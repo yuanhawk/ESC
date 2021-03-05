@@ -1,5 +1,6 @@
 package tech.sutd.indoortrackingpro.ui
 
+import android.content.Intent
 import android.content.IntentFilter
 import android.net.wifi.WifiManager
 import android.os.Bundle
@@ -13,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.adapter.RvItemClickListener
 import tech.sutd.indoortrackingpro.adapter.WifiSearchAdapter
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.databinding.ActivityWifiSearchBinding
+import tech.sutd.indoortrackingpro.model.AccessPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -31,7 +34,9 @@ class WifiSearchActivity : BaseActivity() {
     @Inject lateinit var itemDecoration: DividerItemDecoration
     @Inject lateinit var handler: Handler
     @Inject lateinit var itemAnimator: DefaultItemAnimator
-
+    companion object {
+        val returnKey = "new access Point"
+    }
     private val binding by binding<ActivityWifiSearchBinding>(R.layout.activity_wifi_search)
 
     //TODO: Use wifiService
@@ -46,6 +51,17 @@ class WifiSearchActivity : BaseActivity() {
         binding.wifiListRv.addItemDecoration(itemDecoration)
         binding.wifiListRv.itemAnimator = itemAnimator
         binding.wifiListRv.adapter = wifiSearchAdapter
+        binding.wifiListRv.addOnItemTouchListener(RvItemClickListener(this, binding.wifiListRv, object : RvItemClickListener.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                var accessPoint: AccessPoint = AccessPoint()
+                accessPoint.mac = wifiSearchAdapter.wifiList[position].BSSID
+                accessPoint.ssid = wifiSearchAdapter.wifiList[position].SSID
+                var intent: Intent = Intent()
+                intent.putExtra(returnKey, accessPoint)
+                setResult(RESULT_OK, intent)
+                finish()
+            }
+        }))
 
     }
 

@@ -8,6 +8,7 @@ import java.util.ArrayList
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.MappingPoint
 
 /**
@@ -16,7 +17,7 @@ import tech.sutd.indoortrackingpro.model.MappingPoint
  *
  */
 class MappingPointSection(sectionParameters: SectionParameters?) : Section(sectionParameters) {
-    private var mappingPoints = ArrayList<MappingPoint>()
+    private var mappingPoints: List<MappingPoint> = ArrayList<MappingPoint>()
     override fun getContentItemsTotal(): Int = mappingPoints.size
 
     override fun getItemViewHolder(view: View): RecyclerView.ViewHolder = MappingPointViewHolder(view)
@@ -40,7 +41,7 @@ class MappingPointSection(sectionParameters: SectionParameters?) : Section(secti
         return TitleViewHolder(view)
     }
 
-    fun setMappingPoints(list: ArrayList<MappingPoint>){
+    fun setMappingPoints(list: List<MappingPoint>){
         this.mappingPoints = list
     }
 }

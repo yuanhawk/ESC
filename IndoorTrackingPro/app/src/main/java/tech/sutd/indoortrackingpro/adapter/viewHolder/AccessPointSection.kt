@@ -18,7 +18,7 @@ import tech.sutd.indoortrackingpro.model.AccessPoint
 class AccessPointSection(
     sectionParameters: SectionParameters
 ) : Section(sectionParameters) {
-    private var accessPoints = ArrayList<AccessPoint>()
+    private var accessPoints: List<AccessPoint> = ArrayList<AccessPoint>()
     override fun getContentItemsTotal(): Int = accessPoints.size
 
     override fun getItemViewHolder(view: View): RecyclerView.ViewHolder {
@@ -31,7 +31,7 @@ class AccessPointSection(
         viewHolder.ssid.text = accessPoints[position].ssid
     }
 
-    fun setAccessPoints(accessPoints: ArrayList<AccessPoint>){
+    fun setAccessPoints(accessPoints: List<AccessPoint>){
         this.accessPoints = accessPoints
     }
 
@@ -49,7 +49,7 @@ class AccessPointSection(
 
     class AccessPointViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val mac: TextView = itemView.findViewById(R.id.item_ap_mac)
-        val ssid: TextView = itemView.findViewWithTag(R.id.item_ap_ssid)
+        val ssid: TextView = itemView.findViewById(R.id.item_ap_ssid)
     }
 
 }
