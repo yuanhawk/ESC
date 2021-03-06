@@ -1,14 +1,16 @@
 package tech.sutd.indoortrackingpro.ui
 
-import android.graphics.Color
+
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
-import com.google.android.gms.maps.CameraUpdateFactory
-
-import com.google.android.gms.maps.GoogleMap
-
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import com.otaliastudios.zoom.ZoomImageView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
@@ -20,56 +22,44 @@ import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
     private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
+    private val TAG : String = "Map"
 
 
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding) {
+            val map : ZoomImageView = findViewById(R.id.map)
+            map.setImageResource(R.drawable.map)
 
-            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-            mapFragment?.getMapAsync(callback)
-        }
+            View.OnCapturedPointerListener(motionEvent : MotionEvent): Boolean{
+                val horizontalOffset: Float = motionEvent.x
+                val verticalOffset: Float = motionEvent.y
+                Toast.makeText(
+                    this@MainActivity,
+                    "x : $horizontalOffset , y : $verticalOffset",
+                    Toast.LENGTH_SHORT
+                ).show();
+                return true
+
+
+             }
+
+
+            }
     }
 
 
-    private val callback = OnMapReadyCallback { googleMap ->
-
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val markerLoc = LatLng((1.340701176012829 + 1.3413275446492632) / 2 , (103.9618445759041 + 103.96312593771422) /2 )
-//        val circleOptions = CircleOptions()
-//                .center(markerLoc)
-//                .radius(1.0).strokeColor(Color.BLUE)
-//                .fillColor(Color.argb(128, 0, 0, 255))
 
 
-//
-//        val circle = googleMap.addCircle(circleOptions)
+    }
 
 
 
 
-//        val floorPlanLoc = LatLng(1.340990, 103.962602)
-        val bounds = LatLngBounds(LatLng(1.340701176012829, 103.9618445759041),
-        LatLng(1.3413275446492632, 103.96312593771422));
 
-            googleMap.addMarker(MarkerOptions().position(markerLoc)).setIcon(BitmapDescriptorFactory.defaultMarker())
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(markerLoc))
-
-        val floorPlan = GroundOverlayOptions().image(BitmapDescriptorFactory.fromResource(R.drawable.floor_plan_level_1)).positionFromBounds(bounds)
-        googleMap.addGroundOverlay(floorPlan)
-
-        }
-
-
-}
 
 
 

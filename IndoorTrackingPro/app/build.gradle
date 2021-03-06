@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+// zoom layout
+    implementation 'com.otaliastudios:zoomlayout:1.8.0'
 
     // android supports
     implementation "com.google.android.material:material:$versions.material"
