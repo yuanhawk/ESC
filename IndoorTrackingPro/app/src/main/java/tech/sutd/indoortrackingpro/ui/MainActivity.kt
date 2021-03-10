@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -33,6 +35,7 @@ class MainActivity : BaseActivity() {
                     if (event?.action == MotionEvent.ACTION_UP) {
                         location = floatArrayOf(event.x, event.y)
                         Log.d(TAG, "onCreate: ${location[0]}, ${location[1]}")
+                        Toast.makeText(this@MainActivity,"Current location is: ${location[0]}, ${location[1]}", Toast.LENGTH_SHORT).show()
 
                         map.isEnabled = true
                         map.pos = location
@@ -45,27 +48,32 @@ class MainActivity : BaseActivity() {
                 }
             })
 
-//            map.setOnClickListener{v ->
-//                val location = IntArray(2)
-//                v.getLocationOnScreen(location)
-//                Log.d(TAG, "onCreate: ${location[0]}, ${location[1]}")
-//
-//                val floats = FloatArray(2)
-//                for (i in 0..1) {
-//                    floats[i] = location[i].toFloat()
-//                }
-//
-//                map.elevation = 0f
-//                binding.pointer.visibility = View.VISIBLE
-//                binding.pointer.isEnabled = true
-//                binding.pointer.pos = floats
-//                binding.pointer.elevation = 90f
-//                map.invalidate()
-//            }
+
+            var  myTimerTask : CustomTimerTask = CustomTimerTask(map)
+            var myTimer : Timer = Timer()
+            myTimer.schedule(myTimerTask,100 , 1000)
+
+
+
+
+
+
+
         }
     }
 
-}
+//    fun setLocation( map : CustomZoomImageView , x : Float , y : Float){
+//        map.isEnabled = true
+//        location = floatArrayOf(x,y)
+//        map.pos = location
+//        map.invalidate()
+//    }
+
+
+
+    }
+
+
 
 
 
