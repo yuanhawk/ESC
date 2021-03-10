@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.ui
+package tech.sutd.indoortrackingpro.util
 
 import android.content.Context
 import android.graphics.Canvas
@@ -11,22 +11,25 @@ class CustomZoomImageView(
     context: Context,
     attrs: AttributeSet?
 ) : ZoomImageView(context, attrs) {
-    private var paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var border = Paint(Paint.ANTI_ALIAS_FLAG)
     var pos = floatArrayOf(0f, 0f)
 
     init {
         paint.color = Color.GRAY
+        border.color = Color.WHITE
     }
 
     override fun setEnabled(enabled: Boolean) {
         if (enabled)
-            paint.color = Color.RED
+            paint.color = Color.BLUE
         else
             paint.color = Color.GRAY
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        canvas.drawCircle(pos[0], pos[1], 40f, border)
         canvas.drawCircle(pos[0], pos[1], 30f, paint)
     }
 }

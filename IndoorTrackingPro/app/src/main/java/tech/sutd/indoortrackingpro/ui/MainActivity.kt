@@ -31,6 +31,7 @@ class MainActivity : BaseActivity() {
                         location = floatArrayOf(event.x, event.y)
                         Log.d(TAG, "onCreate: ${location[0]}, ${location[1]}")
 
+                        map.isEnabled = true
                         map.pos = location
                         map.invalidate()
                         return true
@@ -38,24 +39,6 @@ class MainActivity : BaseActivity() {
                     return false
                 }
             })
-
-//            map.setOnClickListener{v ->
-//                val location = IntArray(2)
-//                v.getLocationOnScreen(location)
-//                Log.d(TAG, "onCreate: ${location[0]}, ${location[1]}")
-//
-//                val floats = FloatArray(2)
-//                for (i in 0..1) {
-//                    floats[i] = location[i].toFloat()
-//                }
-//
-//                map.elevation = 0f
-//                binding.pointer.visibility = View.VISIBLE
-//                binding.pointer.isEnabled = true
-//                binding.pointer.pos = floats
-//                binding.pointer.elevation = 90f
-//                map.invalidate()
-//            }
         }
     }
 
