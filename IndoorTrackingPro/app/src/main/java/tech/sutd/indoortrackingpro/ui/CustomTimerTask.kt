@@ -1,6 +1,7 @@
 package tech.sutd.indoortrackingpro.ui
 
 
+import tech.sutd.indoortrackingpro.util.CustomZoomImageView
 import java.util.*
 
 class CustomTimerTask(map : CustomZoomImageView) : TimerTask(){

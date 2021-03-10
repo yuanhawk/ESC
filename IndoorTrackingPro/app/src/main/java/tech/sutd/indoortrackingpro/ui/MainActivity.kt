@@ -1,6 +1,5 @@
 package tech.sutd.indoortrackingpro.ui
 
-import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,11 +16,9 @@ import java.util.*
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
-    private var isTouch = false
     private val TAG = "MainActivity"
     private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private lateinit var location: FloatArray
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -39,9 +36,7 @@ class MainActivity : BaseActivity() {
 
                         map.isEnabled = true
                         map.pos = location
-                        map.elevation = 500f
                         map.invalidate()
-                        isTouch = true
                         return true
                     }
                     return false
@@ -52,6 +47,7 @@ class MainActivity : BaseActivity() {
             var  myTimerTask : CustomTimerTask = CustomTimerTask(map)
             var myTimer : Timer = Timer()
             myTimer.schedule(myTimerTask,100 , 1000)
+
 
 
 
