@@ -21,9 +21,10 @@ class CustomZoomImageView(
     }
 
     override fun setEnabled(enabled: Boolean) {
-        if (enabled)
+        if (enabled){
 
-            paint.color = Color.BLUE
+            paint.color = Color.BLUE}
+        else
 
             paint.color = Color.GRAY
     }
