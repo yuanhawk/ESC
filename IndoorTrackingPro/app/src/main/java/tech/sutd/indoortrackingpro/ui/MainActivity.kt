@@ -1,60 +1,71 @@
 package tech.sutd.indoortrackingpro.ui
 
-
-import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import android.widget.ImageView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import com.otaliastudios.zoom.ZoomImageView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
 
-
-
-
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
+
+    private var isTouch = false
+    private val TAG = "MainActivity"
     private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
-    private val TAG : String = "Map"
 
-
-
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private lateinit var location: FloatArray
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding) {
-            val map : ZoomImageView = findViewById(R.id.map)
             map.setImageResource(R.drawable.map)
 
-            View.OnCapturedPointerListener(motionEvent : MotionEvent): Boolean{
-                val horizontalOffset: Float = motionEvent.x
-                val verticalOffset: Float = motionEvent.y
-                Toast.makeText(
-                    this@MainActivity,
-                    "x : $horizontalOffset , y : $verticalOffset",
-                    Toast.LENGTH_SHORT
-                ).show();
-                return true
+            map.setOnTouchListener(object : View.OnTouchListener{
+                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                    if (event?.action == MotionEvent.ACTION_UP) {
+                        location = floatArrayOf(event.x, event.y)
+                        Log.d(TAG, "onCreate: ${location[0]}, ${location[1]}")
 
+                        map.isEnabled = true
+                        map.pos = location
+                        map.elevation = 500f
+                        map.invalidate()
+                        isTouch = true
+                        return true
+                    }
+                    return false
+                }
+            })
 
-             }
-
-
-            }
+//            map.setOnClickListener{v ->
+//                val location = IntArray(2)
+//                v.getLocationOnScreen(location)
+//                Log.d(TAG, "onCreate: ${location[0]}, ${location[1]}")
+//
+//                val floats = FloatArray(2)
+//                for (i in 0..1) {
+//                    floats[i] = location[i].toFloat()
+//                }
+//
+//                map.elevation = 0f
+//                binding.pointer.visibility = View.VISIBLE
+//                binding.pointer.isEnabled = true
+//                binding.pointer.pos = floats
+//                binding.pointer.elevation = 90f
+//                map.invalidate()
+//            }
+        }
     }
 
-
-
-
-    }
+}
 
 
 
