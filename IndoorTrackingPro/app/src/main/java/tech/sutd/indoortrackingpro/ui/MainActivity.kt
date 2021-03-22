@@ -1,14 +1,16 @@
 package tech.sutd.indoortrackingpro.ui
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
@@ -17,21 +19,49 @@ import tech.sutd.indoortrackingpro.ui.fragments.HomeFragment
 import tech.sutd.indoortrackingpro.ui.fragments.MappingFragment
 import tech.sutd.indoortrackingpro.ui.fragments.TrackingFragment
 
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
+    private val TAG = "MainActivity"
     private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
 
+    private lateinit var location: FloatArray
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding) {
-//            HomeFragment()
+
+            map.setImageResource(R.drawable.map)
+
+            map.setOnTouchListener(object : View.OnTouchListener{
+                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                    if (event?.action == MotionEvent.ACTION_UP) {
+                        location = floatArrayOf(event.x, event.y)
+                        Log.d(TAG, "onCreate: ${location[0]}, ${location[1]}")
+                        Toast.makeText(this@MainActivity,"Current location is: ${location[0]}, ${location[1]}", Toast.LENGTH_SHORT).show()
+
+                        map.isEnabled = true
+                        map.pos = location
+                        map.invalidate()
+                        return true
+                    }
+                    return false
+                }
+            })
+
+
+
+
+
+
         }
 
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
-        // val homeFragment = supportFragmentManager.findFragmentById(R.id.home) as SupportMapFragment
+      
+    
 
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener {
@@ -46,27 +76,3 @@ class MainActivity : BaseActivity() {
 
     }
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val sydney = LatLng(1.3521, 103.8198)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }
-}

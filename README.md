@@ -1,17 +1,14 @@
 # ESC Indoor Tracking Projects. Class 4 Group 8
-### General Steps
-To start up the app, I will use dagger hilt to create various module<br>
-The architecture used will be mvvm<br>
-Den create a module for the api n inject into either the viewmodel or the activity<br>
-To make the ui gd its either a 2d map or a 3d map<br>
-2d map is the traditional google maps with the blue dot<br>  
-Or the 3d map is using the camera to show the location
+
 
 ### Google Docs for Project Meeting 1 (Week 3 Thur)
 https://docs.google.com/document/d/1BcXvbY9EATK2xfdKmMKJOBGerMGPtfZPofNwiZGg8hE/edit?usp=sharing  
 
 ### Google Docs for Problem Set 1
 https://docs.google.com/document/d/1EBp8VzvfgznfbWD9oXOoQ3x81-BpsnLw56h63oVhYno/edit?usp=sharing  
+
+### Google Docs for Project Meeting 2
+https://docs.google.com/document/d/1OLphdt8EI0vNxMHMzzCHkT-oHys2xFqU33vJDfavnM8/edit?usp=sharing
 
 ### Useful linkssss
 Kotlin code labs: https://developer.android.com/courses/kotlin-android-fundamentals/toc  
@@ -21,3 +18,7 @@ Location samples: https://github.com/android/location-samples/tree/432d3b72b8c05
 Geofencing: https://developer.android.com/training/location/geofencing  
 Wifi RTT: https://developer.android.com/guide/topics/connectivity/wifi-rtt  
 Bluetooth: https://developer.android.com/guide/topics/connectivity/bluetooth
+
+Front end to do by Week 6: 
+For the frontend peeps u should make the app has such function by next week: 1. By tapping anywhere on the sutd map, the app could return a coordinate on the screen.
+2. By inputting a coordinate to the app, the app should find and display this point in the sutd map. If the corrdinate given is out of range, the app could also detect it.

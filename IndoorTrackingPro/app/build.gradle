@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+// zoom layout
+    implementation "com.otaliastudios:zoomlayout:1.8.0"
 
     // android supports
     implementation "com.google.android.material:material:$versions.material"
@@ -112,7 +114,4 @@ dependencies {
     kaptTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.hilt"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
-
-    // navigation-test
-    androidTestImplementation "androidx.navigation:navigation-testing:$versions.navigation"
 }
