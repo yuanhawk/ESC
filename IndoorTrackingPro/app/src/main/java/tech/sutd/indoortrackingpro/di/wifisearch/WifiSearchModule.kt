@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.scopes.ActivityScoped
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.adapter.WifiSearchAdapter
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 
@@ -16,7 +18,10 @@ object WifiSearchModule {
 
     @ActivityScoped
     @Provides
-    fun provideWifiSearchAdapter() = WifiSearchAdapter()
+    fun provideWifiSearchAdapter(
+            realm: Realm,
+            config: RealmConfiguration
+    ): WifiSearchAdapter = WifiSearchAdapter(realm, config)
 
     @ActivityScoped
     @Provides

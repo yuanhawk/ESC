@@ -37,11 +37,16 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRealmConfiguration(): RealmConfiguration =
-        RealmConfiguration.Builder().build()
+        RealmConfiguration.Builder()
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .build()
 
     @Singleton
     @Provides
-    fun provideRealmInstance(realmConfig: RealmConfiguration): Realm =
+    fun provideRealmInstance(
+            realmConfig: RealmConfiguration
+    ): Realm =
         Realm.getInstance(realmConfig)
 
     @Singleton

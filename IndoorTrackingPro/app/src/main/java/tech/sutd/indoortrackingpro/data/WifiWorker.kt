@@ -1,28 +1,45 @@
 package tech.sutd.indoortrackingpro.data
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.hilt.work.HiltWorker
 import androidx.work.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import io.realm.Realm
+import io.realm.RealmConfiguration
+import io.realm.RealmList
+import kotlinx.coroutines.*
+import org.bson.types.ObjectId
+import tech.sutd.indoortrackingpro.model.AP
+import tech.sutd.indoortrackingpro.model.ListAP
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.util.*
 import java.util.concurrent.TimeUnit
+
+// Mapping & testing, select ap, return data collected all the access pt selected, submit to db
+// Testing mode to return coordinates
 
 @HiltWorker
 class WifiWorker @AssistedInject constructor(
-    @Assisted val appContext: Context,
-    @Assisted workerParams: WorkerParameters,
-    private val wifiManager: WifiManager,
-    private val workManager: WorkManager
+        @Assisted val appContext: Context,
+        @Assisted workerParams: WorkerParameters,
+        private val wifiManager: WifiManager,
+        private val workManager: WorkManager,
+        private val config: RealmConfiguration
 ) : Worker(appContext, workerParams) {
 
     private val TAG = "WifiWorker"
     private lateinit var results: List<ScanResult>
 
     val workRequest = OneTimeWorkRequestBuilder<WifiWorker>()
-            .setInitialDelay(10, TimeUnit.SECONDS)
+            .setInitialDelay(30, TimeUnit.SECONDS)
             .build()
 
 
@@ -33,21 +50,39 @@ class WifiWorker @AssistedInject constructor(
 
     private fun scanSuccess(): Data {
         results = wifiManager.scanResults
-        for (scanResults in results) {
-            val ssid = scanResults.SSID
-            val level = scanResults.level
-            Log.d(TAG, "scanSuccess: $ssid, $level")
-        }
+        CoroutineScope(Dispatchers.IO).launch { insertIntoDb(results) }
         val data = Data.Builder()
-            .putStringArray("scanResults", arrayOf(results.toTypedArray().toString()))
-            .build()
-        workManager.enqueue(workRequest)
+                .putStringArray("scanResults", arrayOf(results.toTypedArray().toString()))
+                .build()
         return data
     }
 
+    @SuppressLint("HardwareIds")
+    private fun insertIntoDb(results: List<ScanResult>) = runBlocking {
+        val realm = Realm.getInstance(config)
+        val apList = RealmList<AP>()
+        for (scanResults in results) {
+            val ap = AP(
+                wifiManager.connectionInfo.macAddress,
+                scanResults.SSID,
+                scanResults.level
+            )
+            apList.add(ap)
+            Log.d(TAG, "insertIntoDb: ${wifiManager.connectionInfo.macAddress}, ${scanResults.SSID}, ${scanResults.level}")
+        }
+
+        val listAp = ListAP(apList)
+        realm.executeTransactionAsync { innerRealm ->
+            innerRealm.insert(listAp)
+        }
+        realm.close()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun doWork(): Result {
-        val success = wifiManager.startScan()
-        if (success) return Result.success(scanSuccess())
+        workManager.enqueue(workRequest)
+        if (wifiManager.startScan())
+            return Result.success(scanSuccess())
         else scanFailure()
         return Result.success()
     }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,12 +23,15 @@ import tech.sutd.indoortrackingpro.model.Account
 import java.util.*
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
-    @Inject lateinit var workManager: WorkManager
-    @Inject lateinit var realm: Realm
+    private val wifiViewModel: WifiViewModel by viewModels()
+
+    @Inject
+    lateinit var workManager: WorkManager
+    @Inject
+    lateinit var realm: Realm
 
     private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
 
@@ -47,11 +51,14 @@ class MainActivity : BaseActivity() {
         }
 
         if (realm.where(Account::class.java).findAll().isEmpty()) {
-            realm.executeTransactionAsync(object : Realm.Transaction {
-                override fun execute(realm: Realm) {
+            realm.executeTransactionAsync(
+                Realm.Transaction { realm ->
                     realm.createObject(Account::class.java, UUID.randomUUID().toString())
+                },
+                Realm.Transaction.OnError {
+                    Log.d("REALM", "Fail to create realm")
                 }
-            }, Realm.Transaction.OnError { Log.d("REALM", "Fail to create realm") })
+            )
         }
     }
 

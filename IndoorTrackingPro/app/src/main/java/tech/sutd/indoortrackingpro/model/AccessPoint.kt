@@ -7,6 +7,7 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
+// Signal strength, local db (realm), cache that is viewed as rv, pick some AP
 
 open class AccessPoint(
     @PrimaryKey

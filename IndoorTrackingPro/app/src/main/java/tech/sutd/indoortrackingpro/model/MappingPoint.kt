@@ -7,6 +7,7 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
 
+// List of ap recorded (picked), realm db -> remote db
 
 open class MappingPoint(
     @PrimaryKey var id: String = UUID.randomUUID().toString(),
