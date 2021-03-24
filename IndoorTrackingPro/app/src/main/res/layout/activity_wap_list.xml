@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/button_search_for_waps"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="100dp"-->
+<!--        android:text="Search for WAPs" />-->
+
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+<!--        -->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:orientation="vertical">-->
+<!--            -->
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="380dp"-->
+<!--                android:layout_marginTop="10dp" />-->
+
+<!--        </LinearLayout>-->
+<!--    </ScrollView>-->
+
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/button_select_waps"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:text="Select WAPs" />-->
+
+</LinearLayout>
