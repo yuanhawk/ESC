@@ -1,51 +1,79 @@
 package tech.sutd.indoortrackingpro.ui
 
+import android.os.Build
 import android.os.Bundle
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.navigation.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
+import tech.sutd.indoortrackingpro.util.CustomZoomImageView
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
-    private val binding by binding<ActivityMainBinding>(R.layout.activity_main)
+    private val TAG = "MainActivity"
 
+    private lateinit var location: FloatArray
+    private lateinit var binding: ActivityMainBinding
+
+    private val navController by lazy {
+        findNavController(R.id.nav_host_fragment)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        with(binding) {
-            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-            mapFragment?.getMapAsync(callback)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+//        with(binding) {
+//            map.setImageResource(R.drawable.map)
+//
+//            map.setOnTouchListener(object : View.OnTouchListener{
+//                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+//                    if (event?.action == MotionEvent.ACTION_UP) {
+//                        location = floatArrayOf(event.x, event.y)
+//                        Log.d(TAG, "onCreate: ${location[0]}, ${location[1]}")
+//                        Toast.makeText(this@MainActivity,"Current location is: ${location[0]}, ${location[1]}", Toast.LENGTH_SHORT).show()
+//
+//                        map.isEnabled = true
+//                        map.pos = location
+//                        map.invalidate()
+//                        return true
+//                    }
+//                    return false
+//                }
+//            })
+//
+//
+//            var  myTimerTask : CustomTimerTask = CustomTimerTask(map)
+//            var myTimer : Timer = Timer()
+//            myTimer.schedule(myTimerTask,100 , 1000)
+//
+            setContentView(binding.root)
         }
     }
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val sydney = LatLng(1.3521, 103.8198)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }
+//    fun setLocation(map : CustomZoomImageView, x : Float, y : Float){
+//        map.isEnabled = true
+//        location = floatArrayOf(x,y)
+//        map.pos = location
+//        map.invalidate()
+//    }
+//
+//    }
 
-}
+
+
+
+
+
+
+
+
+
