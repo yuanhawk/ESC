@@ -26,7 +26,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="5dp"
-                    android:text="List item"
+                    android:text="SSID"
                     android:layout_weight="1"
                     android:lines="1" />
 
@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="5dp"
-                    android:text="List item"
+                    android:text="MAC"
                     android:layout_weight="1"
                     android:lines="1" />
 
@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="5dp"
-                    android:text="List item"
+                    android:text="RSSI"
                     android:layout_weight="1"
                     android:lines="1" />
             </LinearLayout>
