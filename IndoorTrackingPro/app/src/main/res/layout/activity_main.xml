@@ -1,81 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/main"/>
+        tools:context=".ui.MainActivity">
 
-    <!--    <com.google.android.material.button.MaterialButton-->
-<!--        android:id="@+id/button_wifi"-->
-<!--        android:layout_gravity="end|bottom"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="70dp"-->
-<!--        android:layout_marginEnd="10dp"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:text="Wifi"-->
-<!--        tools:ignore="MissingConstraints" />-->
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/bottom_navigation"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main"/>
 
-<!--    <com.otaliastudios.zoom.ZoomLayout xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--        xmlns:tools="http://schemas.android.com/tools"-->
-<!--        android:id="@+id/fragment_map"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:scrollbars="vertical|horizontal"-->
-<!--        app:alignment="center"-->
-<!--        app:animationDuration="280"-->
-<!--        app:flingEnabled="true"-->
-<!--        app:hasClickableChildren="true"-->
-<!--        app:horizontalPanEnabled="true"-->
-<!--        app:maxZoom="5"-->
-<!--        app:maxZoomType="zoom"-->
-<!--        app:minZoom="0.7"-->
-<!--        app:minZoomType="zoom"-->
-<!--        app:oneFingerScrollEnabled="true"-->
-<!--        app:overPinchable="true"-->
-<!--        app:overScrollHorizontal="true"-->
-<!--        app:overScrollVertical="true"-->
-<!--        app:scrollEnabled="true"-->
-<!--        app:threeFingersScrollEnabled="true"-->
-<!--        app:transformation="centerInside"-->
-<!--        app:transformationGravity="auto"-->
-<!--        app:twoFingersScrollEnabled="true"-->
-<!--        app:verticalPanEnabled="true"-->
-<!--        app:zoomEnabled="true"-->
-<!--        tools:context=".ui.MainActivity">-->
+        <Spinner
+            android:id="@+id/drop_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"/>
 
-<!--        <tech.sutd.indoortrackingpro.util.CustomZoomImageView-->
-<!--            android:id="@+id/map"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:scrollbars="vertical|horizontal"-->
-<!--            app:alignment="center"-->
-<!--            app:animationDuration="280"-->
-<!--            app:flingEnabled="true"-->
-<!--            app:horizontalPanEnabled="true"-->
-<!--            app:maxZoom="5"-->
-<!--            app:maxZoomType="zoom"-->
-<!--            app:minZoom="0.7"-->
-<!--            app:minZoomType="zoom"-->
-<!--            app:oneFingerScrollEnabled="true"-->
-<!--            app:overPinchable="true"-->
-<!--            app:overScrollHorizontal="true"-->
-<!--            app:overScrollVertical="true"-->
-<!--            app:scrollEnabled="true"-->
-<!--            app:threeFingersScrollEnabled="true"-->
-<!--            app:transformation="centerInside"-->
-<!--            app:transformationGravity="auto"-->
-<!--            app:twoFingersScrollEnabled="true"-->
-<!--            app:verticalPanEnabled="true"-->
-<!--            app:zoomEnabled="true" />-->
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottom_navigation" />
 
-<!--    </com.otaliastudios.zoom.ZoomLayout>-->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#FFFFFF"
+            app:itemIconTint="@drawable/icons_selector"
+            app:itemTextColor="@drawable/icons_selector"
+            app:menu="@menu/btm_nav_menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</layout>

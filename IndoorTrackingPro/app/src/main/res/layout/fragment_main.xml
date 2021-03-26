@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <LinearLayout
+    <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Click on Mapping Tab to start mapping"
+            android:layout_centerInParent="true">
+        </TextView>
+
 
         <com.otaliastudios.zoom.ZoomLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/fragment_map"
@@ -64,14 +72,20 @@
 
         </com.otaliastudios.zoom.ZoomLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
+            android:id="@+id/button_coordinates_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coordinates List"
+            android:layout_alignParentRight="true"/>
+
+        <Button
             android:id="@+id/button_wifi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="50dp"
-            android:text="Wifi" />
+            android:text="Wifi"
+            android:layout_below="@+id/button_coordinates_list"
+            android:layout_alignParentRight="true" />
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

@@ -8,8 +8,8 @@ import android.util.AttributeSet
 import com.otaliastudios.zoom.ZoomImageView
 
 class CustomZoomImageView(
-    context: Context,
-    attrs: AttributeSet?
+        context: Context,
+        attrs: AttributeSet?
 ) : ZoomImageView(context, attrs) {
     private var paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var border = Paint(Paint.ANTI_ALIAS_FLAG)

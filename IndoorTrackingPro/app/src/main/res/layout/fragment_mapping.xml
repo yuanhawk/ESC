@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:id="@+id/mappingFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.MappingFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.otaliastudios.zoom.ZoomLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/fragment_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical|horizontal"
+                app:alignment="center"
+                app:animationDuration="280"
+                app:flingEnabled="true"
+                app:hasClickableChildren="true"
+                app:horizontalPanEnabled="true"
+                app:maxZoom="5"
+                app:maxZoomType="zoom"
+                app:minZoom="1"
+                app:minZoomType="zoom"
+                app:oneFingerScrollEnabled="true"
+                app:overPinchable="true"
+                app:overScrollHorizontal="true"
+                app:overScrollVertical="true"
+                app:scrollEnabled="true"
+                app:threeFingersScrollEnabled="true"
+                app:transformation="centerInside"
+                app:transformationGravity="auto"
+                app:twoFingersScrollEnabled="true"
+                app:verticalPanEnabled="true"
+                app:zoomEnabled="true"
+                tools:context=".ui.MainActivity">
+
+                <tech.sutd.indoortrackingpro.util.CustomZoomImageView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="vertical|horizontal"
+                    app:alignment="center"
+                    app:animationDuration="280"
+                    app:flingEnabled="true"
+                    app:horizontalPanEnabled="true"
+                    app:maxZoom="5"
+                    app:maxZoomType="zoom"
+                    app:minZoom="0.7"
+                    app:minZoomType="zoom"
+                    app:oneFingerScrollEnabled="true"
+                    app:overPinchable="true"
+                    app:overScrollHorizontal="true"
+                    app:overScrollVertical="true"
+                    app:scrollEnabled="true"
+                    app:threeFingersScrollEnabled="true"
+                    app:transformation="centerInside"
+                    app:transformationGravity="auto"
+                    app:twoFingersScrollEnabled="true"
+                    app:verticalPanEnabled="true"
+                    app:zoomEnabled="true" />
+            </com.otaliastudios.zoom.ZoomLayout>
+
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/ic_plus_sign">
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

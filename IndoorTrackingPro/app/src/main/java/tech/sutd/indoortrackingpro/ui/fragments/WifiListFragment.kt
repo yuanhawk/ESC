@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
+import tech.sutd.indoortrackingpro.ui.fragments.WAPListAdapter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -45,17 +46,22 @@ class WifiListFragment : Fragment() {
             buttonSearchForWaps.setOnClickListener {
 
                 Toast.makeText(activity,"Hello", Toast.LENGTH_SHORT).show()
-                data.clear()
-                for (i in 0..5) {
-                    val temp = ArrayList<String>()
-                    for (j in 0..3){
-                        temp.add("BSSID$i")
-                        temp.add("SSID$i")
-                        temp.add("RSSI$i")
-                    }
-                    data.add(temp)
-                }
+//                data.clear()
+//                for (i in 0..5) {
+//                    val temp = ArrayList<String>()
+//                    for (j in 0..3){
+//                        temp.add("BSSID$i")
+//                        temp.add("SSID$i")
+//                        temp.add("RSSI$i")
+//                    }
+//                    data.add(temp)
+//                }
             }
+
+            buttonSelectWaps.setOnClickListener {
+                Toast.makeText(activity, "WAPs Selected", Toast.LENGTH_SHORT).show()
+            }
+
         }
         val adapter = WAPListAdapter(this, data)
         binding.wifiListRv.layoutManager = LinearLayoutManager(context)

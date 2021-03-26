@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.ui
+package tech.sutd.indoortrackingpro.ui.fragments
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,17 +7,18 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.ui.WifiListFragment
 
 class WAPListAdapter(
-        private val context: WifiListFragment,
-        private val data: ArrayList<ArrayList<String>>
+    private val context: WifiListFragment,
+    private val data: ArrayList<ArrayList<String>>
 ) : RecyclerView.Adapter<WAPListAdapter.WAPListViewHolder>() {
 
     inner class WAPListViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
         private var mac: TextView = itemView.findViewById(R.id.mac)
         private var ssid: TextView = itemView.findViewById(R.id.ssid)
         private var rssi: TextView = itemView.findViewById(R.id.rssi)
-        private var checkBox: CheckBox = itemView.findViewById(R.id.checkbox_delete)
+//        private var checkBox: CheckBox = itemView.findViewById(R.id.checkbox_delete)
 
         internal fun bind(position: Int){
             mac.text = data[position][0]
@@ -36,8 +37,8 @@ class WAPListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WAPListViewHolder {
         return WAPListViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                        R.layout.wap_list, parent, false)
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.wap_list, parent, false)
         )
 
 

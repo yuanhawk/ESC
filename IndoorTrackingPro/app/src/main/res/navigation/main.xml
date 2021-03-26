@@ -1,9 +1,11 @@
-t<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     app:startDestination="@id/mainFragment">
+
+    <!-- MainFragment -->
     <fragment
         android:id="@+id/mainFragment"
         android:name="tech.sutd.indoortrackingpro.ui.MainFragment"
@@ -12,7 +14,12 @@ t<?xml version="1.0" encoding="utf-8"?>
         <action
             android:id="@+id/action_mainFragment_to_wifiListFragment"
             app:destination="@id/wifiListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_coordinatesListFragment"
+            app:destination="@id/coordinatesListFragment" />
     </fragment>
+
+    <!-- WifiListFragment -->
     <fragment
         android:id="@+id/wifiListFragment"
         android:name="tech.sutd.indoortrackingpro.ui.WifiListFragment"
@@ -22,4 +29,35 @@ t<?xml version="1.0" encoding="utf-8"?>
             android:id="@+id/action_wifiListFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
+
+    <!-- CoordinatesListFragment -->
+    <fragment
+        android:id="@+id/coordinatesListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.CoordinatesListFragment"
+        android:label="CoordinatesListFragment"
+        tools:layout="@layout/fragment_coordinates_list">
+        <action
+            android:id="@+id/action_coordinatesListFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
+
+    <!-- MappingFragment -->
+    <fragment
+        android:id="@+id/mappingFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.fragments.MappingFragment"
+        android:label="MappingFragment"
+        tools:layout="@layout/fragment_mapping">
+        <action
+            android:id="@+id/action_mappingFragment_to_wifiListFragment"
+            app:destination="@id/wifiListFragment" />
+    </fragment>
+
+    <!-- TrackingFragment -->
+    <fragment
+        android:id="@+id/trackingFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.fragments.TrackingFragment"
+        android:label="TrackingFragment"
+        tools:layout="@layout/fragment_tracking">
+    </fragment>
+
 </navigation>

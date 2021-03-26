@@ -41,19 +41,17 @@ android {
 
     buildFeatures {
         dataBinding true
-        viewBinding true
     }
+
 }
 
 dependencies {
-// zoom layout
+    // zoom layout
     implementation "com.otaliastudios:zoomlayout:1.8.0"
 
     // android supports
     implementation "com.google.android.material:material:$versions.material"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
-    implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 
     // core
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -68,9 +66,8 @@ dependencies {
 
     // hilt
     implementation "com.google.dagger:hilt-android:$versions.hilt"
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
     kapt "com.google.dagger:hilt-android-compiler:$versions.hilt"
     kapt "androidx.hilt:hilt-compiler:$versions.hilt_compiler"
 
@@ -101,9 +98,8 @@ dependencies {
     // fragment-test
     // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
     debugImplementation("androidx.fragment:fragment-testing:$versions.fragment") {
-        exclude group:'androidx.test', module:'monitor'
+        exclude group: 'androidx.test', module: 'monitor'
     }
-    androidTestImplementation "androidx.navigation:navigation-testing:$versions.navigation"
 
     // mockito
     testImplementation "io.mockk:mockk:$versions.mockk"
@@ -121,4 +117,27 @@ dependencies {
     kaptTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.hilt"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
+
+    // navigation-test
+    androidTestImplementation "androidx.navigation:navigation-testing:$versions.navigation"
+
+    // paging 3
+    def paging_version = "3.0.0-beta02"
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    // alternatively - without Android dependencies for tests
+    testImplementation "androidx.paging:paging-common:$paging_version"
+    // optional - RxJava2 support
+    implementation "androidx.paging:paging-rxjava2:$paging_version"
+    // optional - RxJava3 support
+    implementation "androidx.paging:paging-rxjava3:$paging_version"
+    // optional - Guava ListenableFuture support
+    implementation "androidx.paging:paging-guava:$paging_version"
+    // Jetpack Compose Integration
+    implementation "androidx.paging:paging-compose:1.0.0-alpha08"
+
+    // recyclerview
+    implementation "com.android.support:recyclerview-v7:28.0.0"
+    implementation "com.android.support:cardview-v7:28.0.0"
 }
+
+apply plugin: 'realm-android'

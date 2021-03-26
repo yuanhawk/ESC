@@ -1,53 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/wifi_cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- RecyclerView containing TextView-->
-        <androidx.cardview.widget.CardView
+        <!-- RecyclerView containing CardView-->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="fill_vertical"
             android:orientation="horizontal"
             android:padding="5dp">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/ssid"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lines="1" />
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ssid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="List item"
+                    android:layout_weight="1"
+                    android:lines="1" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/mac"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:lines="1" />
+                <TextView
+                    android:id="@+id/mac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="List item"
+                    android:layout_weight="1"
+                    android:lines="1" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/rssi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:lines="1" />
+                <TextView
+                    android:id="@+id/rssi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="List item"
+                    android:layout_weight="1"
+                    android:lines="1" />
+            </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/checkbox_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onCheckboxClicked"
-                android:text="delete" />
+<!--            <CheckBox-->
+<!--                android:id="@+id/checkbox_delete"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                android:text="Select"-->
+<!--                android:onClick="onCheckboxClicked" />-->
 
-        </androidx.cardview.widget.CardView>
+        </RelativeLayout>
 
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>
