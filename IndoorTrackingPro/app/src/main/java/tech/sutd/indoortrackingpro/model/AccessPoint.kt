@@ -1,12 +1,13 @@
 package tech.sutd.indoortrackingpro.model
 
+import android.net.wifi.ScanResult
 import android.os.Parcel
 import android.os.Parcelable
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*
-
+import tech.sutd.indoortrackingpro.utils.Constants
 // Signal strength, local db (realm), cache that is viewed as rv, pick some AP
 
 open class AccessPoint(
@@ -15,7 +16,7 @@ open class AccessPoint(
     //RealmObject requires null type, cannot be lateinit
     var mac: String = "",
     var ssid: String = "",
-    var rssi: Double = 0.0):RealmObject(), Parcelable{
+    var rssi: Double = Constants.getNoSignalDefaultRssi()):RealmObject(), Parcelable{
 
 
 
@@ -23,10 +24,14 @@ open class AccessPoint(
         this.id = other.id;
         this.mac = other.mac;
         this.ssid = other.ssid;
-        this.rssi = other.rssi;
+        this.rssi = Constants.getNoSignalDefaultRssi()
     }
 
-
+    constructor(scanResult: ScanResult): this(){
+        mac = scanResult.BSSID
+        ssid = scanResult.SSID
+        rssi = scanResult.level.toDouble()
+    }
     constructor(parcel: Parcel) : this() {
         id = parcel.readString().toString();
         mac = parcel.readString().toString();

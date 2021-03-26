@@ -38,11 +38,11 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        workManager.enqueue(
+        /*workManager.enqueue(
             OneTimeWorkRequest.from(
                 WifiWorker::class.java
             )
-        )
+        )*/
 
         with(binding) {
             val mapFragment =
