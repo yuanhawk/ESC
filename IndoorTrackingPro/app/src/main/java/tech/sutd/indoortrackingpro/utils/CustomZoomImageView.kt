@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.util
+package tech.sutd.indoortrackingpro.utils
 
 import android.content.Context
 import android.graphics.Canvas

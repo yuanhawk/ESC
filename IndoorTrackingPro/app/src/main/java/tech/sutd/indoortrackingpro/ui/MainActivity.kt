@@ -2,32 +2,20 @@ package tech.sutd.indoortrackingpro.ui
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
-import tech.sutd.indoortrackingpro.util.CustomZoomImageView
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -44,6 +32,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        retrieveGpsPermission(this)
 
         navController = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment)?.findNavController()!!

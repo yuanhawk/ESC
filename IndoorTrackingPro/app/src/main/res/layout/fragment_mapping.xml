@@ -40,7 +40,7 @@
                 app:zoomEnabled="true"
                 tools:context=".ui.MainActivity">
 
-                <tech.sutd.indoortrackingpro.util.CustomZoomImageView
+                <tech.sutd.indoortrackingpro.utils.CustomZoomImageView
                     android:id="@+id/map"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

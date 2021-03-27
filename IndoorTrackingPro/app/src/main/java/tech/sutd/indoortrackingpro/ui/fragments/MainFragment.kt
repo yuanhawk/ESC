@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.ui
+package tech.sutd.indoortrackingpro.ui.fragments
 
 import android.os.Bundle
 import android.view.*
