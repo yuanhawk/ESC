@@ -1,53 +1,43 @@
 package tech.sutd.indoortrackingpro.ui.wifi
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import io.realm.RealmList
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.databinding.WapListBinding
+import tech.sutd.indoortrackingpro.model.AP
+import javax.inject.Inject
 
-class WifiListAdapter(
-    private val context: WifiListFragment,
-    private val data: ArrayList<ArrayList<String>>
+class WifiListAdapter @Inject constructor(
 ) : RecyclerView.Adapter<WifiListAdapter.WAPListViewHolder>() {
 
-    inner class WAPListViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
-        private var mac: TextView = itemView.findViewById(R.id.mac)
-        private var ssid: TextView = itemView.findViewById(R.id.ssid)
-        private var rssi: TextView = itemView.findViewById(R.id.rssi)
-//        private var checkBox: CheckBox = itemView.findViewById(R.id.checkbox_delete)
-
-        internal fun bind(position: Int){
-            mac.text = data[position][0]
-            ssid.text = data[position][1]
-            rssi.text = data[position][2]
-        }
-
-//        init{
-//            itemView.setOnClickListener { checkBox.isChecked = !checkBox.isChecked }
-//            checkBox.setOnCheckedChangeListener{_, isChecked ->
-//                val itemText = data[adapterPosition]
-//
-//            }
-//        }
-    }
+    private var list: List<AP> = RealmList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WAPListViewHolder {
-        return WAPListViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.wap_list, parent, false)
+        val binding = DataBindingUtil.inflate<WapListBinding>(
+                LayoutInflater.from(parent.context),
+                R.layout.wap_list, parent, false
         )
-
-
+        return WAPListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: WAPListViewHolder, position: Int) {
-
-//        val itemText = data[position]
-
+        with(holder.binding) {
+            mac.text = list[position].mac
+            ssid.text = list[position].ssid
+            rssi.text = list[position].rssi.toString()
+        }
     }
 
-    override fun getItemCount(): Int = 10
+    fun sendData(list: List<AP>) {
+        this.list = list
+        notifyDataSetChanged()
+    }
+
+    override fun getItemCount(): Int = list.size
+
+    inner class WAPListViewHolder(var binding: WapListBinding): RecyclerView.ViewHolder(binding.root)
 
 }

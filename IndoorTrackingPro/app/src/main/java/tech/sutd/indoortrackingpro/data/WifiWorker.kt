@@ -47,13 +47,11 @@ class WifiWorker @AssistedInject constructor(
     private fun scanSuccess(): Data {
         results = wifiManager.scanResults
         CoroutineScope(Dispatchers.IO).launch { insertIntoDb(results) }
-        val data = Data.Builder()
+        return Data.Builder()
                 .putStringArray("scanResults", arrayOf(results.toTypedArray().toString()))
                 .build()
-        return data
     }
 
-    @SuppressLint("HardwareIds")
     private fun insertIntoDb(results: List<ScanResult>) = runBlocking {
         val realm = Realm.getInstance(config)
         val apList = RealmList<AP>()
