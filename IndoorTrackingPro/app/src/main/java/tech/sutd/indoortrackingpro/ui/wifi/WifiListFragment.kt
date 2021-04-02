@@ -7,16 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
-import tech.sutd.indoortrackingpro.ui.wifi.WAPListAdapter
-import java.util.*
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class WifiListFragment : Fragment() {
+
+    private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
     val data = arrayListOf<ArrayList<String>>()
 
@@ -49,7 +50,7 @@ class WifiListFragment : Fragment() {
             }
 
         }
-        val adapter = WAPListAdapter(this, data)
+        val adapter = WifiListAdapter(this, data)
         binding.wifiListRv.layoutManager = LinearLayoutManager(context)
         binding.wifiListRv.adapter = adapter
 

@@ -7,10 +7,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import tech.sutd.indoortrackingpro.R
 
-class WAPListAdapter(
+class WifiListAdapter(
     private val context: WifiListFragment,
     private val data: ArrayList<ArrayList<String>>
-) : RecyclerView.Adapter<WAPListAdapter.WAPListViewHolder>() {
+) : RecyclerView.Adapter<WifiListAdapter.WAPListViewHolder>() {
 
     inner class WAPListViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
         private var mac: TextView = itemView.findViewById(R.id.mac)
