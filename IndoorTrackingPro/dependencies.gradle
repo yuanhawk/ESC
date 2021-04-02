@@ -42,6 +42,10 @@ ext.versions = [
         // lifecycle
         lifecycle     : '2.3.1',
 
+        // datastore
+        datastore     : '1.0.0-alpha08',
+        javalite      : '3.10.0',
+
         // work
         work          : '2.5.0',
 

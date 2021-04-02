@@ -21,7 +21,6 @@ class WifiViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val workManager: WorkManager,
     private val config: RealmConfiguration,
-    private val adapter: WifiListAdapter
 ) : ViewModel() {
 
     private val TAG = "WifiViewModel"
@@ -50,10 +49,10 @@ class WifiViewModel @Inject constructor(
             override fun onSuccess(realm: Realm) {
                 realm.executeTransaction { transactionRealm ->
                     val wifiResults = transactionRealm.where(ListAP::class.java).findFirst()
-                    wifi = wifiResults?.apList?.asFlowable()
-                            ?.onBackpressureLatest()
-                            ?.toLiveData() as LiveData<RealmList<AP>>
-                    Log.d(TAG, "onSuccess: ${wifiResults.apList.get(0)?.mac}" )
+                    wifi = (wifiResults?.apList?.asFlowable()
+                        ?.onBackpressureLatest()
+                        ?.toLiveData() as LiveData<RealmList<AP>>?)!!
+                    Log.d(TAG, "onSuccess: ${wifiResults?.apList?.get(0)?.mac}" )
                 }
             }
         })

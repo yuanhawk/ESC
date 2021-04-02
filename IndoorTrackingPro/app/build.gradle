@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'realm-android'
     id 'dagger.hilt.android.plugin'
+    id "com.google.protobuf" version "0.8.12"
 }
 
 apply from: "$rootDir/dependencies.gradle"
@@ -94,6 +95,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$versions.lifecycle"
+
+    // datastore
+    implementation "androidx.datastore:datastore-preferences:$versions.datastore"
 
     // test
     androidTestImplementation "androidx.test:core:$versions.core"
