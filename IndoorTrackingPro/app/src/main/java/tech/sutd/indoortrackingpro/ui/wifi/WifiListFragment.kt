@@ -9,13 +9,20 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.data.WifiWorker
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class WifiListFragment : Fragment() {
+
+    @Inject lateinit var workManager: WorkManager
+    @Inject lateinit var wifiWorker: WifiWorker
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
@@ -28,6 +35,12 @@ class WifiListFragment : Fragment() {
     ): View {
         val binding = DataBindingUtil.inflate<FragmentWifiListBinding>(
             inflater, R.layout.fragment_wifi_list, container, false)
+
+        workManager.enqueue(
+            OneTimeWorkRequest.from(
+                WifiWorker::class.java
+            )
+        )
 
         with(binding){
             buttonSearchForWaps.setOnClickListener {

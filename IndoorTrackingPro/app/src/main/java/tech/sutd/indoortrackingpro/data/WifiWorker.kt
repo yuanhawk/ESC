@@ -34,7 +34,7 @@ class WifiWorker @AssistedInject constructor(
     private val TAG = "WifiWorker"
     private lateinit var results: List<ScanResult>
 
-    val workRequest = OneTimeWorkRequestBuilder<WifiWorker>()
+    private val workRequest = OneTimeWorkRequestBuilder<WifiWorker>()
             .setInitialDelay(30, TimeUnit.SECONDS)
             .build()
 

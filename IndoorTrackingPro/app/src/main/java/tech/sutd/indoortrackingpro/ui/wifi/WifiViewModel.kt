@@ -12,7 +12,6 @@ import javax.inject.Inject
 class WifiViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val workManager: WorkManager,
-    private val wifiWorker: WifiWorker
 ) : ViewModel() {
 
     fun initWifiScan() {
