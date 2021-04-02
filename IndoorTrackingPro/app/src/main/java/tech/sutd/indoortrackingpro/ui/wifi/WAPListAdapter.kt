@@ -1,13 +1,11 @@
-package tech.sutd.indoortrackingpro.ui.fragments
+package tech.sutd.indoortrackingpro.ui.wifi
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import tech.sutd.indoortrackingpro.R
-import tech.sutd.indoortrackingpro.ui.WifiListFragment
 
 class WAPListAdapter(
     private val context: WifiListFragment,

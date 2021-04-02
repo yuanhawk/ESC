@@ -8,7 +8,7 @@
     <!-- MainFragment -->
     <fragment
         android:id="@+id/mainFragment"
-        android:name="tech.sutd.indoortrackingpro.ui.fragments.MainFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main" >
         <action
@@ -22,7 +22,7 @@
     <!-- WifiListFragment -->
     <fragment
         android:id="@+id/wifiListFragment"
-        android:name="tech.sutd.indoortrackingpro.ui.WifiListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.wifi.WifiListFragment"
         android:label="WifiListFragment"
         tools:layout="@layout/fragment_wifi_list">
         <action
@@ -33,7 +33,7 @@
     <!-- CoordinatesListFragment -->
     <fragment
         android:id="@+id/coordinatesListFragment"
-        android:name="tech.sutd.indoortrackingpro.ui.CoordinatesListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.coordinates.CoordinatesListFragment"
         android:label="CoordinatesListFragment"
         tools:layout="@layout/fragment_coordinates_list">
         <action
@@ -44,14 +44,14 @@
     <!-- MappingFragment -->
     <fragment
         android:id="@+id/mappingFragment"
-        android:name="tech.sutd.indoortrackingpro.ui.fragments.MappingFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.mapping.MappingFragment"
         android:label="MappingFragment"
         tools:layout="@layout/fragment_mapping"/>
 
     <!-- TrackingFragment -->
     <fragment
         android:id="@+id/trackingFragment"
-        android:name="tech.sutd.indoortrackingpro.ui.fragments.TrackingFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.tracking.TrackingFragment"
         android:label="TrackingFragment"
         tools:layout="@layout/fragment_tracking">
     </fragment>

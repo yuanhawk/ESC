@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.ui
+package tech.sutd.indoortrackingpro.ui.coordinates
 
 import android.content.Context
 import android.net.wifi.ScanResult

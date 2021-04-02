@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import tech.sutd.indoortrackingpro.R
-import tech.sutd.indoortrackingpro.ui.fragments.MappingFragment
 
 abstract class BaseActivity : AppCompatActivity() {
 

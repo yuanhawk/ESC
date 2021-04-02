@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.ui
+package tech.sutd.indoortrackingpro.ui.wifi
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,20 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
-import tech.sutd.indoortrackingpro.ui.fragments.WAPListAdapter
+import tech.sutd.indoortrackingpro.ui.wifi.WAPListAdapter
 import java.util.*
 import kotlin.collections.ArrayList
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [WifiListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 
 @AndroidEntryPoint
 class WifiListFragment : Fragment() {
@@ -35,12 +24,9 @@ class WifiListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentWifiListBinding>(
             inflater, R.layout.fragment_wifi_list, container, false)
-
-
 
         with(binding){
             buttonSearchForWaps.setOnClickListener {

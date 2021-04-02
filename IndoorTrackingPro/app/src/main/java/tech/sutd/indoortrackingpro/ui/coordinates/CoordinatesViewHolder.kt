@@ -1,4 +1,4 @@
-//package tech.sutd.indoortrackingpro.ui.fragments
+package tech.sutd.indoortrackingpro.ui.coordinates//package tech.sutd.indoortrackingpro.ui.fragments
 //
 //import androidx.paging.Pager
 //import androidx.paging.PagingConfig

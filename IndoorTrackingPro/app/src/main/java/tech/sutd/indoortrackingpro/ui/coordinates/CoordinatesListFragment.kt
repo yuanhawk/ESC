@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.ui
+package tech.sutd.indoortrackingpro.ui.coordinates
 
 import android.net.wifi.WifiManager
 import android.os.Bundle

@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragments.TrackingFragment">
+        tools:context=".ui.tracking.TrackingFragment">
 
         <RelativeLayout
             android:id="@+id/trackingFragment"
