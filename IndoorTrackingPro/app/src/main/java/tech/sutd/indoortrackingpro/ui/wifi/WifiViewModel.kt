@@ -1,8 +1,6 @@
 package tech.sutd.indoortrackingpro.ui.wifi
 
-import android.util.Log
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkInfo
@@ -33,15 +31,16 @@ class WifiViewModel @Inject constructor(
                 .build()
     }
 
-    @Suppress("DEPRECATION")
-    fun initWifiScan(fragment: Fragment) {
+    fun initWifiScan(fragment: WifiListFragment) {
         workManager.enqueue(workRequest)
         workManager.getWorkInfoByIdLiveData(workRequest.id)
-                .observe(fragment.viewLifecycleOwner) { workInfo ->
+                .observe(fragment.viewLifecycleOwner, Observer { workInfo ->
                     if (workInfo.state == WorkInfo.State.SUCCEEDED) {
-                        Toast.makeText(fragment.context, "Data Retrieved", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(fragment.context, "Data Retrieved", Toast.LENGTH_SHORT)
+                            .show()
+                        fragment.callObserver()
                     }
-                }
+                })
     }
 
     fun observeWifiScan(): LiveData<RealmList<AP>> {
@@ -49,13 +48,14 @@ class WifiViewModel @Inject constructor(
             override fun onSuccess(realm: Realm) {
                 realm.executeTransaction { transactionRealm ->
                     val wifiResults = transactionRealm.where(ListAP::class.java).findFirst()
-                    wifi = (wifiResults?.apList?.asFlowable()
-                        ?.onBackpressureLatest()
-                        ?.toLiveData() as LiveData<RealmList<AP>>?)!!
-                    Log.d(TAG, "onSuccess: ${wifiResults?.apList?.get(0)?.mac}" )
+                    wifi = wifiResults?.apList?.asFlowable()
+                        ?.onBackpressureBuffer()
+                        ?.toLiveData()!!
+//                    Log.d(TAG, "onSuccess: ${wifiResults?.apList?.get(0)?.mac}" )
                 }
             }
         })
+
         return wifi
     }
 

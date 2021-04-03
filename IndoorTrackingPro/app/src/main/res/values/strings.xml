@@ -3,4 +3,9 @@
     <string name="home_fragment">Home</string>
     <string name="tracking_fragment">Tracking</string>
     <string name="mapping_fragment">Mapping</string>
+
+    <string name="ssid">SSID</string>
+    <string name="mac">MAC</string>
+    <string name="rssi">RSSI</string>
+    <string name="select">Select</string>
 </resources>

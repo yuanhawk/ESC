@@ -1,5 +1,6 @@
 package tech.sutd.indoortrackingpro.ui.wifi
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -26,11 +27,13 @@ import java.util.concurrent.Flow
 import javax.inject.Inject
 
 class WifiListAdapter @Inject constructor(
-    private val prefStore: PrefStore
+    private val prefStore: PrefStore,
 ) : RecyclerView.Adapter<WifiListAdapter.WAPListViewHolder>() {
 
+    private val TAG = "WifiListAdapter"
+
     private var list: List<AP> = RealmList()
-    private val dataStore by lazy { prefStore.prefCounterFlow.asLiveData() }
+//    private val dataStore by lazy { prefStore.prefCounterFlow.asLiveData() }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WAPListViewHolder {
         val binding = DataBindingUtil.inflate<WapListBinding>(
@@ -46,20 +49,21 @@ class WifiListAdapter @Inject constructor(
             ssid.text = list[position].ssid
             rssi.text = list[position].rssi.toString()
 
-            lifecycleOwner?.let { it ->
-                dataStore.observe(it) {
-                    select.isChecked = it.select
-                }
-            }
-
-            select.setOnClickListener {
-                runBlocking { prefStore.setPref(true) }
-            }
+//            lifecycleOwner?.let { it ->
+//                dataStore.observe(it) {
+//                    select.isChecked = it.select
+//                }
+//            }
+//
+//            select.setOnClickListener {
+//                runBlocking { prefStore.setPref(true) }
+//            }
         }
     }
 
     fun sendData(list: List<AP>) {
         this.list = list
+        Log.d(TAG, "sendData: ${list.size}")
         notifyDataSetChanged()
     }
 

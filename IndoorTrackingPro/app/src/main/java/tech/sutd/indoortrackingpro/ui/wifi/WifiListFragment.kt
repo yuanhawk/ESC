@@ -1,6 +1,8 @@
 package tech.sutd.indoortrackingpro.ui.wifi
 
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +22,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class WifiListFragment : Fragment() {
 
+    @Inject lateinit var handler: Handler
     @Inject lateinit var adapter: WifiListAdapter
     @Inject lateinit var manager: LinearLayoutManager
 
@@ -44,7 +47,6 @@ class WifiListFragment : Fragment() {
             buttonSearchForWaps.setOnClickListener {
 
                 viewModel.initWifiScan(this@WifiListFragment)
-                callObserver()
 
                 Toast.makeText(activity,"Initializing Wifi Scan, Please Wait...", Toast.LENGTH_SHORT).show()
             }
@@ -73,7 +75,7 @@ class WifiListFragment : Fragment() {
         callObserver()
     }
 
-    private fun callObserver() {
+    fun callObserver() {
         if (viewModel.observeWifiScan().hasActiveObservers())
             viewModel.observeWifiScan().removeObserver(observer)
         viewModel.observeWifiScan().observe(viewLifecycleOwner, observer)
