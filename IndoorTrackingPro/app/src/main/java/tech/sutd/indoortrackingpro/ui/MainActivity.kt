@@ -1,16 +1,23 @@
 package tech.sutd.indoortrackingpro.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.transition.Slide
+import android.transition.TransitionManager
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.view.ViewGroup
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
@@ -25,9 +32,11 @@ class MainActivity : BaseActivity() {
     private lateinit var location: FloatArray
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+    private lateinit var addMappingButton: FloatingActionButton
 
     private val dropDownList = arrayOf("Wifi", "Coordinates")
 
+    @SuppressLint("InflateParams")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +47,8 @@ class MainActivity : BaseActivity() {
         navController = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment)?.findNavController()!!
 
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.mappingFragment, R.id.trackingFragment))
+        val appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.mappingFragment, R.id.trackingFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         with(binding) {
@@ -55,7 +65,12 @@ class MainActivity : BaseActivity() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                 }
 
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
                     if (dropDown.selectedItemPosition == 0) {
 
                     }
@@ -66,25 +81,36 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
-    }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.drop_down_menu, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-////        when (item.itemId) {
-////            wifi.setOnClickListener{ view ->
-////                view?.findNavController()?.navigate(R.id.action_mainFragment_to_wifiListFragment)
-////            R.id.list_of_ref_points_button -> {
-//////                intent = Intent(this, ProjectDetailActivity::class.java)
-//////                startActivity(intent)
-////            }
-////        }
-//        val navController = findNavController(R.id.nav_host_fragment)
-//        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-//    }
+        with(binding) {
+//            val addMappingButton = findViewById<FloatingActionButton>(R.id.fab)
+            addMappingButton.setOnClickListener {
+                val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val view = inflater.inflate(R.layout.add_mapping,null)
+
+                val addMappingPopUp = PopupWindow(
+                    view,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+
+                val slideIn = Slide()
+                slideIn.slideEdge = Gravity.TOP
+                addMappingPopUp.enterTransition = slideIn
+
+                val slideOut = Slide()
+                slideOut.slideEdge = Gravity.BOTTOM
+                addMappingPopUp.enterTransition = slideOut
+
+                val addMappingView = findViewById<TextView>(R.id.adding_coordinates)
+                val addMappingBackButton = findViewById<TextView>(R.id.back_button_add_mapping)
+
+                addMappingBackButton.setOnClickListener{
+                    addMappingPopUp.dismiss()
+                }
+            }
+        }
+    }
 }
 
 

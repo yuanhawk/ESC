@@ -8,4 +8,13 @@
     <string name="mac">MAC</string>
     <string name="rssi">RSSI</string>
     <string name="select">Select</string>
+
+    <string name="X">X</string>
+    <string name="x_coordinate">X Coordinate: </string>
+    <string name="y_coordinate">Y Coordinate:</string>
+    <string name="adding_coordinates">Adding Coordinates:</string>
+    <string name="confirm_selection">Confirm Selection?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 </resources>
