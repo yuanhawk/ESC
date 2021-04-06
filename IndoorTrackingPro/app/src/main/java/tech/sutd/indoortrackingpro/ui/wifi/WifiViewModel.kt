@@ -36,9 +36,10 @@ class WifiViewModel @Inject constructor(
         workManager.getWorkInfoByIdLiveData(workRequest.id)
                 .observe(fragment.viewLifecycleOwner, Observer { workInfo ->
                     if (workInfo.state == WorkInfo.State.SUCCEEDED) {
-                        Toast.makeText(fragment.context, "Data Retrieved", Toast.LENGTH_SHORT)
+                        Toast.makeText(fragment.context, "Data Retrieved, please refresh", Toast.LENGTH_SHORT)
                             .show()
                         fragment.callObserver()
+                        workManager.cancelAllWork()
                     }
                 })
     }

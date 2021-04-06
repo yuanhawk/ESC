@@ -32,7 +32,7 @@ class MainActivity : BaseActivity() {
     private lateinit var location: FloatArray
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-    private lateinit var addMappingButton: FloatingActionButton
+//    private lateinit var addMappingButton: FloatingActionButton
 
     private val dropDownList = arrayOf("Wifi", "Coordinates")
 
@@ -83,33 +83,34 @@ class MainActivity : BaseActivity() {
         }
 
         with(binding) {
-//            val addMappingButton = findViewById<FloatingActionButton>(R.id.fab)
-            addMappingButton.setOnClickListener {
-                val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                val view = inflater.inflate(R.layout.add_mapping,null)
-
-                val addMappingPopUp = PopupWindow(
-                    view,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-
-                val slideIn = Slide()
-                slideIn.slideEdge = Gravity.TOP
-                addMappingPopUp.enterTransition = slideIn
-
-                val slideOut = Slide()
-                slideOut.slideEdge = Gravity.BOTTOM
-                addMappingPopUp.enterTransition = slideOut
-
-                val addMappingView = findViewById<TextView>(R.id.adding_coordinates)
-                val addMappingBackButton = findViewById<TextView>(R.id.back_button_add_mapping)
-
-                addMappingBackButton.setOnClickListener{
-                    addMappingPopUp.dismiss()
-                }
-            }
         }
+    }
+
+    fun setFloatingActionBtn() {
+//                    val addMappingButton = findViewById<FloatingActionButton>(R.id.fab)
+        val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.add_mapping,null)
+
+        val addMappingPopUp = PopupWindow(
+            view,
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        val slideIn = Slide()
+        slideIn.slideEdge = Gravity.TOP
+        addMappingPopUp.enterTransition = slideIn
+
+        val slideOut = Slide()
+        slideOut.slideEdge = Gravity.BOTTOM
+        addMappingPopUp.enterTransition = slideOut
+
+//                val addMappingView = findViewById<TextView>(R.id.adding_coordinates)
+//                val addMappingBackButton = findViewById<TextView>(R.id.back_button_add_mapping)
+//
+//                addMappingBackButton.setOnClickListener {
+//                    addMappingPopUp.dismiss()
+//                }
     }
 }
 

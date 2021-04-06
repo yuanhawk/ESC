@@ -70,11 +70,6 @@ class WifiListFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        callObserver()
-    }
-
     fun callObserver() {
         if (viewModel.observeWifiScan().hasActiveObservers())
             viewModel.observeWifiScan().removeObserver(observer)
