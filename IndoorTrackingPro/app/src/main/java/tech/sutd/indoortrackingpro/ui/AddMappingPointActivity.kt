@@ -12,7 +12,6 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +23,6 @@ import tech.sutd.indoortrackingpro.adapter.MPReadingAdapter
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.model.ListAP
 import tech.sutd.indoortrackingpro.model.MappingPoint
 import javax.inject.Inject
 import tech.sutd.indoortrackingpro.utils.Constants
@@ -49,7 +47,7 @@ class AddMappingPointActivity: BaseActivity() {
     lateinit var rvAdapter: MPReadingAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_addmappingpoint)
+        setContentView(R.layout.activity_add_mappingpoint)
 
 
 //TODO

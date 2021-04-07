@@ -5,7 +5,6 @@ import tech.sutd.indoortrackingpro.model.Account
 import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
@@ -17,7 +16,6 @@ import tech.sutd.indoortrackingpro.adapter.viewHolder.MappingPointSection
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityProjectDetailBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint
-import tech.sutd.indoortrackingpro.model.MappingPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -57,7 +55,7 @@ class ProjectDetailActivity : BaseActivity(){
         }
 
         binding.buttonAddAp.setOnClickListener {
-            val intent = Intent(this@ProjectDetailActivity, WifiSearchActivity::class.java)
+            val intent = Intent(this@ProjectDetailActivity, AddAccessPointActivity::class.java)
             startActivityForResult(intent, addAP_request_code)
         }
         binding.btnLocateMe.setOnClickListener {
@@ -90,7 +88,7 @@ class ProjectDetailActivity : BaseActivity(){
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == addAP_request_code && resultCode == RESULT_OK){
-            var accessPoint:AccessPoint = data!!.getParcelableExtra(WifiSearchActivity.returnKey)!!
+            var accessPoint:AccessPoint = data!!.getParcelableExtra(AddAccessPointActivity.returnKey)!!
             realm.beginTransaction()
             account.mAccessPoints.add(accessPoint)
             realm.commitTransaction()

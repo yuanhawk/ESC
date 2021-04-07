@@ -2,19 +2,11 @@
 
 package tech.sutd.indoortrackingpro.ui
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.net.wifi.ScanResult
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,17 +15,14 @@ import androidx.work.WorkManager
 import androidx.work.WorkRequest
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
-import io.realm.RealmList
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.adapter.MPReadingAdapter
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.data.MPWorker
-import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.model.ListAP
 import tech.sutd.indoortrackingpro.model.MappingPoint
 import javax.inject.Inject
-import tech.sutd.indoortrackingpro.utils.Constants
+
 @AndroidEntryPoint
 class AddMappingPointB: BaseActivity() {
     @Inject
@@ -49,7 +38,7 @@ class AddMappingPointB: BaseActivity() {
     lateinit var workManager: WorkManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_addmappingpoint)
+        setContentView(R.layout.activity_add_mappingpoint)
         workManager = WorkManager.getInstance(this)
         if (realm.where(Account::class.java).findFirst()?.mAccessPoints!!.size == 0) {
             Toast.makeText(this, "Please add Access Points first!", Toast.LENGTH_LONG).show()

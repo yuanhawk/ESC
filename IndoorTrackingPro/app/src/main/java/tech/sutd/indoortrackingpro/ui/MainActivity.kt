@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -17,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
-import tech.sutd.indoortrackingpro.data.WifiWorker
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
 import tech.sutd.indoortrackingpro.model.Account
 import java.util.*
@@ -98,7 +96,7 @@ class MainActivity : BaseActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         when (item.itemId) {
             R.id.wifi_search_menu_button -> {
-                intent = Intent(this, WifiSearchActivity::class.java)
+                intent = Intent(this, AddAccessPointActivity::class.java)
                 startActivity(intent)
             }
             R.id.project_detail_menu_button -> {
