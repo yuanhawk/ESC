@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.*
@@ -41,6 +42,7 @@ class TrackingActivity: BaseActivity() {
             override fun onReceive(context: Context, intent: Intent) {
                 val wifiData = intent.getParcelableExtra<MappingPoint>(Constants.getIntentKey())
                 val coordinate = predictCoordinate(wifiData!!, realm.where(Account::class.java).findFirst()!!, "WKNN" )
+                Log.d(TAG, "receive")
                 xText.text = coordinate!!.longitude.toString()
                 yText.text = coordinate!!.latitude.toString()
             }

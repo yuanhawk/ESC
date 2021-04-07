@@ -21,7 +21,7 @@ open class AccessPoint(
 
 
     constructor(other: AccessPoint): this(){
-        this.id = other.id;
+        this.id = UUID.randomUUID().toString();  //this is very important!!
         this.mac = other.mac;
         this.ssid = other.ssid;
         this.rssi = Constants.getNoSignalDefaultRssi()

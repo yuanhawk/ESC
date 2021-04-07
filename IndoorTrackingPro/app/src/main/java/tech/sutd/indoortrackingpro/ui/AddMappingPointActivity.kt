@@ -77,7 +77,7 @@ class AddMappingPointActivity: BaseActivity() {
                                 readings[ap.mac] = newlist
                             }
                         }
-                        //Log.d(TAG, ap.mac + scanResult.level)
+                        Log.d(TAG, ap.mac + scanResult.level)
                     }
                 }
             }
@@ -94,6 +94,11 @@ class AddMappingPointActivity: BaseActivity() {
             startScan()
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(wifiReceiver)
+    }
     fun initUI(){
         layoutManager = LinearLayoutManager(this)
         saveButton = findViewById(R.id.add_mp_save_button)
@@ -107,13 +112,26 @@ class AddMappingPointActivity: BaseActivity() {
         saveButton.isEnabled = false
         saveButton.setOnClickListener {
             realm.beginTransaction()
+
             mappingPoint.x = xValue.text.toString().toDouble()
             mappingPoint.y = yValue.text.toString().toDouble()
+            for (ap in mappingPoint.accessPointSignalRecorded){
+                    Log.d( TAG+1, "${ap.mac} ${ap.rssi}")
+            }
             val v = realm.where(Account::class.java).findFirst()!!.mMappingPoints
+            //val index = realm.where(Account::class.java).findFirst()!!.mMappingPoints.size
             v.add(mappingPoint)
             realm.commitTransaction()
-            this.finish()
+            for (i in 0 until realm.where(Account::class.java).findFirst()!!.mMappingPoints.size) {
+                val mappingPointJustAdded = realm.where(Account::class.java).findFirst()!!.mMappingPoints[i];
+                for (ap in mappingPointJustAdded!!.accessPointSignalRecorded) {
+                    Log.d(TAG + 2, "${ap.mac} ${ap.rssi}")
+                }
+                this.finish()
+            }
         }
+
+
     }
 
     fun startScan(){
@@ -131,7 +149,7 @@ class AddMappingPointActivity: BaseActivity() {
             for (ap in mappingPoint.accessPointSignalRecorded){
                 if (mac == ap.mac) {
                     ap.rssi = value!!
-                    Log.d( TAG, "$mac $value")
+                    //Log.d( TAG, "$mac $value")
                 }
             }
         }

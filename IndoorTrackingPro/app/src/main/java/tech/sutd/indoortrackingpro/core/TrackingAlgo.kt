@@ -10,7 +10,6 @@ import kotlin.math.min
 import kotlin.math.pow
 
 
-val k = 5 //How many nearest points to consider
 
 //return coordinate as String
 fun predictCoordinate(
@@ -47,7 +46,7 @@ private fun knnPredict(
     for (mappingPoint in mappingPointsList) {
         val distance: Distance = calculateDistance(mappingPoint, rssiValues)
         distanceLists.add(distance)
-        Log.d("Tracking Algo", "mappping point ${mappingPoint.x} ${mappingPoint.y}" + "spotted\n Distance: ${distance.distance}")
+        Log.d("Tracking Algo", "mapping point ${mappingPoint.x} ${mappingPoint.y}" + " spotted\n Distance: ${distance.distance}")
         Log.d("Tracking Algo", "${mappingPoint.accessPointSignalRecorded[0]!!.rssi}")
     }
     distanceLists.sort()

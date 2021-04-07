@@ -33,18 +33,10 @@ class WifiSearchAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: WifiSearchViewHolder, position: Int) {
-        Log.d("WifiSearchAdapter", "position:" + position)
-        Log.d("WifiSearchAdapter", "realmLength:" + realm.where(ListAP::class.java).findFirst()!!.apList.size)
-        Log.d("WifiSearchAdapter", "realm:" + realm.where(ListAP::class.java).findAll().size)
-        Realm.getInstanceAsync(config, object : Realm.Callback() {
-            override fun onSuccess(realm: Realm) {
-                with(holder.binding){
-                    holder.binding.mac.text = wifiList[position].BSSID
-                    holder.binding.ssid.text = wifiList[position].SSID
-                    holder.binding.rssi.text = wifiList[position].level.toString()
-                }
-            }
-        })
+        holder.binding.mac.text = wifiList[position].BSSID
+        holder.binding.ssid.text = wifiList[position].SSID
+        holder.binding.rssi.text = wifiList[position].level.toString()
+
     }
 
     override fun getItemCount(): Int = wifiList.size
