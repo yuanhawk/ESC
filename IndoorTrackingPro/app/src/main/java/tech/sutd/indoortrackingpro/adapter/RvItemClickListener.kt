@@ -11,18 +11,17 @@ class RvItemClickListener(context: Context,
                           private val listener: OnItemClickListener?): RecyclerView.OnItemTouchListener {
 
     private val gestureDetector = GestureDetector(context, object: GestureDetector.SimpleOnGestureListener() {
-        override fun onSingleTapUp(e: MotionEvent?): Boolean {
-            return true;
-        }
+        override fun onSingleTapUp(e: MotionEvent?): Boolean = true;
     })
-    public interface OnItemClickListener{
+
+    interface OnItemClickListener{
         fun onItemClick(view: View, position: Int)
     }
 
     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
         val childView: View? = rv.findChildViewUnder(e.x, e.y)
-        if (childView != null && listener != null && gestureDetector.onTouchEvent(e)){
-            listener.onItemClick(childView, rv.getChildAdapterPosition(childView))
+        if (childView != null && gestureDetector.onTouchEvent(e)){
+            listener?.onItemClick(childView, rv.getChildAdapterPosition(childView))
         }
         return false
     }

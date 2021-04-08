@@ -14,6 +14,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import tech.sutd.indoortrackingpro.core.TrackingAlgo
+import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -58,4 +60,8 @@ object AppModule {
     @Provides
     fun provideDividerItemDecoration(@ApplicationContext context: Context) =
         DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+
+    @Singleton
+    @Provides
+    fun provideTrackingHelper(): AlgoHelper = TrackingAlgo()
 }

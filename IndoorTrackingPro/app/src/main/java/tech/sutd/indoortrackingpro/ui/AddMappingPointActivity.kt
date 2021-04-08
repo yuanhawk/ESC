@@ -25,7 +25,9 @@ import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.MappingPoint
 import javax.inject.Inject
-import tech.sutd.indoortrackingpro.utils.Constants
+import tech.sutd.indoortrackingpro.utils.fetchInterval
+import tech.sutd.indoortrackingpro.utils.scanBatch
+
 @AndroidEntryPoint
 class AddMappingPointActivity: BaseActivity() {
     @Inject
@@ -37,7 +39,7 @@ class AddMappingPointActivity: BaseActivity() {
     lateinit var wifiManager: WifiManager
     lateinit var wifiReceiver: BroadcastReceiver
     var readings: HashMap<String, ArrayList<Int>> = HashMap()
-    var done = true;
+    var done = true
     var count = 0
     var handler: Handler = Handler(Looper.myLooper()!!)
     lateinit var apList: RealmList<AccessPoint>
@@ -121,7 +123,7 @@ class AddMappingPointActivity: BaseActivity() {
             v.add(mappingPoint)
             realm.commitTransaction()
             for (i in 0 until realm.where(Account::class.java).findFirst()!!.mMappingPoints.size) {
-                val mappingPointJustAdded = realm.where(Account::class.java).findFirst()!!.mMappingPoints[i];
+                val mappingPointJustAdded = realm.where(Account::class.java).findFirst()!!.mMappingPoints[i]
                 for (ap in mappingPointJustAdded!!.accessPointSignalRecorded) {
                     Log.d(TAG + 2, "${ap.mac} ${ap.rssi}")
                 }
@@ -132,15 +134,15 @@ class AddMappingPointActivity: BaseActivity() {
 
     }
 
-    fun startScan(){
+    private fun startScan(){
         handler.postDelayed({
             wifiManager.startScan()
-            if (count < Constants.getScanBatch()) startScan()
+            if (count < scanBatch) startScan()
             else finishScan()
-        },Constants.getFetchInterval())
+        }, fetchInterval)
     }
 
-    fun finishScan(){
+    private fun finishScan(){
         done = true
         for (mac in readings.keys){
             val value = readings[mac]?.sum()?.toDouble()?.div(readings[mac]!!.size)
