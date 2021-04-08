@@ -19,6 +19,7 @@ class WifiListAdapter @Inject constructor(
 
     var wifiList: List<ScanResult> = arrayListOf()
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WAPListViewHolder {
         val binding = DataBindingUtil.inflate<WapListBinding>(
             LayoutInflater.from(parent.context),

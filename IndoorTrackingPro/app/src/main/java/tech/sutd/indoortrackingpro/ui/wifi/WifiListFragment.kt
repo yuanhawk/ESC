@@ -40,7 +40,7 @@ class WifiListFragment : Fragment() {
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var wifiReceiver: WifiSearchReceiver
 
-    private lateinit var binding: FragmentWifiListBinding
+    lateinit var binding: FragmentWifiListBinding
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
