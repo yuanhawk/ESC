@@ -71,9 +71,12 @@ class TrackingViewModel @Inject constructor(
         }
     }
 
-    fun cancelWifiScan() {
+    fun cancelWifiScan(fragment: TrackingFragment) {
         workManager.cancelWorkById(trackingRequest.id)
-
+        fragment.context?.let {
+            LocalBroadcastManager.getInstance(it)
+                .unregisterReceiver(broadcastReceiver)
+        }
     }
 
 }
