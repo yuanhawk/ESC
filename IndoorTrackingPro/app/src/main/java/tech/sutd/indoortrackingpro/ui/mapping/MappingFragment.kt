@@ -1,24 +1,15 @@
 package tech.sutd.indoortrackingpro.ui.mapping
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.transition.Slide
+import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
-import tech.sutd.indoortrackingpro.databinding.FragmentCoordinatesListBinding
 import tech.sutd.indoortrackingpro.databinding.FragmentMappingBinding
 import tech.sutd.indoortrackingpro.ui.MainActivity
 
@@ -29,7 +20,7 @@ class MappingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         // Inflate the layout for this fragment
         val binding = DataBindingUtil.inflate<FragmentMappingBinding>(
@@ -42,7 +33,8 @@ class MappingFragment : Fragment() {
         with(binding) {
             map.setImageResource(R.drawable.map)
 
-            map.setOnTouchListener(object : View.OnTouchListener {
+            map.setOnTouchListener(@SuppressLint("ClickableViewAccessibility")
+            object : View.OnTouchListener {
                 override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                     if (event?.action == MotionEvent.ACTION_UP) {
                         location = floatArrayOf(event.x, event.y)

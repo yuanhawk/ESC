@@ -1,22 +1,15 @@
 package tech.sutd.indoortrackingpro.ui.main
 
 import android.os.Bundle
-import android.view.*
-import androidx.fragment.app.Fragment
-import android.widget.Button
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
-import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
 import tech.sutd.indoortrackingpro.databinding.FragmentMainBinding
 
 @AndroidEntryPoint
@@ -31,20 +24,6 @@ class MainFragment : Fragment() {
     ): View {
         val binding = DataBindingUtil.inflate<FragmentMainBinding>(
             inflater, R.layout.fragment_main, container, false)
-
-        // Wifi Button to go from mainFragment -> wifiListFragment
-        with(binding) {
-            buttonWifi.setOnClickListener{ view ->
-                view?.findNavController()?.navigate(R.id.action_mainFragment_to_wifiListFragment)
-            }
-        }
-
-        // Coordinates List Button to go from mainFragment -> coordinatesListFragment
-        with(binding) {
-            buttonCoordinatesList.setOnClickListener{ view ->
-                view?.findNavController()?.navigate(R.id.action_mainFragment_to_coordinatesListFragment)
-            }
-        }
 
         return binding.root
     }

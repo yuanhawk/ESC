@@ -5,11 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
-import android.transition.TransitionManager
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
@@ -17,15 +13,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
-import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
+import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val TAG = "MainActivity"
 
@@ -47,43 +43,46 @@ class MainActivity : BaseActivity() {
         navController = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment)?.findNavController()!!
 
-        val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.mappingFragment, R.id.trackingFragment))
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
         with(binding) {
+            bottomNavigation.setOnNavigationItemSelectedListener(this@MainActivity)
             bottomNavigation.setupWithNavController(navController)
             setContentView(root)
+            button.setOnClickListener{ v -> setupMainMenu(PopupMenu(this@MainActivity, v)) }
         }
+    }
 
-        val dropDownAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, dropDownList)
-        dropDownAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        navController.popBackStack(R.id.mainFragment, false)
+        return when (item.itemId) {
+            R.id.mappingFragment -> {
+                navController.navigate(R.id.mappingFragment)
+                true
+            }
+            R.id.trackingFragment -> {
+                navController.navigate(R.id.trackingFragment)
+                true
+            }
+            else -> false
+        }
+    }
 
-        with(binding) {
-            dropDown.adapter = dropDownAdapter
-            dropDown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
+    private fun setupMainMenu(popupMenu: PopupMenu) {
+        popupMenu.setOnMenuItemClickListener { item ->
+            navController.popBackStack(R.id.mainFragment, false)
+            when (item.itemId) {
+                R.id.wifi -> {
+                    navController.navigate(R.id.wifiListFragment)
+                    return@setOnMenuItemClickListener true
                 }
-
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    if (dropDown.selectedItemPosition == 0) {
-
-                    }
-
-                    if (dropDown.selectedItemPosition == 1) {
-
-                    }
+                R.id.coordinates -> {
+                    navController.navigate(R.id.coordinatesListFragment)
+                    return@setOnMenuItemClickListener true
                 }
+                else -> false
             }
         }
-
-        with(binding) {
-        }
+        popupMenu.inflate(R.menu.top_drop_down_menu)
+        popupMenu.show()
     }
 
     fun setFloatingActionBtn() {

@@ -24,22 +24,14 @@
         android:id="@+id/wifiListFragment"
         android:name="tech.sutd.indoortrackingpro.ui.wifi.WifiListFragment"
         android:label="WifiListFragment"
-        tools:layout="@layout/fragment_wifi_list">
-        <action
-            android:id="@+id/action_wifiListFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_wifi_list"/>
 
     <!-- CoordinatesListFragment -->
     <fragment
         android:id="@+id/coordinatesListFragment"
         android:name="tech.sutd.indoortrackingpro.ui.coordinates.CoordinatesListFragment"
         android:label="CoordinatesListFragment"
-        tools:layout="@layout/fragment_coordinates_list">
-        <action
-            android:id="@+id/action_coordinatesListFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_coordinates_list"/>
 
     <!-- MappingFragment -->
     <fragment
@@ -53,7 +45,6 @@
         android:id="@+id/trackingFragment"
         android:name="tech.sutd.indoortrackingpro.ui.tracking.TrackingFragment"
         android:label="TrackingFragment"
-        tools:layout="@layout/fragment_tracking">
-    </fragment>
+        tools:layout="@layout/fragment_tracking"/>
 
 </navigation>

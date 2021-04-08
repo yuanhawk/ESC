@@ -72,20 +72,5 @@
 
         </com.otaliastudios.zoom.ZoomLayout>
 
-        <Button
-            android:id="@+id/button_coordinates_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Coordinates List"
-            android:layout_alignParentRight="true"/>
-
-        <Button
-            android:id="@+id/button_wifi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wifi"
-            android:layout_below="@+id/button_coordinates_list"
-            android:layout_alignParentRight="true" />
-
     </RelativeLayout>
 </layout>

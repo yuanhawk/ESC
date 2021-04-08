@@ -16,5 +16,7 @@
     <string name="confirm_selection">Confirm Selection?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="wifi">Wifi</string>
+    <string name="coordinates">Coordinates</string>
 
 </resources>
