@@ -8,6 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.scopes.FragmentScoped
+import io.realm.Realm
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.ui.wifi.WifiListAdapter
 
@@ -17,7 +18,9 @@ object WifiSearchModule {
 
     @FragmentScoped
     @Provides
-    fun provideWifiListAdapter(): WifiListAdapter = WifiListAdapter()
+    fun provideWifiListAdapter(
+        realm: Realm
+    ): WifiListAdapter = WifiListAdapter(realm)
 
     @FragmentScoped
     @Provides

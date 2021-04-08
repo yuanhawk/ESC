@@ -1,9 +1,11 @@
 package tech.sutd.indoortrackingpro.ui.wifi
 
 import android.content.IntentFilter
+import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,23 +15,26 @@ import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
+import tech.sutd.indoortrackingpro.model.Account
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class WifiListFragment : Fragment() {
 
+    private val TAG = "WifiListFragment"
+
+    @Inject lateinit var config: RealmConfiguration
     @Inject lateinit var handler: Handler
     @Inject lateinit var adapter: WifiListAdapter
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var wifiReceiver: WifiSearchReceiver
 
     private lateinit var binding: FragmentWifiListBinding
-//    private val observer: Observer<RealmList<AP>> by lazy {
-//        Observer<RealmList<AP>> { adapter.sendData(it) }
-//    }
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
@@ -42,7 +47,6 @@ class WifiListFragment : Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_wifi_list, container, false)
-
         with(binding){
             buttonSearchForWaps.setOnClickListener {
 
@@ -50,7 +54,16 @@ class WifiListFragment : Fragment() {
             }
 
             buttonSelectWaps.setOnClickListener {
-                Toast.makeText(activity, "WAPs Selected", Toast.LENGTH_SHORT).show()
+                adapter.selectWap()
+                Realm.getInstanceAsync(config, object : Realm.Callback() {
+                    override fun onSuccess(realm: Realm) {
+                        realm.executeTransaction { transactionRealm ->
+                            val wifiResults =
+                                transactionRealm.where(Account::class.java).findFirst()
+//                            Log.d(TAG, "onSuccess: ${wifiResults?.mAccessPoints?.get(0)?.rssi}")
+                        }
+                    }
+                })
             }
         }
 

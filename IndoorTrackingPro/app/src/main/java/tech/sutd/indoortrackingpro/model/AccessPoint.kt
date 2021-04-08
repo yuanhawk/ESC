@@ -17,7 +17,7 @@ open class AccessPoint(
     var mac: String = "",
     var ssid: String = "",
     var rssi: Double = noSignalDefaultRssi
-):RealmObject(), Parcelable{
+) : RealmObject(), Parcelable{
 
     constructor(other: AccessPoint): this(){
         this.id = UUID.randomUUID().toString()  //this is very important!!
