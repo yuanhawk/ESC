@@ -1,24 +1,23 @@
-package tech.sutd.indoortrackingpro.ui.wifi
+package tech.sutd.indoortrackingpro.ui.adapter
 
 import android.net.wifi.ScanResult
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.WapListBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.Account
-import java.io.Serializable
+import javax.inject.Inject
 
-class WifiListAdapter(
-    private val realm: Realm
+class WifiListAdapter @Inject constructor(
+    private val config: RealmConfiguration
 ) : RecyclerView.Adapter<WifiListAdapter.WAPListViewHolder>() {
 
-    private var wifiList: List<ScanResult> = arrayListOf()
-    private var selectedWifiList: List<ScanResult> = arrayListOf()
+    var wifiList: List<ScanResult> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WAPListViewHolder {
         val binding = DataBindingUtil.inflate<WapListBinding>(
@@ -33,28 +32,12 @@ class WifiListAdapter(
             mac.text = wifiList[position].BSSID
             ssid.text = wifiList[position].SSID
             rssi.text = wifiList[position].level.toString()
-
-            if (select.isChecked) {
-                selectedWifiList.toMutableList().add(wifiList[position])
-            }
         }
     }
 
     fun sendData(wifiList: List<ScanResult>) {
         this.wifiList = wifiList
         notifyDataSetChanged()
-    }
-
-    fun selectWap() {
-        realm.beginTransaction()
-        val account = realm.where(Account::class.java).findFirst()!!
-        for (wifi in selectedWifiList) {
-            val accessPoint = AccessPoint()
-            accessPoint.mac = wifi.BSSID
-            accessPoint.ssid = wifi.SSID
-            account.mAccessPoints.add(accessPoint)
-            realm.commitTransaction()
-        }
     }
 
     override fun getItemCount(): Int = wifiList.size

@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "tech.sutd.indoortrackingpro"
-        minSdkVersion versions.minSdk
+        minSdkVersion 23
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName

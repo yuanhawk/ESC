@@ -1,76 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Click on Mapping Tab to start mapping"
-            android:layout_centerInParent="true">
-        </TextView>
-
-
-        <com.otaliastudios.zoom.ZoomLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fragment_map"
-            android:layout_height="600dp"
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
-            android:scrollbars="vertical|horizontal"
-            app:alignment="center"
-            app:animationDuration="280"
-            app:flingEnabled="true"
-            app:hasClickableChildren="true"
-            app:horizontalPanEnabled="true"
-            app:maxZoom="5"
-            app:maxZoomType="zoom"
-            app:minZoom="0.7"
-            app:minZoomType="zoom"
-            app:oneFingerScrollEnabled="true"
-            app:overPinchable="true"
-            app:overScrollHorizontal="true"
-            app:overScrollVertical="true"
-            app:scrollEnabled="true"
-            app:threeFingersScrollEnabled="true"
-            app:transformation="centerInside"
-            app:transformationGravity="auto"
-            app:twoFingersScrollEnabled="true"
-            app:verticalPanEnabled="true"
-            app:zoomEnabled="true"
-            tools:context=".ui.MainActivity"
-            tools:ignore="MissingConstraints">
+            android:layout_height="wrap_content"
+            android:text="@string/ap_added"
+            android:layout_marginTop="20dp"/>
 
-            <tech.sutd.indoortrackingpro.utils.CustomZoomImageView
-                android:id="@+id/map"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:scrollbars="vertical|horizontal"
-                app:alignment="center"
-                app:animationDuration="280"
-                app:flingEnabled="true"
-                app:horizontalPanEnabled="true"
-                app:maxZoom="5"
-                app:maxZoomType="zoom"
-                app:minZoom="0.7"
-                app:minZoomType="zoom"
-                app:oneFingerScrollEnabled="true"
-                app:overPinchable="true"
-                app:overScrollHorizontal="true"
-                app:overScrollVertical="true"
-                app:scrollEnabled="true"
-                app:threeFingersScrollEnabled="true"
-                app:transformation="centerInside"
-                app:transformationGravity="auto"
-                app:twoFingersScrollEnabled="true"
-                app:verticalPanEnabled="true"
-                app:zoomEnabled="true" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ap_rv"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
 
-        </com.otaliastudios.zoom.ZoomLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mp_added"
+            android:layout_marginTop="20dp"/>
 
-    </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mp_rv"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+    </LinearLayout>
 </layout>

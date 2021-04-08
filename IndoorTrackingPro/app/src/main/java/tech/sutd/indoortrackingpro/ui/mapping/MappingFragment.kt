@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentMappingBinding
-import tech.sutd.indoortrackingpro.ui.MainActivity
 
 @AndroidEntryPoint
 class MappingFragment : Fragment() {
