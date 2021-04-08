@@ -16,12 +16,6 @@ object WifiSearchModule {
 
     @FragmentScoped
     @Provides
-    fun provideWifiListAdapter(
-        config: RealmConfiguration
-    ): WifiListAdapter = WifiListAdapter(config)
-
-    @FragmentScoped
-    @Provides
     fun provideWifiSearchReceiver(
         wifiManager: WifiManager,
         adapter: WifiListAdapter

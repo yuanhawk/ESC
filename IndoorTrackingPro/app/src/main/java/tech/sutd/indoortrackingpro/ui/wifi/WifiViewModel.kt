@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmList
+import kotlinx.coroutines.runBlocking
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.WifiWrapper
 import tech.sutd.indoortrackingpro.model.AccessPoint
@@ -25,7 +26,7 @@ class WifiViewModel @Inject constructor(
 
     private val TAG = "WifiViewModel"
 
-    var apLd: MutableLiveData<RealmList<AccessPoint>> = MutableLiveData()
+    var apLd: MutableLiveData<AccessPoint> = MutableLiveData()
     var account: LiveData<RealmList<AccessPoint>> = MutableLiveData()
     var mapping: LiveData<RealmList<MappingPoint>> = MutableLiveData()
 
@@ -35,10 +36,11 @@ class WifiViewModel @Inject constructor(
         val account = realm.where(Account::class.java).findFirst()
         account?.mAccessPoints?.add(accessPoint)
         realm.commitTransaction()
-        apLd.value = account?.mAccessPoints
+        apLd.value = accessPoint
+        Log.d(TAG, "insertAp: ${accessPoint.mac}")
     }
 
-    fun apLd(): LiveData<RealmList<AccessPoint>> = apLd
+    fun apLd(): LiveData<AccessPoint> = apLd
 
     fun initScan(receiver: WifiSearchReceiver): LiveData<List<ScanResult>> {
         wifiWrapper.startScan()

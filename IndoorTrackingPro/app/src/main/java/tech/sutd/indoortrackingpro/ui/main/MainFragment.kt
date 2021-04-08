@@ -29,11 +29,6 @@ class MainFragment : Fragment() {
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
     @Inject lateinit var manager: LinearLayoutManager
     lateinit var binding: FragmentMainBinding
-    private val apObserver by lazy {
-        Observer<RealmList<AccessPoint>> {
-            apAdapter.sendData(it)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,23 +36,28 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = DataBindingUtil.inflate<FragmentMainBinding>(
+        binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_main, container, false)
         binding.apRv.adapter = apAdapter
         binding.apRv.layoutManager = manager
+        val ap = AccessPoint()
+        ap.mac = "50"
+        ap.ssid = "1s4"
+        apAdapter.sendData(ap)
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.apLd().observe(viewLifecycleOwner, apObserver)
+        viewModel.apLd().observe(viewLifecycleOwner, {
+            Log.d(TAG, "onResume: ${it.mac}")
+            apAdapter.sendData(it)
+            apAdapter.notifyDataSetChanged()
+        })
     }
 
     override fun onPause() {
         super.onPause()
-        if (viewModel.apLd().hasActiveObservers())
-            viewModel.apLd().removeObserver(apObserver)
-        viewModel.apLd().observe(viewLifecycleOwner, apObserver)
         binding.apRv.layoutManager = null
         binding.apRv.adapter = null
     }
