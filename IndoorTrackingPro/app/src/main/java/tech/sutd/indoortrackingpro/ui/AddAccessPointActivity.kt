@@ -7,23 +7,21 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.adapter.RvItemClickListener
 import tech.sutd.indoortrackingpro.adapter.WifiSearchAdapter
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
-import tech.sutd.indoortrackingpro.databinding.ActivityWifiSearchBinding
+import tech.sutd.indoortrackingpro.databinding.ActivityAddAccesspointBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WifiSearchActivity : BaseActivity() {
+class AddAccessPointActivity : BaseActivity() {
 
     val TAG = "Wifi Search Activity"
     @Inject lateinit var wifiManager: WifiManager
@@ -37,7 +35,7 @@ class WifiSearchActivity : BaseActivity() {
     companion object {
         val returnKey = "new access Point"
     }
-    private val binding by binding<ActivityWifiSearchBinding>(R.layout.activity_wifi_search)
+    private val binding by binding<ActivityAddAccesspointBinding>(R.layout.activity_add_accesspoint)
 
     //TODO: Use wifiService
     override fun onCreate(savedInstanceState: Bundle?) {

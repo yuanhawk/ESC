@@ -5,10 +5,10 @@ import tech.sutd.indoortrackingpro.model.Account
 import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter
+
 import io.realm.Realm
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.adapter.viewHolder.AccessPointSection
@@ -16,7 +16,6 @@ import tech.sutd.indoortrackingpro.adapter.viewHolder.MappingPointSection
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityProjectDetailBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint
-import tech.sutd.indoortrackingpro.model.MappingPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -50,25 +49,33 @@ class ProjectDetailActivity : BaseActivity(){
 
         sectionAdapter.addSection(apSection)
         sectionAdapter.addSection(mpSection)
+        binding.buttonAddMp.setOnClickListener {
+            val intent = Intent(this@ProjectDetailActivity, AddMappingPointActivity::class.java)
+            startActivity(intent)
+        }
 
-        binding.apRv.addItemDecoration(itemDecoration)
-        binding.apRv.layoutManager = layoutManager
-        binding.apRv.adapter = sectionAdapter
         binding.buttonAddAp.setOnClickListener {
-            var intent = Intent(this@ProjectDetailActivity, WifiSearchActivity::class.java)
+            val intent = Intent(this@ProjectDetailActivity, AddAccessPointActivity::class.java)
             startActivityForResult(intent, addAP_request_code)
+        }
+        binding.btnLocateMe.setOnClickListener {
+            val intent = Intent(this@ProjectDetailActivity, TrackingActivity::class.java)
+            startActivity(intent)
         }
     }
 
     private fun setCounts(){
-        if (account.mAccessPoints.size != 0) binding.apCount.setText(account.mAccessPoints.size.toString())
-        if (account.mMappingPoints.size != 0) binding.mpCount.setText(account.mMappingPoints.size.toString())
+        if (account.mAccessPoints.size != 0) binding.apCount.text = account.mAccessPoints.size.toString()
+        if (account.mMappingPoints.size != 0) binding.mpCount.text = account.mMappingPoints.size.toString()
     }
 
     override fun onResume() {
         super.onResume()
         //sectionAdapter.notifyDataSetChanged()
         setCounts()
+        binding.apRv.addItemDecoration(itemDecoration)
+        binding.apRv.layoutManager = layoutManager
+        binding.apRv.adapter = sectionAdapter
     }
 
     override fun onPause() {
@@ -81,13 +88,13 @@ class ProjectDetailActivity : BaseActivity(){
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == addAP_request_code && resultCode == RESULT_OK){
-            var accessPoint:AccessPoint = data!!.getParcelableExtra(WifiSearchActivity.returnKey)!!
+            var accessPoint:AccessPoint = data!!.getParcelableExtra(AddAccessPointActivity.returnKey)!!
             realm.beginTransaction()
             account.mAccessPoints.add(accessPoint)
             realm.commitTransaction()
             apSection.setAccessPoints(account.mAccessPoints)
             mpSection.setMappingPoints(account.mMappingPoints)
-            //sectionAdapter.notifyDataSetChanged()
+            sectionAdapter.notifyDataSetChanged()
         }
     }
 }

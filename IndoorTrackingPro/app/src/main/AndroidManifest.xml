@@ -54,8 +54,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.WifiSearchActivity"/>
+        <activity android:name=".ui.AddAccessPointActivity"/>
         <activity android:name=".ui.ProjectDetailActivity" />
+        <activity android:name=".ui.AddMappingPointActivity"/>
+        <activity android:name=".ui.TrackingActivity"/>
     </application>
 
 </manifest>

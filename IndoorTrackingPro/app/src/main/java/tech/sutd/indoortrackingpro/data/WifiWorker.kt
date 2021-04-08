@@ -50,6 +50,7 @@ class WifiWorker @AssistedInject constructor(
 
     private fun scanSuccess(): Data {
         results = wifiManager.scanResults
+        Log.d("SCANRESULE", "Length:" + results.size)
         CoroutineScope(Dispatchers.IO).launch { insertIntoDb(results) }
         val data = Data.Builder()
                 .putStringArray("scanResults", arrayOf(results.toTypedArray().toString()))
@@ -63,16 +64,16 @@ class WifiWorker @AssistedInject constructor(
         val apList = RealmList<AP>()
         for (scanResults in results) {
             val ap = AP(
-                wifiManager.connectionInfo.macAddress,
+                scanResults.BSSID,
                 scanResults.SSID,
                 scanResults.level
             )
             apList.add(ap)
-            Log.d(TAG, "insertIntoDb: ${wifiManager.connectionInfo.macAddress}, ${scanResults.SSID}, ${scanResults.level}")
+            Log.d(TAG, "insertIntoDb: ${scanResults.BSSID}, ${scanResults.SSID}, ${scanResults.level}")
         }
 
         val listAp = ListAP(apList)
-        realm.executeTransactionAsync { innerRealm ->
+        realm.executeTransactionAsync() { innerRealm ->
             innerRealm.insert(listAp)
         }
         realm.close()

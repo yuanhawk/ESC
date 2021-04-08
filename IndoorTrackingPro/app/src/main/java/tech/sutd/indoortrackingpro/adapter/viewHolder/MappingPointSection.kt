@@ -8,7 +8,6 @@ import java.util.ArrayList
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section
 import tech.sutd.indoortrackingpro.R
-import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.MappingPoint
 
 /**
@@ -24,9 +23,10 @@ class MappingPointSection(sectionParameters: SectionParameters?) : Section(secti
 
     override fun onBindItemViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
         val viewHolder = holder as MappingPointViewHolder
-        viewHolder.x.text = mappingPoints[position].latitude.toString()
-        viewHolder.y.text = mappingPoints[position].longitude.toString()
+        viewHolder.x.text = mappingPoints[position].x.toString()
+        viewHolder.y.text = mappingPoints[position].y.toString()
     }
+
     class MappingPointViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val x: TextView = itemView.findViewById(R.id.item_mp_x)
         val y: TextView = itemView.findViewById(R.id.item_mp_y)
