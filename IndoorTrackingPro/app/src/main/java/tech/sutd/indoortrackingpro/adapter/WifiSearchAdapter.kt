@@ -1,7 +1,6 @@
 package tech.sutd.indoortrackingpro.adapter
 
 import android.net.wifi.ScanResult
-import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 
 import android.view.LayoutInflater
@@ -12,8 +11,6 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.ItemWifisearchBinding
-import tech.sutd.indoortrackingpro.model.AP
-import tech.sutd.indoortrackingpro.model.ListAP
 import java.util.ArrayList
 import javax.inject.Inject
 

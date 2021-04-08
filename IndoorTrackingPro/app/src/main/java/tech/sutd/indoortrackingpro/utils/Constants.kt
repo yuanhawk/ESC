@@ -1,12 +1,8 @@
 package tech.sutd.indoortrackingpro.utils
 
-class Constants {
-    companion object{
-        fun getNoSignalDefaultRssi() = -110.0 //default value for an AP that is not detectable
-        fun getK() = 2 //how many nearest point to consider in KNN algo
-        fun getScanBatch() = 5
-        fun getFetchInterval() = 200L //2 second
-        fun getIntentFilter() = "ANDROID_WIFI_SCANNER"
-        fun getIntentKey() = "WIFI_DATA"
-    }
-}
+const val noSignalDefaultRssi = -110.0 //default value for an AP that is not detectable
+const val k = 2 //how many nearest point to consider in KNN algo
+const val scanBatch = 5
+const val fetchInterval = 200L //2 second
+const val intentFilter = "ANDROID_WIFI_SCANNER"
+const val intentKey = "WIFI_DATA"

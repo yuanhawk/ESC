@@ -88,7 +88,7 @@ class ProjectDetailActivity : BaseActivity(){
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == addAP_request_code && resultCode == RESULT_OK){
-            var accessPoint:AccessPoint = data!!.getParcelableExtra(AddAccessPointActivity.returnKey)!!
+            val accessPoint:AccessPoint = data!!.getParcelableExtra(AddAccessPointActivity.returnKey)!!
             realm.beginTransaction()
             account.mAccessPoints.add(accessPoint)
             realm.commitTransaction()

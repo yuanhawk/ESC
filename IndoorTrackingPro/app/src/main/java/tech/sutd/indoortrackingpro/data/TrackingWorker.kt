@@ -3,38 +3,42 @@ package tech.sutd.indoortrackingpro.data
 import android.content.Context
 import android.content.Intent
 import android.net.wifi.ScanResult
-import android.net.wifi.WifiManager
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.hilt.work.HiltWorker
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.work.*
-import kotlinx.coroutines.*
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import tech.sutd.indoortrackingpro.model.MappingPoint
-import tech.sutd.indoortrackingpro.utils.Constants
-import java.util.*
+import tech.sutd.indoortrackingpro.utils.intentFilter
+import tech.sutd.indoortrackingpro.utils.intentKey
 import java.util.concurrent.TimeUnit
 
-
-class TrackingWorker(
-        val appContext: Context,
-        workerParams: WorkerParameters,
-
+@HiltWorker
+class TrackingWorker @AssistedInject constructor(
+        @Assisted val appContext: Context,
+        @Assisted workerParams: WorkerParameters,
+        private val wifiWrapper: WifiWrapper,
+        val workManager: WorkManager
 ) : Worker(appContext, workerParams) {
 
     private val TAG = "TrackingWorker"
-    private val wifiManager = appContext.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
     @RequiresApi(Build.VERSION_CODES.O)
     override fun doWork(): Result {
-        wifiManager.startScan()
+        wifiWrapper.startScan()
         // get networks
-        val mResults: List<ScanResult> = wifiManager.getScanResults()
+        val mResults: List<ScanResult> = wifiWrapper.scanResults()
         Log.d(TAG, "New scan result: (" + mResults.size + ") networks found")
         val mappingPoint = MappingPoint(mResults)
-        val intent = Intent(Constants.getIntentFilter())
-        intent.putExtra(Constants.getIntentKey(), mappingPoint)
+        val intent = Intent(intentFilter)
+        intent.putExtra(intentKey, mappingPoint)
         LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent)
-        WorkManager.getInstance(appContext).enqueue(OneTimeWorkRequestBuilder<TrackingWorker>()
+        workManager.enqueue(OneTimeWorkRequestBuilder<TrackingWorker>()
                 .setInitialDelay(5, TimeUnit.SECONDS)
                 .build())
         return Result.success()
