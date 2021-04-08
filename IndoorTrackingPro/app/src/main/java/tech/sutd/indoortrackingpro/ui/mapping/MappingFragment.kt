@@ -53,17 +53,6 @@ class MappingFragment : Fragment() {
                     return false
                 }
             })
-
-//            val addMappingButton = findViewById<FloatingActionButton>(R.id.fab)
-            fab.setOnClickListener {
-                (activity as MainActivity).setFloatingActionBtn()
-            }
-
-//            // Tracking Button to go from mappingFragment -> trackingFragment
-//            trackingButton.setOnClickListener{ view ->
-//                view?.findNavController()?.navigate(R.id.action_mappingFragment_to_trackingFragment)
-//            }
-
             return binding.root
         }
     }

@@ -18,5 +18,6 @@
     <string name="no">No</string>
     <string name="wifi">Wifi</string>
     <string name="coordinates">Coordinates</string>
+    <string name="add_coordinates">Add Coordinates</string>
 
 </resources>

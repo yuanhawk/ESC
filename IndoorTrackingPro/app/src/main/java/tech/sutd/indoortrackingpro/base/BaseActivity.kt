@@ -5,17 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
+import tech.sutd.indoortrackingpro.model.Account
+import tech.sutd.indoortrackingpro.model.Coordinate
+import tech.sutd.indoortrackingpro.model.MappingPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 abstract class BaseActivity : AppCompatActivity() {
+
+    @Inject lateinit var algoHelper: AlgoHelper
 
     protected inline fun <reified T : ViewDataBinding> binding(
             @LayoutRes resId: Int
     ): Lazy<T> = lazy(LazyThreadSafetyMode.NONE) { DataBindingUtil.setContentView(this, resId) }
-
-    fun beginTransaction(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment).commit()
-    }
 
 }

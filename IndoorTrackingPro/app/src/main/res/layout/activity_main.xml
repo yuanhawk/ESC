@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity">
@@ -16,18 +16,6 @@
             android:layout_above="@+id/bottom_navigation"
             app:defaultNavHost="true"
             app:navGraph="@navigation/main"/>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            android:background="@drawable/popup_menu"
-            android:src="@drawable/ic_down"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -43,7 +31,23 @@
             android:background="@color/dark_blue"
             app:itemIconTint="@drawable/icons_selector"
             app:itemTextColor="@drawable/icons_selector"
+            app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/btm_nav_menu" />
 
-    </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:translationZ="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/popup_menu"
+            android:src="@drawable/ic_add"
+            app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

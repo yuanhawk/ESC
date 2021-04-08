@@ -1,9 +1,11 @@
 package tech.sutd.indoortrackingpro.di
 
 import android.content.Context
+import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.os.Handler
 import android.os.Looper
+import androidx.lifecycle.MediatorLiveData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.WorkManager
@@ -14,17 +16,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import tech.sutd.indoortrackingpro.data.PrefStore
+import tech.sutd.indoortrackingpro.core.TrackingAlgo
+import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 object AppModule {
-
-    @Singleton
-    @Provides
-    fun providePrefStore(@ApplicationContext context: Context): PrefStore =
-        PrefStore(context)
 
     @Singleton
     @Provides
@@ -65,4 +63,12 @@ object AppModule {
     fun provideDividerItemDecoration(@ApplicationContext context: Context) =
         DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
 
+    @Singleton
+    @Provides
+    fun provideTrackingHelper(): AlgoHelper = TrackingAlgo()
+
+    @Singleton
+    @Provides
+    fun provideListScanResult(): MediatorLiveData<List<ScanResult>> =
+        MediatorLiveData()
 }
