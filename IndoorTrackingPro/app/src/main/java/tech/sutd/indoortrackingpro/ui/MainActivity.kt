@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -15,16 +16,21 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import io.realm.Realm
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
+import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
+import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val TAG = "MainActivity"
-
+    @Inject
+    lateinit var realm: Realm
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
@@ -46,6 +52,18 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             bottomNavigation.setupWithNavController(navController)
             setContentView(root)
             button.setOnClickListener{ v -> setupMainMenu(PopupMenu(this@MainActivity, v)) }
+        }
+
+        if (realm.where(Account::class.java).findAll().isEmpty()) {
+            Log.d("Create Realm", "Realm")
+            realm.executeTransactionAsync(
+                Realm.Transaction { realm ->
+                    realm.createObject(Account::class.java, UUID.randomUUID().toString())
+                },
+                Realm.Transaction.OnError {
+                    Log.d("REALM", "Fail to create realm")
+                }
+            )
         }
     }
 

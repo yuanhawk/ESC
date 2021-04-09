@@ -14,21 +14,28 @@ import javax.inject.Inject
 @HiltViewModel
 class MappingViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val config: RealmConfiguration,
+    private val realm: Realm
 ) : ViewModel() {
 
-    private val TAG = "MappingViewModel"
+    private val TAG = "mappingViewModel"
 
-    fun insertMp(coord: FloatArray) {
-        val mappingPt = MappingPoint()
+    fun insertMp(coord: FloatArray, mappingPt: MappingPoint) {
         mappingPt.x = coord[0].toDouble()
         mappingPt.y = coord[1].toDouble()
 
-        val realm = Realm.getInstance(config)
+
         realm.beginTransaction()
-        val account = realm.where(Account::class.java).findFirst()
-        account?.mMappingPoints?.add(mappingPt)
+        for (ap in mappingPt.accessPointSignalRecorded){
+            Log.d( TAG+1, "${ap.mac} ${ap.rssi}")
+        }
+        val v = realm.where(Account::class.java).findFirst()!!.mMappingPoints
+        v.add(mappingPt)
         realm.commitTransaction()
-        Log.d(TAG, "insertAp: ${coord[0]}")
+        for (i in 0 until realm.where(Account::class.java).findFirst()!!.mMappingPoints.size) {
+            val mappingPointJustAdded = realm.where(Account::class.java).findFirst()!!.mMappingPoints[i]
+            for (ap in mappingPointJustAdded!!.accessPointSignalRecorded) {
+                Log.d(TAG + 2, "${ap.mac} ${ap.rssi}")
+            }
+        }
     }
 }
