@@ -3,6 +3,7 @@ package tech.sutd.indoortrackingpro.di
 import android.content.Context
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.MediatorLiveData
@@ -77,4 +78,8 @@ object AppModule {
     @Provides
     fun provideListApt(): MediatorLiveData<List<AccessPoint>> =
         MediatorLiveData()
+
+    @Singleton
+    @Provides
+    fun provideBundle(): Bundle = Bundle()
 }

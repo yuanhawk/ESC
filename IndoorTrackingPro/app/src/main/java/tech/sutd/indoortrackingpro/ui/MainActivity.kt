@@ -78,6 +78,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                     navController.navigate(R.id.coordinatesListFragment)
                     return@setOnMenuItemClickListener true
                 }
+                R.id.add_coordinate -> {
+                    navController.navigate(R.id.addMappingDialog)
+                    return@setOnMenuItemClickListener true
+                }
                 else -> false
             }
         }

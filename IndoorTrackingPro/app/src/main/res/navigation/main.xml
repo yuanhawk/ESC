@@ -38,7 +38,11 @@
         android:id="@+id/mappingFragment"
         android:name="tech.sutd.indoortrackingpro.ui.mapping.MappingFragment"
         android:label="MappingFragment"
-        tools:layout="@layout/fragment_mapping"/>
+        tools:layout="@layout/fragment_mapping">
+        <action
+            android:id="@+id/action_mappingFragment_to_addMappingDialog"
+            app:destination="@id/addMappingDialog" />
+    </fragment>
 
     <!-- TrackingFragment -->
     <fragment
@@ -46,5 +50,18 @@
         android:name="tech.sutd.indoortrackingpro.ui.tracking.TrackingFragment"
         android:label="TrackingFragment"
         tools:layout="@layout/fragment_tracking"/>
+
+    <!-- AddMappingFragment -->
+    <dialog
+        android:id="@+id/addMappingDialog"
+        android:name="tech.sutd.indoortrackingpro.ui.mapping.AddMappingFragment"
+        android:label="AddMappingDialog">
+        <action
+            android:id="@+id/action_addMappingDialog_to_mappingFragment"
+            app:destination="@+id/mappingFragment"/>
+        <action
+            android:id="@+id/action_yesAddMappingDialog_to_mappingFragment"
+            app:destination="@+id/mappingFragment"/>
+    </dialog>
 
 </navigation>
