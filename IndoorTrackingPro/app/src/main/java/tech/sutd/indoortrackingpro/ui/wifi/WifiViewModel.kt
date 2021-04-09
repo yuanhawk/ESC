@@ -26,7 +26,6 @@ class WifiViewModel @Inject constructor(
 
     private val TAG = "WifiViewModel"
 
-    var apLd: MutableLiveData<AccessPoint> = MutableLiveData()
     var account: LiveData<RealmList<AccessPoint>> = MutableLiveData()
     var mapping: LiveData<RealmList<MappingPoint>> = MutableLiveData()
 
@@ -36,11 +35,8 @@ class WifiViewModel @Inject constructor(
         val account = realm.where(Account::class.java).findFirst()
         account?.mAccessPoints?.add(accessPoint)
         realm.commitTransaction()
-        apLd.value = accessPoint
         Log.d(TAG, "insertAp: ${accessPoint.mac}")
     }
-
-    fun apLd(): LiveData<AccessPoint> = apLd
 
     fun initScan(receiver: WifiSearchReceiver): LiveData<List<ScanResult>> {
         wifiWrapper.startScan()
