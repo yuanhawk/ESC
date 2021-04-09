@@ -40,17 +40,17 @@ class MainFragment : Fragment() {
             inflater, R.layout.fragment_main, container, false)
         binding.apRv.adapter = apAdapter
         binding.apRv.layoutManager = manager
-        val ap = AccessPoint()
-        ap.mac = "50"
-        ap.ssid = "1s4"
-        apAdapter.sendData(ap)
+//        val ap = AccessPoint()
+//        ap.mac = "50"
+//        ap.ssid = "1s4"
+//        apAdapter.sendData(ap)
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.apLd().observe(viewLifecycleOwner, {
-            Log.d(TAG, "onResume: ${it.mac}")
+        viewModel.accessPoints().observe(viewLifecycleOwner, {
+            Log.d(TAG, "onResume: ${it.get(0)?.mac}")
             apAdapter.sendData(it)
             apAdapter.notifyDataSetChanged()
         })

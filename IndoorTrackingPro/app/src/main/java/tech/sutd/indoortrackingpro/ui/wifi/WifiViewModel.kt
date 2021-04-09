@@ -58,7 +58,6 @@ class WifiViewModel @Inject constructor(
                 realm.executeTransaction { transactionRealm ->
                     val wifiResults =
                         transactionRealm.where(Account::class.java).findFirst()
-                    Log.d(TAG, "onSuccess: ${wifiResults?.mAccessPoints?.get(0)?.mac}")
                     account = wifiResults?.mAccessPoints?.asFlowable()
                         ?.onBackpressureBuffer()
                         ?.toLiveData() as LiveData<RealmList<AccessPoint>>

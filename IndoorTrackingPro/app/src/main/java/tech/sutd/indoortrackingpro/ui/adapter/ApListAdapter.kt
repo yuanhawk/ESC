@@ -34,8 +34,9 @@ class ApListAdapter :
         }
     }
 
-    fun sendData(wifiList: AccessPoint) {
-        this.wifiList.toMutableList().add(wifiList)
+    fun sendData(wifiList: List<AccessPoint>) {
+        this.wifiList = wifiList
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = wifiList.size
