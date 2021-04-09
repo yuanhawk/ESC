@@ -3,6 +3,7 @@ package tech.sutd.indoortrackingpro.di
 import android.content.Context
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.MediatorLiveData
@@ -18,6 +19,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.core.TrackingAlgo
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
+import tech.sutd.indoortrackingpro.model.AccessPoint
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -71,4 +73,13 @@ object AppModule {
     @Provides
     fun provideListScanResult(): MediatorLiveData<List<ScanResult>> =
         MediatorLiveData()
+
+    @Singleton
+    @Provides
+    fun provideListApt(): MediatorLiveData<List<AccessPoint>> =
+        MediatorLiveData()
+
+    @Singleton
+    @Provides
+    fun provideBundle(): Bundle = Bundle()
 }

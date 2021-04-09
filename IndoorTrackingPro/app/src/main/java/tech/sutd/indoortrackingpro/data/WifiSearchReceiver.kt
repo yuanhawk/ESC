@@ -7,7 +7,7 @@ import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import tech.sutd.indoortrackingpro.ui.wifi.WifiListAdapter
+import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 import java.util.*
 import javax.inject.Inject
 

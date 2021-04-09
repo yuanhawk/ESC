@@ -19,5 +19,10 @@
     <string name="wifi">Wifi</string>
     <string name="coordinates">Coordinates</string>
     <string name="add_coordinates">Add Coordinates</string>
+    <string name="ap_added">Access Points</string>
+    <string name="mp_added">Mapping Points</string>
+    <string name="search_for_waps">Search for WAPs</string>
+    <string name="x_val">X val</string>
+    <string name="y_val">Y val</string>
 
 </resources>

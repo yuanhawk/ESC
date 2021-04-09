@@ -25,10 +25,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     private val TAG = "MainActivity"
 
-    private lateinit var location: FloatArray
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-//    private lateinit var addMappingButton: FloatingActionButton
 
     private val dropDownList = arrayOf("Wifi", "Coordinates")
 
@@ -78,38 +76,15 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                     navController.navigate(R.id.coordinatesListFragment)
                     return@setOnMenuItemClickListener true
                 }
+                R.id.add_coordinate -> {
+                    navController.navigate(R.id.addMappingDialog)
+                    return@setOnMenuItemClickListener true
+                }
                 else -> false
             }
         }
         popupMenu.inflate(R.menu.top_drop_down_menu)
         popupMenu.show()
-    }
-
-    fun setFloatingActionBtn() {
-//                    val addMappingButton = findViewById<FloatingActionButton>(R.id.fab)
-        val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.add_mapping,null)
-
-        val addMappingPopUp = PopupWindow(
-            view,
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
-
-        val slideIn = Slide()
-        slideIn.slideEdge = Gravity.TOP
-        addMappingPopUp.enterTransition = slideIn
-
-        val slideOut = Slide()
-        slideOut.slideEdge = Gravity.BOTTOM
-        addMappingPopUp.enterTransition = slideOut
-
-//                val addMappingView = findViewById<TextView>(R.id.adding_coordinates)
-//                val addMappingBackButton = findViewById<TextView>(R.id.back_button_add_mapping)
-//
-//                addMappingBackButton.setOnClickListener {
-//                    addMappingPopUp.dismiss()
-//                }
     }
 }
 

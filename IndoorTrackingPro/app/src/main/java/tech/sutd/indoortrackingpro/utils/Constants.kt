@@ -6,3 +6,5 @@ const val scanBatch = 5
 const val fetchInterval = 200L //2 second
 const val intentFilter = "ANDROID_WIFI_SCANNER"
 const val intentKey = "WIFI_DATA"
+
+const val coord = "COORDINATE"

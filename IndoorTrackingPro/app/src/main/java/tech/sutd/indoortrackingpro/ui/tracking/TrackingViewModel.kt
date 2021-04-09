@@ -48,18 +48,18 @@ class TrackingViewModel @Inject constructor(
         broadcastReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context, intent: Intent) {
                 val wifiData = intent.getParcelableExtra<MappingPoint>(intentKey)
-                val coordinate = algoHelper.predictCoordinate(wifiData!!, realm.where(Account::class.java).findFirst()!!, "WKNN" )
+                val coordinate = algoHelper.predictCoordinate(wifiData!!, realm.where(Account::class.java).findFirst()!!, "WKNN")!!
 
                 Log.d(TAG, "receive")
-                Log.d(TAG, coordinate!!.longitude.toString())
-                Log.d(TAG, coordinate!!.latitude.toString())
+                Log.d(TAG, coordinate.longitude.toString())
+                Log.d(TAG, coordinate.latitude.toString())
                 coordinates = MutableLiveData(coordinate)
            with(fragment.binding) {
-               trackingMap.setImageResource(tech.sutd.indoortrackingpro.R.drawable.map)
-               trackingMap.isEnabled = true;
-               trackingMap.pos[0] = coordinate!!.longitude.toFloat()
-               trackingMap.pos[1] = coordinate!!.latitude.toFloat()
-               trackingMap.invalidate();
+               trackingMap.setImageResource(R.drawable.map)
+               trackingMap.isEnabled = true
+               trackingMap.pos[0] = coordinate.longitude.toFloat()
+               trackingMap.pos[1] = coordinate.latitude.toFloat()
+               trackingMap.invalidate()
            }
 //                xText.text = coordinate.longitude.toString()
 //                yText.text = coordinate.latitude.toString()
@@ -77,6 +77,7 @@ class TrackingViewModel @Inject constructor(
             LocalBroadcastManager.getInstance(it)
                 .unregisterReceiver(broadcastReceiver)
         }
+
     }
 
 }
