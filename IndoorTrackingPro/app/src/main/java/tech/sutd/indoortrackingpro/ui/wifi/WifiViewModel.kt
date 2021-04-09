@@ -21,13 +21,13 @@ class WifiViewModel @Inject constructor(
     private val wifiWrapper: WifiWrapper,
     private val data: MediatorLiveData<List<ScanResult>>,
     private val accountMd: MediatorLiveData<List<AccessPoint>>,
-    private val config: RealmConfiguration,
+    private val config: RealmConfiguration
 ) : ViewModel() {
 
     private val TAG = "WifiViewModel"
 
-    var account: LiveData<RealmList<AccessPoint>> = MutableLiveData()
-    var mapping: LiveData<RealmList<MappingPoint>> = MutableLiveData()
+    var account: LiveData<RealmList<AccessPoint>>? = MutableLiveData()
+    var mapping: LiveData<RealmList<MappingPoint>>? = MutableLiveData()
 
     fun insertAp(accessPoint: AccessPoint) {
         val realm = Realm.getInstance(config)
@@ -48,7 +48,7 @@ class WifiViewModel @Inject constructor(
         data.removeSource(receiver.data)
     }
 
-    fun accessPoints(): LiveData<RealmList<AccessPoint>> {
+    fun accessPoints(): LiveData<RealmList<AccessPoint>>? {
         Realm.getInstanceAsync(config, object : Realm.Callback() {
             override fun onSuccess(realm: Realm) {
                 realm.executeTransaction { transactionRealm ->
@@ -56,14 +56,14 @@ class WifiViewModel @Inject constructor(
                         transactionRealm.where(Account::class.java).findFirst()
                     account = wifiResults?.mAccessPoints?.asFlowable()
                         ?.onBackpressureBuffer()
-                        ?.toLiveData() as LiveData<RealmList<AccessPoint>>
+                        ?.toLiveData()
                 }
             }
         })
         return account
     }
 
-    fun mappingPoint(): LiveData<RealmList<MappingPoint>> {
+    fun mappingPoint(): LiveData<RealmList<MappingPoint>>? {
         Realm.getInstanceAsync(config, object : Realm.Callback() {
             override fun onSuccess(realm: Realm) {
                 realm.executeTransaction { transactionRealm ->
@@ -71,7 +71,7 @@ class WifiViewModel @Inject constructor(
                         transactionRealm.where(Account::class.java).findFirst()
                     mapping = wifiResults?.mMappingPoints?.asFlowable()
                         ?.onBackpressureBuffer()
-                        ?.toLiveData() as LiveData<RealmList<MappingPoint>>
+                        ?.toLiveData()
                 }
             }
         })

@@ -45,11 +45,6 @@ class MappingFragment : Fragment() {
                         if (event?.action == MotionEvent.ACTION_UP) {
                             location = floatArrayOf(event.x, event.y)
                             Log.d(ContentValues.TAG, "onCreate: ${location[0]}, ${location[1]}")
-                            Toast.makeText(
-                                this@MappingFragment.context,
-                                "Current location is: ${location[0]}, ${location[1]}",
-                                Toast.LENGTH_SHORT
-                            ).show()
 
                             bundle.putFloatArray(coord, location)
                             findNavController().navigate(

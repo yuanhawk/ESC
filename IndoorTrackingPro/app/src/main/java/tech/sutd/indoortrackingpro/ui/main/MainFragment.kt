@@ -17,6 +17,7 @@ import tech.sutd.indoortrackingpro.databinding.FragmentMainBinding
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
+import tech.sutd.indoortrackingpro.ui.wifi.MpListAdapter
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import javax.inject.Inject
 
@@ -26,8 +27,8 @@ class MainFragment : Fragment() {
     private val TAG = "MainFragment"
 
     @Inject lateinit var apAdapter: ApListAdapter
+    @Inject lateinit var mpAdapter: MpListAdapter
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
-    @Inject lateinit var manager: LinearLayoutManager
     lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(
@@ -38,8 +39,14 @@ class MainFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_main, container, false)
-        binding.apRv.adapter = apAdapter
-        binding.apRv.layoutManager = manager
+
+        with(binding) {
+            apRv.adapter = apAdapter
+            apRv.layoutManager = LinearLayoutManager(context)
+            mpRv.adapter = mpAdapter
+            mpRv.layoutManager = LinearLayoutManager(context)
+        }
+
 //        val ap = AccessPoint()
 //        ap.mac = "50"
 //        ap.ssid = "1s4"
@@ -49,16 +56,27 @@ class MainFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.accessPoints().observe(viewLifecycleOwner, {
-            Log.d(TAG, "onResume: ${it.get(0)?.mac}")
+        viewModel.accessPoints()?.observe(viewLifecycleOwner, {
+//            Log.d(TAG, "onResume: ${it[0]?.mac}")
             apAdapter.sendData(it)
+            apAdapter.notifyDataSetChanged()
+        })
+
+        viewModel.mappingPoint()?.observe(viewLifecycleOwner, {
+//            Log.d(TAG, "onResume: ${it[0]?.x}")
+            mpAdapter.sendData(it)
             apAdapter.notifyDataSetChanged()
         })
     }
 
     override fun onPause() {
         super.onPause()
-        binding.apRv.layoutManager = null
-        binding.apRv.adapter = null
+        with(binding) {
+            apRv.layoutManager = null
+            apRv.adapter = null
+            mpRv.adapter = null
+            mpRv.layoutManager = null
+        }
+
     }
 }

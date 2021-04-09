@@ -1,12 +1,10 @@
 package tech.sutd.indoortrackingpro.ui.adapter
 
-import android.net.wifi.ScanResult
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import io.realm.RealmList
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.SelectedApListBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint

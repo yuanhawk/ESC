@@ -55,13 +55,14 @@
     <dialog
         android:id="@+id/addMappingDialog"
         android:name="tech.sutd.indoortrackingpro.ui.mapping.AddMappingFragment"
-        android:label="AddMappingDialog">
+        android:label="AddMappingDialog"
+        tools:layout="@layout/add_mapping">
+        <action
+            android:id="@+id/action_addMappingDialog_to_mainFragment"
+            app:destination="@id/mainFragment" />
         <action
             android:id="@+id/action_addMappingDialog_to_mappingFragment"
-            app:destination="@+id/mappingFragment"/>
-        <action
-            android:id="@+id/action_yesAddMappingDialog_to_mappingFragment"
-            app:destination="@+id/mappingFragment"/>
+            app:destination="@id/mappingFragment" />
     </dialog>
 
 </navigation>
