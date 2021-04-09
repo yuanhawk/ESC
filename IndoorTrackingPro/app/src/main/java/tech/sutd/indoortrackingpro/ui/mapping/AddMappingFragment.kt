@@ -62,7 +62,7 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                 viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
                 Toast.makeText(activity,"Coordinate added!",Toast.LENGTH_SHORT).show()
             }
-
+            yesButtonAddMapping.isEnabled = false
             xAddMapping.text = coordinate?.get(0)?.toString() ?: ""
             yAddMapping.text = coordinate?.get(1)?.toString() ?: ""
             isCancelable = false
