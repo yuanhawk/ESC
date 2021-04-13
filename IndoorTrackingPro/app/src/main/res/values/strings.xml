@@ -9,6 +9,9 @@
     <string name="rssi">RSSI</string>
     <string name="select">Select</string>
 
+    <string name="ssid_text">SSID:</string>
+    <string name="mac_text">MAC:</string>
+
     <string name="X">X</string>
     <string name="x_coordinate">X Coordinate: </string>
     <string name="y_coordinate">Y Coordinate:</string>
@@ -17,9 +20,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="wifi">Wifi Access Points</string>
-    <string name="selected_mp">Selected Mapping Points</string>
     <string name="add_coordinates">Add Coordinates</string>
-    <string name="ap_added">Selected Access Points</string>
+    <string name="ap_added">Selected Wifi Access Points</string>
     <string name="mp_added">Selected Mapping Points</string>
     <string name="search_for_waps">Search for WAPs</string>
     <string name="x_val">X val</string>

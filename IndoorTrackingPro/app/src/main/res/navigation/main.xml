@@ -15,6 +15,9 @@
             android:id="@+id/action_mainFragment_to_wifiListFragment"
             app:destination="@id/wifiListFragment" />
         <action
+            android:id="@+id/action_mainFragment_to_selectedAPListFragment"
+            app:destination="@+id/selectedAPListFragment" />
+        <action
             android:id="@+id/action_mainFragment_to_selectedMPListFragment"
             app:destination="@+id/selectedMPListFragment" />
     </fragment>
@@ -24,14 +27,29 @@
         android:id="@+id/wifiListFragment"
         android:name="tech.sutd.indoortrackingpro.ui.wifi.WifiListFragment"
         android:label="WifiListFragment"
-        tools:layout="@layout/fragment_wifi_list"/>
+        tools:layout="@layout/fragment_wifi_list">
+        <action
+            android:id="@+id/action_wifiListFragment_to_selectedAPListFragment"
+            app:destination="@+id/selectedAPListFragment" />
+    </fragment>
+
+    <!-- SelectedAPListFragment -->
+    <fragment
+        android:id="@+id/selectedAPListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.wifi_access_points.SelectedAPListFragment"
+        android:label="selectedAPListFragment"
+        tools:layout="@layout/fragment_selected_ap_list" />
 
     <!-- SelectedMPListFragment -->
     <fragment
         android:id="@+id/selectedMPListFragment"
         android:name="tech.sutd.indoortrackingpro.ui.coordinates.SelectedMPListFragment"
         android:label="selectedMPListFragment"
-        tools:layout="@layout/fragment_selected_mp_list" />
+        tools:layout="@layout/fragment_selected_mp_list" >
+        <action
+            android:id="@+id/action_selectedMPListFragment_to_wifiListFragment"
+            app:destination="@id/wifiListFragment"/>
+    </fragment>
 
     <!-- MappingFragment -->
     <fragment

@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
 
-        <TextView
-            android:id="@+id/mac"
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:lines="1"
-            android:text="@string/mac" />
+            android:orientation="vertical"
+            android:backgroundTint="@color/dark_blue">
 
-        <TextView
-            android:id="@+id/ssid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:lines="1"
-            android:text="@string/ssid" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:orientation="horizontal">
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+                <TextView
+                    android:id="@+id/mac"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="@string/mac" />
+
+                <TextView
+                    android:id="@+id/ssid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="@string/ssid" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 </layout>

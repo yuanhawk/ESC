@@ -77,7 +77,8 @@ class WifiListFragment : Fragment() {
                         viewModel.insertAp(accessPoint)
 
                         Toast.makeText(context, "Added to WAP list successfully", Toast.LENGTH_SHORT).show()
-                        findNavController().popBackStack(R.id.mainFragment, false)
+                        findNavController().popBackStack(R.id.selectedAPListFragment, false)
+                        findNavController().navigate(R.id.action_wifiListFragment_to_selectedAPListFragment)
                     }
                 }
             )

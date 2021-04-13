@@ -86,11 +86,15 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         popupMenu.setOnMenuItemClickListener { item ->
             navController.popBackStack(R.id.mainFragment, false)
             when (item.itemId) {
-                R.id.wifi -> {
+                R.id.wifi_ap_list -> {
                     navController.navigate(R.id.wifiListFragment)
                     return@setOnMenuItemClickListener true
                 }
-                R.id.coordinates -> {
+                R.id.selected_ap_list -> {
+                    navController.navigate(R.id.selectedAPListFragment)
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.selected_mp_list -> {
                     navController.navigate(R.id.selectedMPListFragment)
                     return@setOnMenuItemClickListener true
                 }

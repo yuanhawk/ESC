@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.RealmList
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
+import tech.sutd.indoortrackingpro.databinding.ActivityMainBindingImpl
 import tech.sutd.indoortrackingpro.databinding.FragmentMainBinding
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint
@@ -41,9 +43,9 @@ class MainFragment : Fragment() {
             inflater, R.layout.fragment_main, container, false)
 
         with(binding) {
-            apRv.adapter = apAdapter
-            apRv.layoutManager = LinearLayoutManager(context)
-            apAdapter.notifyDataSetChanged()
+//            apRv.adapter = apAdapter
+//            apRv.layoutManager = LinearLayoutManager(context)
+//            apAdapter.notifyDataSetChanged()
 //            mpRV.adapter = mpAdapter
 //            mpRv.layoutManager = LinearLayoutManager(context)
         }
@@ -73,8 +75,8 @@ class MainFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         with(binding) {
-            apRv.layoutManager = null
-            apRv.adapter = null
+//            apRv.layoutManager = null
+//            apRv.adapter = null
 //            mpRv.adapter = null
 //            mpRv.layoutManager = null
         }

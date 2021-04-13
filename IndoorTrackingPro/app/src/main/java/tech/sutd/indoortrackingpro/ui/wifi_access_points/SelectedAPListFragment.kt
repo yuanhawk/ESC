@@ -1,49 +1,37 @@
-package tech.sutd.indoortrackingpro.ui.coordinates
+package tech.sutd.indoortrackingpro.ui.wifi_access_points
 
-import android.content.IntentFilter
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
-import io.realm.RealmList
-import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
-import tech.sutd.indoortrackingpro.databinding.FragmentSelectedMpListBinding
+import tech.sutd.indoortrackingpro.databinding.FragmentSelectedApListBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint
-import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.model.MappingPoint
-import tech.sutd.indoortrackingpro.ui.wifi.MpListAdapter
+import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
-import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SelectedMPListFragment : Fragment() {
+class SelectedAPListFragment : Fragment() {
 
-    private val TAG = "SelectedMPListFragment"
+    private val TAG = "SelectedAPListFragment"
 
-    private var mapList: List<MappingPoint> = arrayListOf()
+    private var wifiList: List<AccessPoint> = arrayListOf()
 
     @Inject lateinit var realm: Realm
     @Inject lateinit var handler: Handler
-    @Inject lateinit var adapter: MpListAdapter
+    @Inject lateinit var adapter: ApListAdapter
     @Inject lateinit var manager: LinearLayoutManager
 
-    lateinit var binding: FragmentSelectedMpListBinding
+
+    lateinit var binding: FragmentSelectedApListBinding
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
@@ -55,15 +43,15 @@ class SelectedMPListFragment : Fragment() {
 
         // Inflate layout for this fragment
         binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_selected_mp_list, container, false)
+            R.layout.fragment_selected_ap_list, container, false)
 
         with(binding){
-            selectedMpListRv.adapter = adapter
-            selectedMpListRv.layoutManager = LinearLayoutManager(context)
+            selectedApListRv.adapter = adapter
+            selectedApListRv.layoutManager = LinearLayoutManager(context)
         }
 
-        binding.selectedMpListRv.layoutManager = manager
-        binding.selectedMpListRv.adapter = adapter
+        binding.selectedApListRv.layoutManager = manager
+        binding.selectedApListRv.adapter = adapter
 
 //        activity?.applicationContext?.let {
 //            RvItemClickListener(
@@ -87,17 +75,18 @@ class SelectedMPListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.mappingPoint()?.observe(viewLifecycleOwner, {
-//            Log.d(TAG, "onResume: ${it[0]?.x}")
+        viewModel.accessPoints()?.observe(viewLifecycleOwner, {
+//            Log.d(TAG, "onResume: ${it[0]?.mac}")
             adapter.sendData(it)
+            adapter.notifyDataSetChanged()
         })
     }
 
     override fun onPause() {
         super.onPause()
         with(binding) {
-            selectedMpListRv.layoutManager = null
-            selectedMpListRv.adapter = null
+            selectedApListRv.layoutManager = null
+            selectedApListRv.adapter = null
         }
     }
 

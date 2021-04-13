@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/wifi"
+        android:id="@+id/wifi_ap_list"
         android:title="@string/wifi" />
 
     <item
-        android:id="@+id/coordinates"
-        android:title="@string/selected_mp" />
+        android:id="@+id/selected_ap_list"
+        android:title="@string/ap_added" />
+
+    <item
+        android:id="@+id/selected_mp_list"
+        android:title="@string/mp_added" />
 
     <item
         android:id="@+id/add_coordinate"
