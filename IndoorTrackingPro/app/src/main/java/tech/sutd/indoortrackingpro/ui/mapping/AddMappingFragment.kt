@@ -54,13 +54,14 @@ class AddMappingFragment : BottomSheetDialogFragment() {
             backButtonAddMapping.setOnClickListener {
                 if (findNavController().previousBackStackEntry?.equals(R.id.mappingFragment) == true)
                     findNavController().popBackStack(R.id.mappingFragment, false)
-                findNavController().navigate(R.id.action_addMappingDialog_to_mappingFragment)
+                    findNavController().navigate(R.id.action_addMappingDialog_to_mappingFragment)
             }
 
             yesButtonAddMapping.setOnClickListener {
                 findNavController().popBackStack(R.id.mainFragment, false)
                 viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
                 Toast.makeText(activity,"Coordinate added!",Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
             }
             yesButtonAddMapping.isEnabled = false
             xAddMapping.text = coordinate?.get(0)?.toString() ?: ""

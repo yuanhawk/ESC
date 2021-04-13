@@ -43,6 +43,7 @@ class MainFragment : Fragment() {
         with(binding) {
             apRv.adapter = apAdapter
             apRv.layoutManager = LinearLayoutManager(context)
+            apAdapter.notifyDataSetChanged()
 //            mpRV.adapter = mpAdapter
 //            mpRv.layoutManager = LinearLayoutManager(context)
         }
@@ -64,7 +65,7 @@ class MainFragment : Fragment() {
 
         viewModel.mappingPoint()?.observe(viewLifecycleOwner, {
 //            Log.d(TAG, "onResume: ${it[0]?.x}")
-            mpAdapter.sendData(it)
+//            mpAdapter.sendData(it)
             apAdapter.notifyDataSetChanged()
         })
     }

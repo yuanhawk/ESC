@@ -82,6 +82,15 @@ class SelectedMPListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.mappingPoint()?.observe(viewLifecycleOwner, {
+//            Log.d(TAG, "onResume: ${it[0]?.x}")
+            adapter.sendData(it)
+        })
+    }
+
     override fun onPause() {
         super.onPause()
         with(binding) {
