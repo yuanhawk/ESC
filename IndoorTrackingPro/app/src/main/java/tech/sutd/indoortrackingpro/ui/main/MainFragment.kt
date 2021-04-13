@@ -43,8 +43,8 @@ class MainFragment : Fragment() {
         with(binding) {
             apRv.adapter = apAdapter
             apRv.layoutManager = LinearLayoutManager(context)
-            mpRv.adapter = mpAdapter
-            mpRv.layoutManager = LinearLayoutManager(context)
+//            mpRV.adapter = mpAdapter
+//            mpRv.layoutManager = LinearLayoutManager(context)
         }
 
 //        val ap = AccessPoint()
@@ -74,8 +74,8 @@ class MainFragment : Fragment() {
         with(binding) {
             apRv.layoutManager = null
             apRv.adapter = null
-            mpRv.adapter = null
-            mpRv.layoutManager = null
+//            mpRv.adapter = null
+//            mpRv.layoutManager = null
         }
 
     }

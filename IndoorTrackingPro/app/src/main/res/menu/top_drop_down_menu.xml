@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/coordinates"
-        android:title="@string/coordinates" />
+        android:title="@string/selected_mp" />
 
     <item
         android:id="@+id/add_coordinate"

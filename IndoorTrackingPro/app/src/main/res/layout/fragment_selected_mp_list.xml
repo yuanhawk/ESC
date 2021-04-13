@@ -6,21 +6,22 @@
         android:orientation="vertical"
         xmlns:tools="http://schemas.android.com/tools">
 
-        <Button
-            android:id="@+id/button_search_for_waps"
+        <TextView
+            android:id="@+id/text_selected_mp_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="70dp"
-            android:text="@string/search_for_waps" />
+            android:textSize="20sp"
+            android:text="@string/mp_added" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/wifi_list_rv"
+            android:id="@+id/selected_mp_list_rv"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            tools:listitem = "@layout/wap_list"/>
+            tools:listitem="@layout/selected_mp_list" />
 
     </LinearLayout>
 </layout>

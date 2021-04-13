@@ -91,7 +91,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                     return@setOnMenuItemClickListener true
                 }
                 R.id.coordinates -> {
-                    navController.navigate(R.id.coordinatesListFragment)
+                    navController.navigate(R.id.selectedMPListFragment)
                     return@setOnMenuItemClickListener true
                 }
                 R.id.add_coordinate -> {

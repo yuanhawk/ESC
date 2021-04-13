@@ -54,6 +54,7 @@ class WifiListFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_wifi_list, container, false)
+
         with(binding){
             buttonSearchForWaps.setOnClickListener {
 
