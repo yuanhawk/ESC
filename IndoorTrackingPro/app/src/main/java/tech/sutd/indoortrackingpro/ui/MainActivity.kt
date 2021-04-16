@@ -17,9 +17,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
+import io.realm.RealmList
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
+import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
 import java.util.*
@@ -29,6 +31,10 @@ import javax.inject.Inject
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val TAG = "MainActivity"
+    companion object {
+        var apAdded : Boolean = false
+        var mpAdded : Boolean = false
+    }
     @Inject
     lateinit var realm: Realm
     private lateinit var binding: ActivityMainBinding

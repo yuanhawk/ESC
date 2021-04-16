@@ -24,7 +24,7 @@
                 app:horizontalPanEnabled="true"
                 app:maxZoom="5"
                 app:maxZoomType="zoom"
-                app:minZoom="1"
+                app:minZoom="0.5"
                 app:minZoomType="zoom"
                 app:oneFingerScrollEnabled="true"
                 app:overPinchable="true"

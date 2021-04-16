@@ -17,6 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
+import io.realm.RealmConfiguration
+import io.realm.RealmList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +27,8 @@ import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.Account
+import tech.sutd.indoortrackingpro.model.MappingPoint
+import tech.sutd.indoortrackingpro.ui.MainActivity
 import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
@@ -34,17 +38,21 @@ class WifiListFragment : Fragment() {
 
     private val TAG = "WifiListFragment"
 
-    @Inject lateinit var realm: Realm
+
+
+
     @Inject lateinit var handler: Handler
     @Inject lateinit var adapter: WifiListAdapter
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var wifiReceiver: WifiSearchReceiver
-
+    @Inject lateinit var config: RealmConfiguration
     lateinit var binding: FragmentWifiListBinding
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
     val data = arrayListOf<ArrayList<String>>()
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,16 +77,23 @@ class WifiListFragment : Fragment() {
             RvItemClickListener(
                 it, object : RvItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
+//                        val realm2 = Realm.getInstance(config)
+//                        var mpList: RealmList<MappingPoint> = realm2.where(Account::class.java).findFirst()?.mMappingPoints!!
+                        if (!MainActivity.mpAdded){
                         val accessPoint = AccessPoint()
                         accessPoint.mac = adapter.wifiList[position].BSSID
                         accessPoint.ssid = adapter.wifiList[position].SSID
                         Log.d(TAG, "onItemClick: ${accessPoint.mac}")
 
                         viewModel.insertAp(accessPoint)
+                        MainActivity.apAdded = true
 
                         Toast.makeText(context, "Added to WAP list successfully", Toast.LENGTH_SHORT).show()
                         findNavController().popBackStack(R.id.selectedAPListFragment, false)
                         findNavController().navigate(R.id.action_wifiListFragment_to_selectedAPListFragment)
+                    } else{
+                        Toast.makeText(context, "Unable to add AP after adding MP",Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             )
