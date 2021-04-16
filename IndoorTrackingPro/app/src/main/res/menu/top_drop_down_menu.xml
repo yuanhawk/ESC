@@ -12,7 +12,4 @@
         android:id="@+id/selected_mp_list"
         android:title="@string/mp_added" />
 
-    <item
-        android:id="@+id/add_coordinate"
-        android:title="@string/add_coordinates" />
 </menu>

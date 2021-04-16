@@ -31,7 +31,7 @@ class CustomZoomImageView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawCircle(pos[0], pos[1], 20f, border)
-        canvas.drawCircle(pos[0], pos[1], 15f, paint)
+        canvas.drawCircle(pos[0], pos[1], 40f, border)
+        canvas.drawCircle(pos[0], pos[1], 30f, paint)
     }
 }
