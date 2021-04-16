@@ -62,7 +62,6 @@ class MainFragment : Fragment() {
         viewModel.accessPoints()?.observe(viewLifecycleOwner, {
 //            Log.d(TAG, "onResume: ${it[0]?.mac}")
             apAdapter.sendData(it)
-            apAdapter.notifyDataSetChanged()
         })
 
         viewModel.mappingPoint()?.observe(viewLifecycleOwner, {

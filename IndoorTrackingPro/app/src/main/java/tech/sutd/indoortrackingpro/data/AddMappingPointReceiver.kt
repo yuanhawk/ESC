@@ -18,6 +18,8 @@ import tech.sutd.indoortrackingpro.model.MappingPoint
 import tech.sutd.indoortrackingpro.ui.mapping.AddMappingFragment
 import tech.sutd.indoortrackingpro.utils.*
 
+// TODO: Requires hilt
+
 class AddMappingPointReceiver(var fragment: AddMappingFragment, var realm: Realm): BroadcastReceiver() {
 
     var readings: HashMap<String, ArrayList<Int>> = HashMap()

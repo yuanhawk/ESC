@@ -17,21 +17,17 @@ class TrackingFragment : Fragment() {
     lateinit var  binding: FragmentTrackingBinding
     val model:  TrackingViewModel by viewModels()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate<FragmentTrackingBinding>(inflater, R.layout.fragment_tracking, container, false)
-
-//        // Mapping Button to go from trackingFragment -> mappingFragment
-//        mappingButton.setOnClickListener { view ->
-//            view?.findNavController()?.navigate(R.id.action_mappingFragment_to_trackingFragment)
-//        }
+        
         model.initWifiScan(this)
         with(binding){
             trackingMap.setImageResource(R.drawable.map)
-            trackingMap.isEnabled = true;
+            trackingMap.isEnabled = true
             trackingMap.pos[0] = 300.0f
             trackingMap.pos[1] = 500.0f
-            trackingMap.invalidate();
+            trackingMap.invalidate()
         }
 
 

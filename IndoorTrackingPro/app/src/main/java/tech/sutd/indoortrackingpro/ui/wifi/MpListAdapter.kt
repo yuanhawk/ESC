@@ -9,8 +9,7 @@ import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.SelectedMpListBinding
 import tech.sutd.indoortrackingpro.model.MappingPoint
 
-class MpListAdapter :
-    RecyclerView.Adapter<MpListAdapter.MpListViewHolder>() {
+class MpListAdapter : RecyclerView.Adapter<MpListAdapter.MpListViewHolder>() {
 
     private val TAG = "MpListAdapter"
 

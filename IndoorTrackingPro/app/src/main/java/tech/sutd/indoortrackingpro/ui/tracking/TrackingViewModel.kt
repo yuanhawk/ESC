@@ -23,6 +23,8 @@ import tech.sutd.indoortrackingpro.utils.intentKey
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+// TODO: Requires separation of UI elements
+
 @HiltViewModel
 class TrackingViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,

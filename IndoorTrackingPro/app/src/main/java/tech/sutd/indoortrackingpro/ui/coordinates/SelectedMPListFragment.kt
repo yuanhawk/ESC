@@ -34,9 +34,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SelectedMPListFragment : Fragment() {
 
-    private val TAG = "SelectedMPListFragment"
-
-    private var mapList: List<MappingPoint> = arrayListOf()
+//    private val TAG = "SelectedMPListFragment"
 
     @Inject lateinit var realm: Realm
     @Inject lateinit var handler: Handler

@@ -38,9 +38,6 @@ class WifiListFragment : Fragment() {
 
     private val TAG = "WifiListFragment"
 
-
-
-
     @Inject lateinit var handler: Handler
     @Inject lateinit var adapter: WifiListAdapter
     @Inject lateinit var manager: LinearLayoutManager
@@ -51,8 +48,6 @@ class WifiListFragment : Fragment() {
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
     val data = arrayListOf<ArrayList<String>>()
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,

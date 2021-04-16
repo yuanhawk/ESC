@@ -1,7 +1,5 @@
 package tech.sutd.indoortrackingpro.ui.mapping
 
-import android.content.BroadcastReceiver
-import android.content.Intent
 import android.content.IntentFilter
 import android.net.wifi.WifiManager
 import android.os.Bundle
@@ -12,23 +10,19 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import io.realm.RealmList
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
 import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
-import tech.sutd.indoortrackingpro.databinding.FragmentMainBinding
-import tech.sutd.indoortrackingpro.model.AccessPoint
-import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.ui.MainActivity
-import tech.sutd.indoortrackingpro.ui.wifi.WifiListFragment
-import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import tech.sutd.indoortrackingpro.utils.coord
 import javax.inject.Inject
+
+// TODO: Requires caching
+
 @AndroidEntryPoint
 class AddMappingFragment: BottomSheetDialogFragment() {
 
@@ -36,10 +30,6 @@ class AddMappingFragment: BottomSheetDialogFragment() {
     lateinit var binding: AddMappingBinding
     lateinit var wifiReceiver: AddMappingPointReceiver
     @Inject lateinit var config: RealmConfiguration
-
-
-
-
 
     val TAG = "addMapping"
 
@@ -90,8 +80,8 @@ class AddMappingFragment: BottomSheetDialogFragment() {
 //                }
 
                 yesButtonAddMapping.isEnabled = false
-                xAddMapping.text = coordinate?.get(0)?.toString() ?: ""
-                yAddMapping.text = coordinate?.get(1)?.toString() ?: ""
+                xAddMapping.text = coordinate[0].toString()
+                yAddMapping.text = coordinate[1].toString()
                 isCancelable = false}
             } }
             val realm = Realm.getInstance(config)
