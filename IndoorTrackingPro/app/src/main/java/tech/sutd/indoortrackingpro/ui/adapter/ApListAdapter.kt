@@ -9,8 +9,7 @@ import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.SelectedApListBinding
 import tech.sutd.indoortrackingpro.model.AccessPoint
 
-class ApListAdapter :
-    RecyclerView.Adapter<ApListAdapter.ApListViewHolder>() {
+class ApListAdapter : RecyclerView.Adapter<ApListAdapter.ApListViewHolder>() {
 
     private val TAG = "ApListAdapter"
 

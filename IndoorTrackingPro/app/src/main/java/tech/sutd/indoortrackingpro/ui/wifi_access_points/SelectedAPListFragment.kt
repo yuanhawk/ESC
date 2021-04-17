@@ -2,18 +2,17 @@ package tech.sutd.indoortrackingpro.ui.wifi_access_points
 
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentSelectedApListBinding
-import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import javax.inject.Inject
@@ -21,17 +20,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SelectedAPListFragment : Fragment() {
 
-    private val TAG = "SelectedAPListFragment"
-
-    private var wifiList: List<AccessPoint> = arrayListOf()
-
     @Inject lateinit var realm: Realm
     @Inject lateinit var handler: Handler
     @Inject lateinit var adapter: ApListAdapter
     @Inject lateinit var manager: LinearLayoutManager
 
-
-    lateinit var binding: FragmentSelectedApListBinding
+    private lateinit var binding: FragmentSelectedApListBinding
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
@@ -47,11 +41,8 @@ class SelectedAPListFragment : Fragment() {
 
         with(binding){
             selectedApListRv.adapter = adapter
-            selectedApListRv.layoutManager = LinearLayoutManager(context)
+            selectedApListRv.layoutManager = manager
         }
-
-        binding.selectedApListRv.layoutManager = manager
-        binding.selectedApListRv.adapter = adapter
 
 //        activity?.applicationContext?.let {
 //            RvItemClickListener(

@@ -17,8 +17,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MappingFragment : Fragment() {
-    @Inject
-    lateinit var bundle: Bundle
+    @Inject lateinit var bundle: Bundle
 
     private lateinit var location: FloatArray
 

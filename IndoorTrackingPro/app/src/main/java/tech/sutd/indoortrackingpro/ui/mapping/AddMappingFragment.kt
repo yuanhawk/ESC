@@ -24,28 +24,22 @@ import javax.inject.Inject
 // TODO: Requires caching
 
 @AndroidEntryPoint
-class AddMappingFragment: BottomSheetDialogFragment() {
+class AddMappingFragment : BottomSheetDialogFragment() {
 
     private val viewModel: MappingViewModel by hiltNavGraphViewModels(R.id.main)
-    lateinit var binding: AddMappingBinding
-    lateinit var wifiReceiver: AddMappingPointReceiver
+    private lateinit var binding: AddMappingBinding
     @Inject lateinit var config: RealmConfiguration
+    @Inject lateinit var wifiReceiver: AddMappingPointReceiver
 
     val TAG = "addMapping"
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
 
-        binding = DataBindingUtil.inflate<AddMappingBinding>(
-            inflater,
-            R.layout.add_mapping,
-            container,
-            false
-        )
-
+        binding = DataBindingUtil.inflate(inflater, R.layout.add_mapping, container, false)
 
         with(binding) {
 
@@ -71,28 +65,29 @@ class AddMappingFragment: BottomSheetDialogFragment() {
 //                    val intent = Intent(context,WifiListFragment::class.java)
 //                            startActivity(intent)
 
-                } else{
+                } else {
                     findNavController().popBackStack(R.id.mainFragment, false)
                     viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
                     Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT).show()
                     MainActivity.mpAdded = true
                     findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
-//                }
 
-                yesButtonAddMapping.isEnabled = false
-                xAddMapping.text = coordinate[0].toString()
-                yAddMapping.text = coordinate[1].toString()
-                isCancelable = false}
-            } }
-            val realm = Realm.getInstance(config)
-            wifiReceiver = AddMappingPointReceiver(this, realm)
-            return binding.root
-
+                    yesButtonAddMapping.isEnabled = false
+                    xAddMapping.text = coordinate[0].toString()
+                    yAddMapping.text = coordinate[1].toString()
+                    isCancelable = false
+                }
+            }
+        }
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        requireActivity().registerReceiver(wifiReceiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
+        requireActivity().registerReceiver(
+            wifiReceiver,
+            IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        )
         wifiReceiver.start()
     }
 

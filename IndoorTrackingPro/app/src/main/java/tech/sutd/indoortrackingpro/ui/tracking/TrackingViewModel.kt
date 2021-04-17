@@ -23,8 +23,6 @@ import tech.sutd.indoortrackingpro.utils.intentKey
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-// TODO: Requires separation of UI elements
-
 @HiltViewModel
 class TrackingViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
@@ -56,13 +54,13 @@ class TrackingViewModel @Inject constructor(
                 Log.d(TAG, coordinate.longitude.toString())
                 Log.d(TAG, coordinate.latitude.toString())
                 coordinates = MutableLiveData(coordinate)
-           with(fragment.binding) {
-               trackingMap.setImageResource(R.drawable.map)
-               trackingMap.isEnabled = true
-               trackingMap.pos[0] = coordinate.longitude.toFloat()
-               trackingMap.pos[1] = coordinate.latitude.toFloat()
-               trackingMap.invalidate()
-           }
+//           with(fragment.binding) {
+//               trackingMap.setImageResource(R.drawable.map)
+//               trackingMap.isEnabled = true
+//               trackingMap.pos[0] = coordinate.longitude.toFloat()
+//               trackingMap.pos[1] = coordinate.latitude.toFloat()
+//               trackingMap.invalidate()
+//           }
 //                xText.text = coordinate.longitude.toString()
 //                yText.text = coordinate.latitude.toString()
             }
@@ -79,7 +77,8 @@ class TrackingViewModel @Inject constructor(
             LocalBroadcastManager.getInstance(it)
                 .unregisterReceiver(broadcastReceiver)
         }
-
     }
+
+    fun coordinates(): LiveData<Coordinate> = coordinates
 
 }

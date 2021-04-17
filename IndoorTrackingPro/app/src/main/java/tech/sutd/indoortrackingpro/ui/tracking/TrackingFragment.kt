@@ -14,21 +14,31 @@ import tech.sutd.indoortrackingpro.databinding.FragmentTrackingBinding
 
 @AndroidEntryPoint
 class TrackingFragment : Fragment() {
-    lateinit var  binding: FragmentTrackingBinding
+    private lateinit var binding: FragmentTrackingBinding
     val model:  TrackingViewModel by viewModels()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate<FragmentTrackingBinding>(inflater, R.layout.fragment_tracking, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tracking, container, false)
+
+        model.coordinates().observe(viewLifecycleOwner, {
+            with(binding) {
+                trackingMap.setImageResource(R.drawable.map)
+                trackingMap.isEnabled = true
+                trackingMap.pos[0] = it.longitude.toFloat()
+                trackingMap.pos[1] = it.latitude.toFloat()
+                trackingMap.invalidate()
+            }
+        })
         
         model.initWifiScan(this)
-        with(binding){
-            trackingMap.setImageResource(R.drawable.map)
-            trackingMap.isEnabled = true
-            trackingMap.pos[0] = 300.0f
-            trackingMap.pos[1] = 500.0f
-            trackingMap.invalidate()
-        }
+//        with(binding){
+//            trackingMap.setImageResource(R.drawable.map)
+//            trackingMap.isEnabled = true
+//            trackingMap.pos[0] = 300.0f
+//            trackingMap.pos[1] = 500.0f
+//            trackingMap.invalidate()
+//        }
 
 
         return binding.root

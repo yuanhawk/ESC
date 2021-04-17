@@ -13,6 +13,8 @@ import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.Account
 import javax.inject.Inject
 
+// Removed on next iteration if not used
+
 class WifiListAdapter @Inject constructor(
     private val config: RealmConfiguration
 ) : RecyclerView.Adapter<WifiListAdapter.WAPListViewHolder>() {

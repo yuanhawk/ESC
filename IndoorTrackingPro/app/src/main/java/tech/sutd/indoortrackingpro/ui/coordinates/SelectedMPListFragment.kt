@@ -41,7 +41,7 @@ class SelectedMPListFragment : Fragment() {
     @Inject lateinit var adapter: MpListAdapter
     @Inject lateinit var manager: LinearLayoutManager
 
-    lateinit var binding: FragmentSelectedMpListBinding
+    private lateinit var binding: FragmentSelectedMpListBinding
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
@@ -57,11 +57,8 @@ class SelectedMPListFragment : Fragment() {
 
         with(binding){
             selectedMpListRv.adapter = adapter
-            selectedMpListRv.layoutManager = LinearLayoutManager(context)
+            selectedMpListRv.layoutManager = manager
         }
-
-        binding.selectedMpListRv.layoutManager = manager
-        binding.selectedMpListRv.adapter = adapter
 
 //        activity?.applicationContext?.let {
 //            RvItemClickListener(
