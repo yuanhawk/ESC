@@ -19,7 +19,7 @@ import io.realm.Realm
 import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.core.TrackingAlgo
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
-import tech.sutd.indoortrackingpro.model.AccessPoint
+import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -76,7 +76,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideListApt(): MediatorLiveData<List<AccessPoint>> =
+    fun provideListApt(): MediatorLiveData<List<Account_mAccessPoints>> =
         MediatorLiveData()
 
     @Singleton

@@ -5,22 +5,20 @@ import android.os.Parcel
 import android.os.Parcelable
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.utils.noSignalDefaultRssi
 import java.util.*
 
 // Signal strength, local db (realm), cache that is viewed as rv, pick some AP
-
-open class AccessPoint(
-    @PrimaryKey
-    var id : String = UUID.randomUUID().toString(),
-    //RealmObject requires null type, cannot be lateinit
+open class Account_mAccessPoints(
+    @PrimaryKey var _id: ObjectId = ObjectId(),
     var mac: String = "",
-    var ssid: String = "",
-    var rssi: Double = noSignalDefaultRssi
+    var rssi: Double = noSignalDefaultRssi,
+    var ssid: String = ""
 ) : RealmObject(), Parcelable{
 
-    constructor(other: AccessPoint): this(){
-        this.id = UUID.randomUUID().toString()  //this is very important!!
+    constructor(other: Account_mAccessPoints): this(){
+        this._id = ObjectId()  //this is very important!!
         this.mac = other.mac
         this.ssid = other.ssid
         this.rssi = noSignalDefaultRssi
@@ -32,14 +30,14 @@ open class AccessPoint(
         rssi = scanResult.level.toDouble()
     }
     constructor(parcel: Parcel) : this() {
-        id = parcel.readString().toString()
+        _id = ObjectId()
         mac = parcel.readString().toString()
         ssid = parcel.readString().toString()
         rssi = parcel.readDouble()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
+        parcel.writeString(_id.toString())
         parcel.writeString(mac)
         parcel.writeString(ssid)
         parcel.writeDouble(rssi)
@@ -49,12 +47,12 @@ open class AccessPoint(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<AccessPoint> {
-        override fun createFromParcel(parcel: Parcel): AccessPoint {
-            return AccessPoint(parcel)
+    companion object CREATOR : Parcelable.Creator<Account_mAccessPoints> {
+        override fun createFromParcel(parcel: Parcel): Account_mAccessPoints {
+            return Account_mAccessPoints(parcel)
         }
 
-        override fun newArray(size: Int): Array<AccessPoint?> {
+        override fun newArray(size: Int): Array<Account_mAccessPoints?> {
             return arrayOfNulls(size)
         }
     }

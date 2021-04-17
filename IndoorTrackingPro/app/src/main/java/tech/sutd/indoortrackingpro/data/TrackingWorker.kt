@@ -14,7 +14,7 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import tech.sutd.indoortrackingpro.model.MappingPoint
+import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import tech.sutd.indoortrackingpro.utils.intentFilter
 import tech.sutd.indoortrackingpro.utils.intentKey
 import java.util.concurrent.TimeUnit
@@ -34,7 +34,7 @@ class TrackingWorker @AssistedInject constructor(
         // get networks
         val mResults: List<ScanResult> = wifiWrapper.scanResults()
         Log.d(TAG, "New scan result: (" + mResults.size + ") networks found")
-        val mappingPoint = MappingPoint(mResults)
+        val mappingPoint = Account_mMappingPoints(mResults)
         val intent = Intent(intentFilter)
         intent.putExtra(intentKey, mappingPoint)
         LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent)

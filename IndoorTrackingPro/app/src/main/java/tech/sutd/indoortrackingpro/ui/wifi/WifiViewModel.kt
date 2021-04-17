@@ -7,29 +7,27 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import io.realm.RealmList
-import kotlinx.coroutines.runBlocking
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.WifiWrapper
-import tech.sutd.indoortrackingpro.model.AccessPoint
+import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.model.MappingPoint
-import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
+import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import javax.inject.Inject
 
 @HiltViewModel
 class WifiViewModel @Inject constructor(
     private val wifiWrapper: WifiWrapper,
     private val data: MediatorLiveData<List<ScanResult>>,
-    private val accountMd: MediatorLiveData<List<AccessPoint>>,
+    private val accountMd: MediatorLiveData<List<Account_mAccessPoints>>,
     private val config: RealmConfiguration
 ) : ViewModel() {
 
     private val TAG = "WifiViewModel"
 
-    var account: LiveData<RealmList<AccessPoint>>? = MutableLiveData()
-    var mapping: LiveData<RealmList<MappingPoint>>? = MutableLiveData()
+    var account: LiveData<RealmList<Account_mAccessPoints>>? = MutableLiveData()
+    var mapping: LiveData<RealmList<Account_mMappingPoints>>? = MutableLiveData()
 
-    fun insertAp(accessPoint: AccessPoint) {
+    fun insertAp(accessPoint: Account_mAccessPoints) {
         val realm = Realm.getInstance(config)
         realm.beginTransaction()
         val account = realm.where(Account::class.java).findFirst()
@@ -48,7 +46,7 @@ class WifiViewModel @Inject constructor(
         data.removeSource(receiver.data)
     }
 
-    fun accessPoints(): LiveData<RealmList<AccessPoint>>? {
+    fun accessPoints(): LiveData<RealmList<Account_mAccessPoints>>? {
         Realm.getInstanceAsync(config, object : Realm.Callback() {
             override fun onSuccess(realm: Realm) {
                 realm.executeTransaction { transactionRealm ->
@@ -63,7 +61,7 @@ class WifiViewModel @Inject constructor(
         return account
     }
 
-    fun mappingPoint(): LiveData<RealmList<MappingPoint>>? {
+    fun mappingPoint(): LiveData<RealmList<Account_mMappingPoints>>? {
         Realm.getInstanceAsync(config, object : Realm.Callback() {
             override fun onSuccess(realm: Realm) {
                 realm.executeTransaction { transactionRealm ->

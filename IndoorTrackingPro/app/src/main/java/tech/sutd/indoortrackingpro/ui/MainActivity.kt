@@ -1,27 +1,21 @@
 package tech.sutd.indoortrackingpro.ui
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.transition.Slide
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
-import io.realm.RealmList
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
-import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
 import java.util.*

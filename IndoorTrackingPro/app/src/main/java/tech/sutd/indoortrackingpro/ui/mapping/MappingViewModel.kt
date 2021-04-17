@@ -5,10 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
-import io.realm.RealmConfiguration
-import tech.sutd.indoortrackingpro.model.AccessPoint
 import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.model.MappingPoint
+import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +17,7 @@ class MappingViewModel @Inject constructor(
 
     private val TAG = "mappingViewModel"
 
-    fun insertMp(coord: FloatArray, mappingPt: MappingPoint) {
+    fun insertMp(coord: FloatArray, mappingPt: Account_mMappingPoints) {
         mappingPt.x = coord[0].toDouble()
         mappingPt.y = coord[1].toDouble()
 

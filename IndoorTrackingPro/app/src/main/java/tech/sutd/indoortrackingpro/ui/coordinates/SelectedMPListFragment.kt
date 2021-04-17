@@ -1,34 +1,20 @@
 package tech.sutd.indoortrackingpro.ui.coordinates
 
-import android.content.IntentFilter
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
-import io.realm.RealmList
-import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentSelectedMpListBinding
-import tech.sutd.indoortrackingpro.model.AccessPoint
-import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.model.MappingPoint
 import tech.sutd.indoortrackingpro.ui.wifi.MpListAdapter
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
-import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
 
 @AndroidEntryPoint

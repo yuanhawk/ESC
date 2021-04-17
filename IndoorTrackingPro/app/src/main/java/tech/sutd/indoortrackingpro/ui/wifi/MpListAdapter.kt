@@ -7,13 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.SelectedMpListBinding
-import tech.sutd.indoortrackingpro.model.MappingPoint
+import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 
 class MpListAdapter : RecyclerView.Adapter<MpListAdapter.MpListViewHolder>() {
 
     private val TAG = "MpListAdapter"
 
-    private var mapList: List<MappingPoint> = arrayListOf()
+    private var mapList: List<Account_mMappingPoints> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MpListViewHolder {
         val binding = DataBindingUtil.inflate<SelectedMpListBinding>(
@@ -31,7 +31,7 @@ class MpListAdapter : RecyclerView.Adapter<MpListAdapter.MpListViewHolder>() {
         }
     }
 
-    fun sendData(mapList: List<MappingPoint>) {
+    fun sendData(mapList: List<Account_mMappingPoints>) {
         this.mapList = mapList
         notifyDataSetChanged()
     }

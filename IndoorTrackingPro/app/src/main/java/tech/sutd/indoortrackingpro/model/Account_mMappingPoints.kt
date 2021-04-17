@@ -6,28 +6,30 @@ import android.os.Parcelable
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import org.bson.types.ObjectId
 import java.util.*
 
 // List of ap recorded (picked), realm db -> remote db
-
-open class MappingPoint(
-    @PrimaryKey var id: String = UUID.randomUUID().toString(),
+open class Account_mMappingPoints(
+    @PrimaryKey var _id: ObjectId = ObjectId(),
+    var accessPointSignalRecorded: RealmList<Account_mAccessPoints> = RealmList(),
     var x: Double = 0.0,
-    var y: Double = 0.0,
-    var accessPointSignalRecorded: RealmList<AccessPoint> = RealmList()): RealmObject(), Parcelable{
+    var y: Double = 0.0
+) : RealmObject(), Parcelable{
+
     constructor(parcel: Parcel) : this(){
-        id = parcel.readString()!!
+        _id = ObjectId()
         x = parcel.readDouble()
         y = parcel.readDouble()
-        parcel.readTypedList(accessPointSignalRecorded, AccessPoint.CREATOR)
+        parcel.readTypedList(accessPointSignalRecorded, Account_mAccessPoints.CREATOR)
     }
     constructor(scanResultList: List<ScanResult>): this(){
         for (scanResult in scanResultList){
-            accessPointSignalRecorded.add(AccessPoint(scanResult))
+            accessPointSignalRecorded.add(Account_mAccessPoints(scanResult))
         }
     }
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(id)
+        parcel.writeString(_id.toString())
         parcel.writeDouble(x)
         parcel.writeDouble(y)
     }
@@ -36,15 +38,14 @@ open class MappingPoint(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<MappingPoint> {
-        override fun createFromParcel(parcel: Parcel): MappingPoint {
-            return MappingPoint(parcel)
+    companion object CREATOR : Parcelable.Creator<Account_mMappingPoints> {
+        override fun createFromParcel(parcel: Parcel): Account_mMappingPoints {
+            return Account_mMappingPoints(parcel)
         }
 
-        override fun newArray(size: Int): Array<MappingPoint?> {
+        override fun newArray(size: Int): Array<Account_mMappingPoints?> {
             return arrayOfNulls(size)
         }
     }
-
 
 }

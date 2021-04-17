@@ -7,13 +7,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.SelectedApListBinding
-import tech.sutd.indoortrackingpro.model.AccessPoint
+import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 
 class ApListAdapter : RecyclerView.Adapter<ApListAdapter.ApListViewHolder>() {
 
     private val TAG = "ApListAdapter"
 
-    private var wifiList: List<AccessPoint> = arrayListOf()
+    private var wifiList: List<Account_mAccessPoints> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApListViewHolder {
         val binding = DataBindingUtil.inflate<SelectedApListBinding>(
@@ -31,7 +31,7 @@ class ApListAdapter : RecyclerView.Adapter<ApListAdapter.ApListViewHolder>() {
         }
     }
 
-    fun sendData(wifiList: List<AccessPoint>) {
+    fun sendData(wifiList: List<Account_mAccessPoints>) {
         this.wifiList = wifiList
         notifyDataSetChanged()
     }

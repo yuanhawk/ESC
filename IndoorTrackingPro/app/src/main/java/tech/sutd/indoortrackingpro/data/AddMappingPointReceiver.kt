@@ -4,18 +4,15 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.wifi.ScanResult
-import android.net.wifi.WifiManager
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.widget.Toast
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import io.realm.Realm
 import io.realm.RealmList
-import tech.sutd.indoortrackingpro.model.AccessPoint
+import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.model.MappingPoint
-import tech.sutd.indoortrackingpro.ui.mapping.AddMappingFragment
+import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
+import tech.sutd.indoortrackingpro.model.Account_mMappingPoints_accessPointSignalRecorded
 import tech.sutd.indoortrackingpro.utils.*
 import javax.inject.Inject
 
@@ -29,9 +26,9 @@ class AddMappingPointReceiver @Inject constructor(
     var readings: HashMap<String, ArrayList<Int>> = HashMap()
     var done = true
     var count = 0
-    var apList: RealmList<AccessPoint> =
+    var apList: RealmList<Account_mAccessPoints> =
         realm.where(Account::class.java).findFirst()?.mAccessPoints!!
-    var mappingPoint = MappingPoint()
+    var mappingPoint = Account_mMappingPoints()
     val TAG = "addingMappingReceiver"
 
     init {
@@ -45,7 +42,9 @@ class AddMappingPointReceiver @Inject constructor(
 
         for (ap in apList) {
             Log.d(TAG, ap.mac)
-            mappingPoint.accessPointSignalRecorded.add(AccessPoint(ap))
+            mappingPoint.accessPointSignalRecorded.add(
+                Account_mAccessPoints(ap)
+            )
         }
     }
 

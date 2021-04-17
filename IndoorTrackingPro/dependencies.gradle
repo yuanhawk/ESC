@@ -28,7 +28,7 @@ ext.versions = [
         paging        : '3.0.0-beta03',
 
         // navigation
-        navigation    : '2.3.4',
+        navigation    : '2.3.5',
 
         // hilt_compiler
         hilt_compiler : '1.0.0-alpha03',

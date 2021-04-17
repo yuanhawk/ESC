@@ -12,13 +12,13 @@ import kotlin.math.pow
 class TrackingAlgo : AlgoHelper {
     //return coordinate as String
     override fun predictCoordinate(
-            wifiData: MappingPoint,
-            account: Account,
-            whichAlgo: String
+        wifiData: Account_mMappingPoints,
+        account: Account,
+        whichAlgo: String
     ): Coordinate? {
         val networkDataScanResult = wifiData.accessPointSignalRecorded
         val rssiValues: ArrayList<Double> = ArrayList()
-        for (accessPoint: AccessPoint in account.mAccessPoints) {
+        for (accessPoint: Account_mAccessPoints in account.mAccessPoints) {
             var flag = false
             for (j in 0 until networkDataScanResult.size) {
                 if (accessPoint.mac == networkDataScanResult[j]!!.mac) {
@@ -36,8 +36,8 @@ class TrackingAlgo : AlgoHelper {
 
     // unweighted KNN
     private fun knnPredict(
-            mappingPointsList: RealmList<MappingPoint>,
-            rssiValues: List<Double>
+        mappingPointsList: RealmList<Account_mMappingPoints>,
+        rssiValues: List<Double>
     ): Coordinate {
         val distanceLists: ArrayList<Distance> = ArrayList()
         for (mappingPoint in mappingPointsList) {
@@ -63,7 +63,7 @@ class TrackingAlgo : AlgoHelper {
         return Coordinate(x, y)
     }
 
-    private fun calculateDistance(mappingPoint: MappingPoint, rssiValues: List<Double>): Distance {
+    private fun calculateDistance(mappingPoint: Account_mMappingPoints, rssiValues: List<Double>): Distance {
         var temp = 0.0 //distance square
         for (i in rssiValues.indices) {
             temp += ((mappingPoint.accessPointSignalRecorded[i]?.rssi)!! - rssiValues[i]).pow(2.0)

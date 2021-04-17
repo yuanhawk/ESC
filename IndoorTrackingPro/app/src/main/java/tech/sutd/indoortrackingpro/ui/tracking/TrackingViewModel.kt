@@ -11,13 +11,11 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
-import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.TrackingWorker
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Coordinate
-import tech.sutd.indoortrackingpro.model.MappingPoint
-import tech.sutd.indoortrackingpro.ui.wifi.WifiListFragment
+import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import tech.sutd.indoortrackingpro.utils.intentFilter
 import tech.sutd.indoortrackingpro.utils.intentKey
 import java.util.concurrent.TimeUnit
@@ -47,7 +45,7 @@ class TrackingViewModel @Inject constructor(
         workManager.enqueue(trackingRequest)
         broadcastReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context, intent: Intent) {
-                val wifiData = intent.getParcelableExtra<MappingPoint>(intentKey)
+                val wifiData = intent.getParcelableExtra<Account_mMappingPoints>(intentKey)
                 val coordinate = algoHelper.predictCoordinate(wifiData!!, realm.where(Account::class.java).findFirst()!!, "WKNN")!!
 
                 Log.d(TAG, "receive")

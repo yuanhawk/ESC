@@ -12,22 +12,14 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import io.realm.Realm
 import io.realm.RealmConfiguration
-import io.realm.RealmList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
-import tech.sutd.indoortrackingpro.model.AccessPoint
-import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.model.MappingPoint
+import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.ui.MainActivity
 import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 import tech.sutd.indoortrackingpro.utils.RvItemClickListener
@@ -75,7 +67,7 @@ class WifiListFragment : Fragment() {
 //                        val realm2 = Realm.getInstance(config)
 //                        var mpList: RealmList<MappingPoint> = realm2.where(Account::class.java).findFirst()?.mMappingPoints!!
                         if (!MainActivity.mpAdded){
-                        val accessPoint = AccessPoint()
+                        val accessPoint = Account_mAccessPoints()
                         accessPoint.mac = adapter.wifiList[position].BSSID
                         accessPoint.ssid = adapter.wifiList[position].SSID
                         Log.d(TAG, "onItemClick: ${accessPoint.mac}")

@@ -42,14 +42,15 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     buildFeatures {
         dataBinding true
     }
     hilt {
         enableTransformForLocalTests = true
     }
-
+    realm {
+        syncEnabled true
+    }
 }
 
 dependencies {
