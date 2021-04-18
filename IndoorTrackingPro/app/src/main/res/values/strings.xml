@@ -26,5 +26,6 @@
     <string name="search_for_waps">Search for WAPs</string>
     <string name="x_val">X val</string>
     <string name="y_val">Y val</string>
+    <string name="clear_database">Clear Database</string>
 
 </resources>
