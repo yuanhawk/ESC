@@ -9,12 +9,13 @@ import android.util.Log
 import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmList
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
-import tech.sutd.indoortrackingpro.model.Account_mMappingPoints_accessPointSignalRecorded
-import tech.sutd.indoortrackingpro.ui.mapping.AddMappingFragment
 import tech.sutd.indoortrackingpro.utils.*
 import javax.inject.Inject
 
@@ -22,8 +23,11 @@ class AddMappingPointReceiver @Inject constructor(
     var context: Context,
     var handler: Handler,
     var realm: Realm,
-    var wifiWrapper: WifiWrapper
+    var wifiWrapper: WifiWrapper,
+    var pref: Preferences
 ) : BroadcastReceiver() {
+
+//    private lateinit var binding: AddMappingBinding
 
     var readings: HashMap<String, ArrayList<Int>> = HashMap()
     var done = true
@@ -69,8 +73,8 @@ class AddMappingPointReceiver @Inject constructor(
     }
 
     fun start() {
-
         if (done) {
+            GlobalScope.launch { pref.scanDone(false) }
             done = false
             startScan()
         }
@@ -86,6 +90,7 @@ class AddMappingPointReceiver @Inject constructor(
 
     private fun finishScan() {
         done = true
+        GlobalScope.launch { pref.scanDone(true) }
         for (mac in readings.keys) {
             val value = readings[mac]?.sum()?.toDouble()?.div(readings[mac]!!.size)
             for (ap in mappingPoint.accessPointSignalRecorded) {
@@ -95,12 +100,12 @@ class AddMappingPointReceiver @Inject constructor(
                 }
             }
         }
-        //binding.yesButtonAddMapping.isEnabled = true
-        Toast.makeText(
-            context,
-            "Scanning is done, press button to save the mappingPoint",
-            Toast.LENGTH_LONG
-        ).show()
+//        binding.yesButtonAddMapping.isEnabled = true
+//        Toast.makeText(
+//            context,
+//            "Scanning is done, press button to save the mappingPoint",
+//            Toast.LENGTH_LONG
+//        ).show()
         //activity.rvAdapter.notifyDataSetChanged()
     }
 }

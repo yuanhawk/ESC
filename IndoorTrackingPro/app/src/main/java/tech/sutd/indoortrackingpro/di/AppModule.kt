@@ -18,6 +18,7 @@ import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.core.TrackingAlgo
+import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import javax.inject.Singleton
@@ -82,4 +83,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideBundle(): Bundle = Bundle()
+
+    @Singleton
+    @Provides
+    fun providePreferences(@ApplicationContext context: Context): Preferences = Preferences(context)
 }

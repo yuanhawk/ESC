@@ -26,7 +26,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     private val TAG = "MainActivity"
     companion object {
-        var apAdded : Boolean = false
         var mpAdded : Boolean = false
     }
     @Inject

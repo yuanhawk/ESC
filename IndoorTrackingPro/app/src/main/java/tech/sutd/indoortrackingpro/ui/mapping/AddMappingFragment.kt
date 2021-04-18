@@ -9,13 +9,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
+import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
 import tech.sutd.indoortrackingpro.ui.MainActivity
 import tech.sutd.indoortrackingpro.utils.coord
@@ -30,6 +34,7 @@ class AddMappingFragment : BottomSheetDialogFragment() {
     lateinit var binding: AddMappingBinding
     @Inject lateinit var config: RealmConfiguration
     @Inject lateinit var wifiReceiver: AddMappingPointReceiver
+    @Inject lateinit var pref: Preferences
     val TAG = "addMapping"
 
     override fun onCreateView(
@@ -50,29 +55,34 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                 findNavController().navigate(R.id.action_addMappingDialog_to_mappingFragment)
             }
 
-            yesButtonAddMapping.setOnClickListener {
+            pref.apAdded.asLiveData().observe(viewLifecycleOwner, { apList ->
+                yesButtonAddMapping.setOnClickListener {
 //                val realm1  = Realm.getInstance(config)
 //                var apList: RealmList<AccessPoint> = realm1.where(Account::class.java).findFirst()?.mAccessPoints!!
-                if (!MainActivity.apAdded) {
+
+                    if (apList == null || apList == false) {
 //                    findNavController().popBackStack(R.id.mainFragment, false)
-                    Toast.makeText(
-                        activity,
-                        "Wifi Access Points are required first. Please proceed to add Access Points first",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        Toast.makeText(
+                            activity,
+                            "Wifi Access Points are required first. Please proceed to add Access Points first",
+                            Toast.LENGTH_SHORT
+                        ).show()
 //                    findNavController().navigate(R.id.action_selectedMPListFragment_to_wifiListFragment)
 //                    val intent = Intent(context,WifiListFragment::class.java)
 //                            startActivity(intent)
 
-                } else {
-                    findNavController().popBackStack(R.id.mainFragment, false)
-                    viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
-                    Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT).show()
-                    MainActivity.mpAdded = true
-                    findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
+                    } else {
+                        findNavController().popBackStack(R.id.mainFragment, false)
+                        viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
+                        Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT).show()
 
+                        GlobalScope.launch { pref.updateCheckMp(true) }
+
+                        findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
+                    }
                 }
-            }
+            })
+
             yesButtonAddMapping.isEnabled = false
             xAddMapping.text = coordinate?.get(0).toString()
             yAddMapping.text = coordinate?.get(1).toString()
@@ -87,6 +97,16 @@ class AddMappingFragment : BottomSheetDialogFragment() {
             wifiReceiver,
             IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
         )
+
+        pref.scanDone.asLiveData().observe(viewLifecycleOwner, {
+            binding.yesButtonAddMapping.isEnabled = true
+            Toast.makeText(
+                context,
+                "Scanning is done, press button to save the mappingPoint",
+                Toast.LENGTH_LONG
+            ).show()
+        })
+
         wifiReceiver.start()
     }
 

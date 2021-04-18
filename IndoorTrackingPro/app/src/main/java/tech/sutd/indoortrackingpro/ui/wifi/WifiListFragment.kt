@@ -10,14 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.datastore.dataStore
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.RealmConfiguration
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
+import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.ui.MainActivity
@@ -35,6 +40,7 @@ class WifiListFragment : Fragment() {
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var wifiReceiver: WifiSearchReceiver
     @Inject lateinit var config: RealmConfiguration
+    @Inject lateinit var pref: Preferences
     lateinit var binding: FragmentWifiListBinding
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
@@ -60,31 +66,44 @@ class WifiListFragment : Fragment() {
         binding.wifiListRv.layoutManager = manager
         binding.wifiListRv.adapter = adapter
 
-        activity?.applicationContext?.let {
-            RvItemClickListener(
-                it, object : RvItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
+        pref.mpAdded.asLiveData().observe(viewLifecycleOwner, { mpList ->
+            activity?.applicationContext?.let {
+                RvItemClickListener(
+                    it, object : RvItemClickListener.OnItemClickListener {
+                        override fun onItemClick(view: View, position: Int) {
 //                        val realm2 = Realm.getInstance(config)
 //                        var mpList: RealmList<MappingPoint> = realm2.where(Account::class.java).findFirst()?.mMappingPoints!!
-                        if (!MainActivity.mpAdded){
-                        val accessPoint = Account_mAccessPoints()
-                        accessPoint.mac = adapter.wifiList[position].BSSID
-                        accessPoint.ssid = adapter.wifiList[position].SSID
-                        Log.d(TAG, "onItemClick: ${accessPoint.mac}")
+                            if (mpList == null || mpList == false) {
+                                val accessPoint = Account_mAccessPoints()
+                                accessPoint.mac = adapter.wifiList[position].BSSID
+                                accessPoint.ssid = adapter.wifiList[position].SSID
+                                Log.d(TAG, "onItemClick: ${accessPoint.mac}")
 
-                        viewModel.insertAp(accessPoint)
-                        MainActivity.apAdded = true
+                                viewModel.insertAp(accessPoint)
 
-                        Toast.makeText(context, "Added to WAP list successfully", Toast.LENGTH_SHORT).show()
-                        findNavController().popBackStack(R.id.selectedAPListFragment, false)
-                        findNavController().navigate(R.id.action_wifiListFragment_to_selectedAPListFragment)
-                    } else{
-                        Toast.makeText(context, "Unable to add AP after adding MP",Toast.LENGTH_SHORT).show()
+                                GlobalScope.launch {
+                                    pref.updateCheckAp(true)
+                                }
+
+                                Toast.makeText(
+                                    context,
+                                    "Added to WAP list successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                findNavController().popBackStack(R.id.selectedAPListFragment, false)
+                                findNavController().navigate(R.id.action_wifiListFragment_to_selectedAPListFragment)
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Unable to add AP after adding MP",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     }
-                }
-            )
-        }?.let { binding.wifiListRv.addOnItemTouchListener(it) }
+                )
+            }?.let { binding.wifiListRv.addOnItemTouchListener(it) }
+        })
 
         return binding.root
     }
