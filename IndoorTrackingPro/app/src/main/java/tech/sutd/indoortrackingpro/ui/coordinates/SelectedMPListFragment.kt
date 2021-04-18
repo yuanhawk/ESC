@@ -44,6 +44,8 @@ class SelectedMPListFragment : Fragment() {
     private val observer by lazy {
         Observer<RealmList<Account_mMappingPoints>> {
             adapter.sendData(it)
+            if (adapter.mapList.isEmpty())
+                GlobalScope.launch { pref.updateCheckMp(false) }
         }
     }
 
@@ -69,7 +71,7 @@ class SelectedMPListFragment : Fragment() {
                     .setTitle("Would you like to delete all saved entries")
                     .setPositiveButton("yes") { _, _ ->
                         viewModel.clearMp()
-                        GlobalScope.launch { pref.updateCheckMp(false) }
+//                        GlobalScope.launch { pref.updateCheckMp(false) }
                     }
                     .setNegativeButton("no") { _, _ -> }.show()
             }
@@ -83,6 +85,8 @@ class SelectedMPListFragment : Fragment() {
                             .setTitle("Would you like to delete this entry")
                             .setPositiveButton("yes") { _, _ ->
                                 Log.d(TAG, "onItemClick: $position")
+                                val id = adapter.mapList[position]._id
+                                viewModel.deleteMp(id)
                             }
                             .setNegativeButton("no") { _, _ -> }.show()
                     }

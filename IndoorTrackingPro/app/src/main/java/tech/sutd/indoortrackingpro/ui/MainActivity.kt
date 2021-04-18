@@ -25,15 +25,10 @@ import javax.inject.Inject
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val TAG = "MainActivity"
-    companion object {
-        var mpAdded : Boolean = false
-    }
-    @Inject
-    lateinit var realm: Realm
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
-    private val dropDownList = arrayOf("Wifi", "Coordinates")
 
     @SuppressLint("InflateParams")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -53,17 +48,19 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             button.setOnClickListener{ v -> setupMainMenu(PopupMenu(this@MainActivity, v)) }
         }
 
-        if (realm.where(Account::class.java).findAll().isEmpty()) {
-            Log.d("Create Realm", "Realm")
-            realm.executeTransactionAsync(
-                Realm.Transaction { realm ->
-                    realm.createObject(Account::class.java, UUID.randomUUID().toString())
-                },
-                Realm.Transaction.OnError {
-                    Log.d("REALM", "Fail to create realm")
-                }
-            )
-        }
+
+
+//        if (realm.where(Account::class.java).findAll().isEmpty()) {
+//            Log.d("Create Realm", "Realm")
+//            realm.executeTransactionAsync(
+//                Realm.Transaction { realm ->
+//                    realm.createObject(Account::class.java, UUID.randomUUID().toString())
+//                },
+//                Realm.Transaction.OnError {
+//                    Log.d("REALM", "Fail to create realm")
+//                }
+//            )
+//        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

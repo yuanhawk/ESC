@@ -13,7 +13,7 @@ class MpListAdapter : RecyclerView.Adapter<MpListAdapter.MpListViewHolder>() {
 
     private val TAG = "MpListAdapter"
 
-    private var mapList: List<Account_mMappingPoints> = arrayListOf()
+    var mapList: List<Account_mMappingPoints> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MpListViewHolder {
         val binding = DataBindingUtil.inflate<SelectedMpListBinding>(
