@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
+import io.realm.RealmList
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentSelectedApListBinding
+import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import javax.inject.Inject
@@ -29,6 +32,13 @@ class SelectedAPListFragment : Fragment() {
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
+    private val observer by lazy {
+        Observer<RealmList<Account_mAccessPoints>> {
+//            Log.d(TAG, "onResume: ${it[0]?.mac}")
+            adapter.sendData(it)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,6 +52,11 @@ class SelectedAPListFragment : Fragment() {
         with(binding){
             selectedApListRv.adapter = adapter
             selectedApListRv.layoutManager = manager
+
+            swipeRefresh.setOnRefreshListener {
+                refreshObserver()
+                swipeRefresh.isRefreshing = false
+            }
         }
 
 //        activity?.applicationContext?.let {
@@ -65,12 +80,7 @@ class SelectedAPListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        viewModel.accessPoints()?.observe(viewLifecycleOwner, {
-//            Log.d(TAG, "onResume: ${it[0]?.mac}")
-            adapter.sendData(it)
-            adapter.notifyDataSetChanged()
-        })
+        refreshObserver()
     }
 
     override fun onPause() {
@@ -79,6 +89,12 @@ class SelectedAPListFragment : Fragment() {
             selectedApListRv.layoutManager = null
             selectedApListRv.adapter = null
         }
+    }
+
+    private fun refreshObserver() {
+        if (viewModel.accessPoints()?.hasActiveObservers() == true)
+            viewModel.accessPoints()?.removeObserver(observer)
+        viewModel.accessPoints()?.observe(viewLifecycleOwner, observer)
     }
 
 }

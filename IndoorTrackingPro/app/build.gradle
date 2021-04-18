@@ -57,6 +57,7 @@ dependencies {
 
     // android supports
     implementation "com.google.android.material:material:$versions.material"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swipe"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
 
     // zoom layout

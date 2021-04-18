@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
+import io.realm.RealmList
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentSelectedMpListBinding
+import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import tech.sutd.indoortrackingpro.ui.wifi.MpListAdapter
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import javax.inject.Inject
@@ -31,6 +34,12 @@ class SelectedMPListFragment : Fragment() {
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
+    private val observer by lazy {
+        Observer<RealmList<Account_mMappingPoints>> {
+            adapter.sendData(it)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,6 +53,10 @@ class SelectedMPListFragment : Fragment() {
         with(binding){
             selectedMpListRv.adapter = adapter
             selectedMpListRv.layoutManager = manager
+            swipeRefresh.setOnRefreshListener {
+                refreshObserver()
+                swipeRefresh.isRefreshing = false
+            }
         }
 
 //        activity?.applicationContext?.let {
@@ -67,11 +80,7 @@ class SelectedMPListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        viewModel.mappingPoint()?.observe(viewLifecycleOwner, {
-//            Log.d(TAG, "onResume: ${it[0]?.x}")
-            adapter.sendData(it)
-        })
+        refreshObserver()
     }
 
     override fun onPause() {
@@ -80,6 +89,12 @@ class SelectedMPListFragment : Fragment() {
             selectedMpListRv.layoutManager = null
             selectedMpListRv.adapter = null
         }
+    }
+
+    private fun refreshObserver() {
+        if (viewModel.mappingPoint()?.hasActiveObservers() == true)
+            viewModel.mappingPoint()?.removeObserver(observer)
+        viewModel.mappingPoint()?.observe(viewLifecycleOwner, observer)
     }
 
 }
