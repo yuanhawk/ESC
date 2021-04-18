@@ -9,10 +9,12 @@ import android.util.Log
 import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmList
+import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints_accessPointSignalRecorded
+import tech.sutd.indoortrackingpro.ui.mapping.AddMappingFragment
 import tech.sutd.indoortrackingpro.utils.*
 import javax.inject.Inject
 
@@ -93,7 +95,7 @@ class AddMappingPointReceiver @Inject constructor(
                 }
             }
         }
-//        fragment.binding.yesButtonAddMapping.isEnabled = true
+        //binding.yesButtonAddMapping.isEnabled = true
         Toast.makeText(
             context,
             "Scanning is done, press button to save the mappingPoint",

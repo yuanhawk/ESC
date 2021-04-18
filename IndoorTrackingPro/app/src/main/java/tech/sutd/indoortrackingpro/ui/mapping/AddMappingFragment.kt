@@ -27,10 +27,9 @@ import javax.inject.Inject
 class AddMappingFragment : BottomSheetDialogFragment() {
 
     private val viewModel: MappingViewModel by hiltNavGraphViewModels(R.id.main)
-    private lateinit var binding: AddMappingBinding
+    lateinit var binding: AddMappingBinding
     @Inject lateinit var config: RealmConfiguration
     @Inject lateinit var wifiReceiver: AddMappingPointReceiver
-
     val TAG = "addMapping"
 
     override fun onCreateView(
@@ -72,12 +71,12 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                     MainActivity.mpAdded = true
                     findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
 
-                    yesButtonAddMapping.isEnabled = false
-                    xAddMapping.text = coordinate[0].toString()
-                    yAddMapping.text = coordinate[1].toString()
-                    isCancelable = false
                 }
             }
+            yesButtonAddMapping.isEnabled = false
+            xAddMapping.text = coordinate?.get(0).toString()
+            yAddMapping.text = coordinate?.get(1).toString()
+            isCancelable = false
         }
         return binding.root
     }

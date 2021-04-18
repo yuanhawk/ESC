@@ -39,7 +39,7 @@ class TrackingViewModel @Inject constructor(
             .build()
     }
 
-    private lateinit var coordinates: LiveData<Coordinate>
+    private var coordinates: LiveData<Coordinate> = MutableLiveData<Coordinate>(Coordinate(300.0, 300.0))
 
     fun initWifiScan(fragment: TrackingFragment) {
         workManager.enqueue(trackingRequest)

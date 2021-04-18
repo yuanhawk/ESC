@@ -14,6 +14,7 @@ import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.WifiWrapper
+import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
 import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 
 @InstallIn(FragmentComponent::class)
