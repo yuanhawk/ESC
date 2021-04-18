@@ -1,10 +1,13 @@
 package tech.sutd.indoortrackingpro.ui.wifi_access_points
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -13,20 +16,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import io.realm.RealmList
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
+import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.FragmentSelectedApListBinding
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
+import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SelectedAPListFragment : Fragment() {
 
+    private val TAG = "SelectedAPListFragment"
+
     @Inject lateinit var realm: Realm
     @Inject lateinit var handler: Handler
     @Inject lateinit var adapter: ApListAdapter
     @Inject lateinit var manager: LinearLayoutManager
+    @Inject lateinit var pref: Preferences
 
     private lateinit var binding: FragmentSelectedApListBinding
 
@@ -57,23 +67,32 @@ class SelectedAPListFragment : Fragment() {
                 refreshObserver()
                 swipeRefresh.isRefreshing = false
             }
+
+            apClearDatabase.setOnClickListener {
+                AlertDialog.Builder(context)
+                    .setTitle("Would you like to delete all saved entries")
+                    .setPositiveButton("yes") { _, _ ->
+                        viewModel.clearAp()
+                        GlobalScope.launch { pref.updateCheckAp(false) }
+                    }
+                    .setNegativeButton("no") { _, _ -> }.show()
+            }
         }
 
-//        activity?.applicationContext?.let {
-//            RvItemClickListener(
-//                it, object : RvItemClickListener.OnItemClickListener {
-//                    override fun onItemClick(view: View, position: Int) {
-//                        val mappingPoint = MappingPoint()
-//                        mappingPoint.x = mapList[position].x
-//                        mappingPoint.y = mapList[position].y
-//
-//                        viewModel.mappingPoint()
-//
-//                        findNavController().popBackStack(R.id.selectedMPListFragment, false)
-//                    }
-//                }
-//            )
-//        }?.let { binding.selectedMpListRv.addOnItemTouchListener(it) }
+        activity?.applicationContext?.let {
+            RvItemClickListener(
+                it, object : RvItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        AlertDialog.Builder(context)
+                            .setTitle("Would you like to delete this entry")
+                            .setPositiveButton("yes") { _, _ ->
+                                Log.d(TAG, "onItemClick: $position")
+                            }
+                            .setNegativeButton("no") { _, _ -> }.show()
+                    }
+                }
+            )
+        }?.let { binding.selectedApListRv.addOnItemTouchListener(it) }
 
         return binding.root
     }

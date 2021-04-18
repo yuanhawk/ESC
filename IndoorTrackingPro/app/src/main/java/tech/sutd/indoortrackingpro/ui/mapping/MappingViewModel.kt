@@ -21,7 +21,6 @@ class MappingViewModel @Inject constructor(
         mappingPt.x = coord[0].toDouble()
         mappingPt.y = coord[1].toDouble()
 
-
         realm.beginTransaction()
         for (ap in mappingPt.accessPointSignalRecorded){
             Log.d( TAG+1, "${ap.mac} ${ap.rssi}")
