@@ -13,8 +13,11 @@ ext.versions = [
         constraint    : '2.0.4',
         kotlin        : '1.3.2',
         appcompat     : '1.3.0-rc01',
-        google        : '4.3.4',
+        google        : '4.3.5',
         zoom          : '1.8.0',
+        crash_gradle  : '2.5.2',
+        crashlytics   : '17.4.1',
+        analytics     : '18.0.3',
 
         // fragment
         fragment      : '1.3.2',

@@ -32,42 +32,46 @@ class AddMappingPointReceiver @Inject constructor(
     var readings: HashMap<String, ArrayList<Int>> = HashMap()
     var done = true
     var count = 0
-    var apList: RealmList<Account_mAccessPoints> =
-        realm.where(Account::class.java).findFirst()?.mAccessPoints!!
+    var apList: RealmList<Account_mAccessPoints>? =
+        realm.where(Account::class.java).findFirst()?.mAccessPoints
     var mappingPoint = Account_mMappingPoints()
     val TAG = "addingMappingReceiver"
 
     init {
-        if (apList.size == 0) {
-            Toast.makeText(
-                context,
-                "Please add Access Points first!",
-                Toast.LENGTH_LONG
-            ).show()
-        }
+        if (apList != null) {
+            if (apList?.size == 0) {
+                Toast.makeText(
+                    context,
+                    "Please add Access Points first!",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
 
-        for (ap in apList) {
-            Log.d(TAG, ap.mac)
-            mappingPoint.accessPointSignalRecorded.add(
-                Account_mAccessPoints(ap)
-            )
+            for (ap in apList!!) {
+                Log.d(TAG, ap.mac)
+                mappingPoint.accessPointSignalRecorded.add(
+                    Account_mAccessPoints(ap)
+                )
+            }
         }
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val scanResults: List<ScanResult> = wifiWrapper.scanResults()
         count++
-        for (ap in apList) {
-            for (scanResult in scanResults) {
-                if (ap.mac == scanResult.BSSID) {
-                    if (readings.containsKey(ap.mac)) readings[ap.mac]!!.add(scanResult.level)
-                    else {
-                        val newlist = ArrayList<Int>()
-                        newlist.add(scanResult.level)
-                        readings[ap.mac] = newlist
+        if (apList != null) {
+            for (ap in apList!!) {
+                for (scanResult in scanResults) {
+                    if (ap.mac == scanResult.BSSID) {
+                        if (readings.containsKey(ap.mac)) readings[ap.mac]!!.add(scanResult.level)
+                        else {
+                            val newlist = ArrayList<Int>()
+                            newlist.add(scanResult.level)
+                            readings[ap.mac] = newlist
+                        }
                     }
+                    Log.d(TAG, ap.mac + scanResult.level)
                 }
-                Log.d(TAG, ap.mac + scanResult.level)
             }
         }
     }

@@ -4,7 +4,8 @@ plugins {
     id 'kotlin-kapt'
     id 'realm-android'
     id 'dagger.hilt.android.plugin'
-    id "com.google.protobuf" version "0.8.12"
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.gms.google-services'
 }
 
 apply from: "$rootDir/dependencies.gradle"
@@ -54,6 +55,10 @@ android {
 }
 
 dependencies {
+
+    // firebase
+    implementation "com.google.firebase:firebase-crashlytics-ktx:$versions.crashlytics"
+    implementation "com.google.firebase:firebase-analytics-ktx:$versions.analytics"
 
     // android supports
     implementation "com.google.android.material:material:$versions.material"
