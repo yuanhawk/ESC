@@ -13,7 +13,7 @@ class ApListAdapter : RecyclerView.Adapter<ApListAdapter.ApListViewHolder>() {
 
     private val TAG = "ApListAdapter"
 
-    private var wifiList: List<Account_mAccessPoints> = arrayListOf()
+    var wifiList: List<Account_mAccessPoints> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApListViewHolder {
         val binding = DataBindingUtil.inflate<SelectedApListBinding>(

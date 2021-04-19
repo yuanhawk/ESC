@@ -21,7 +21,7 @@ import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.FragmentSelectedMpListBinding
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
-import tech.sutd.indoortrackingpro.ui.wifi.MpListAdapter
+import tech.sutd.indoortrackingpro.ui.adapter.MpListAdapter
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
@@ -44,6 +44,8 @@ class SelectedMPListFragment : Fragment() {
     private val observer by lazy {
         Observer<RealmList<Account_mMappingPoints>> {
             adapter.sendData(it)
+            if (adapter.mapList.isEmpty())
+                GlobalScope.launch { pref.updateCheckMp(false) }
         }
     }
 
@@ -83,6 +85,8 @@ class SelectedMPListFragment : Fragment() {
                             .setTitle("Would you like to delete this entry")
                             .setPositiveButton("yes") { _, _ ->
                                 Log.d(TAG, "onItemClick: $position")
+                                val id = adapter.mapList[position]._id
+                                viewModel.deleteMp(id)
                             }
                             .setNegativeButton("no") { _, _ -> }.show()
                     }

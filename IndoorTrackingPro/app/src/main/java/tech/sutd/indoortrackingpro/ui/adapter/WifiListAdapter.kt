@@ -5,16 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.WapListBinding
 import javax.inject.Inject
 
 // Removed on next iteration if not used
 
-class WifiListAdapter @Inject constructor(
-    private val config: RealmConfiguration
-) : RecyclerView.Adapter<WifiListAdapter.WAPListViewHolder>() {
+class WifiListAdapter : RecyclerView.Adapter<WifiListAdapter.WAPListViewHolder>() {
 
     var wifiList: List<ScanResult> = arrayListOf()
 
