@@ -11,15 +11,28 @@
         android:name="tech.sutd.indoortrackingpro.ui.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main" >
+
         <action
             android:id="@+id/action_mainFragment_to_wifiListFragment"
-            app:destination="@id/wifiListFragment" />
+            app:destination="@id/wifiListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_mainFragment_to_selectedAPListFragment"
-            app:destination="@+id/selectedAPListFragment" />
+            app:destination="@+id/selectedAPListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_mainFragment_to_selectedMPListFragment"
-            app:destination="@+id/selectedMPListFragment" />
+            app:destination="@+id/selectedMPListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <!-- WifiListFragment -->
@@ -30,7 +43,16 @@
         tools:layout="@layout/fragment_wifi_list">
         <action
             android:id="@+id/action_wifiListFragment_to_selectedAPListFragment"
-            app:destination="@+id/selectedAPListFragment" />
+            app:destination="@+id/selectedAPListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_wifiListFragment_to_mappingFragment"
+            app:destination="@id/mappingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <!-- SelectedAPListFragment -->
@@ -38,17 +60,29 @@
         android:id="@+id/selectedAPListFragment"
         android:name="tech.sutd.indoortrackingpro.ui.wifi_access_points.SelectedAPListFragment"
         android:label="selectedAPListFragment"
-        tools:layout="@layout/fragment_selected_ap_list" />
+        tools:layout="@layout/fragment_selected_ap_list">
+        <action
+            android:id="@+id/action_selectedAPListFragment_to_mappingFragment"
+            app:destination="@id/mappingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
 
     <!-- SelectedMPListFragment -->
     <fragment
         android:id="@+id/selectedMPListFragment"
-        android:name="tech.sutd.indoortrackingpro.ui.coordinates.SelectedMPListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.mapping_points.SelectedMPListFragment"
         android:label="selectedMPListFragment"
         tools:layout="@layout/fragment_selected_mp_list" >
         <action
-            android:id="@+id/action_selectedMPListFragment_to_wifiListFragment"
-            app:destination="@id/wifiListFragment"/>
+            android:id="@+id/action_selectedMPListFragment_to_mappingFragment"
+            app:destination="@id/mappingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
     </fragment>
 
     <!-- MappingFragment -->
@@ -76,7 +110,7 @@
         android:label="AddMappingDialog"
         tools:layout="@layout/add_mapping">
         <action
-            android:id="@+id/action_addMappingDialog_to_mainFragment"
+            android:id="@+id/action_addMappingDialog_to_mainActivity"
             app:destination="@id/mainFragment" />
         <action
             android:id="@+id/action_addMappingDialog_to_mappingFragment"

@@ -21,7 +21,7 @@ import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
 import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
-import tech.sutd.indoortrackingpro.ui.MainActivity
+import tech.sutd.indoortrackingpro.ui.main.MainFragment
 import tech.sutd.indoortrackingpro.utils.coord
 import javax.inject.Inject
 
@@ -64,17 +64,14 @@ class AddMappingFragment : BottomSheetDialogFragment() {
 //                    findNavController().popBackStack(R.id.mainFragment, false)
                         Toast.makeText(
                             activity,
-                            "Wifi Access Points are required first. Please proceed to add Access Points first",
+                            "Wifi APs are required first. Please proceed to add Wifi APs first",
                             Toast.LENGTH_SHORT
                         ).show()
-//                    findNavController().navigate(R.id.action_selectedMPListFragment_to_wifiListFragment)
-//                    val intent = Intent(context,WifiListFragment::class.java)
-//                            startActivity(intent)
 
                     } else {
                         findNavController().popBackStack(R.id.mainFragment, false)
                         viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
-                        Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Coordinates added", Toast.LENGTH_SHORT).show()
 
                         GlobalScope.launch { pref.updateCheckMp(true) }
 
