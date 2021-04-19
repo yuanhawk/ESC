@@ -47,7 +47,8 @@
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/top_drop_down_menu"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

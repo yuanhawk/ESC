@@ -19,7 +19,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="70dp"
                 android:text="@string/mp_added"
-                android:textColor="@color/green"
+                android:textColor="@color/blue"
                 android:textSize="20sp" />
 
             <LinearLayout
@@ -36,7 +36,7 @@
                     android:layout_weight="1"
                     android:lines="1"
                     android:text="@string/x_coordinate"
-                    android:textColor="@color/green" />
+                    android:textColor="@color/blue" />
 
                 <TextView
                     android:id="@+id/selected_mp_y_coords"
@@ -47,7 +47,7 @@
                     android:layout_weight="1"
                     android:lines="1"
                     android:text="@string/y_coordinate"
-                    android:textColor="@color/green" />
+                    android:textColor="@color/blue" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -64,7 +64,7 @@
                 android:textAlignment="center"
                 android:layout_gravity="center"
                 android:textStyle="bold"
-                android:backgroundTint="@color/green"
+                android:backgroundTint="@color/blue"
                 android:textColor="@color/black"
                 android:text="@string/clear_database">
 

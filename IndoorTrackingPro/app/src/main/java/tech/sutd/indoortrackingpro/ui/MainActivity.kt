@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.PopupMenu
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -21,13 +22,16 @@ import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
 import java.util.*
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val TAG = "MainActivity"
+
     companion object {
-        var mpAdded : Boolean = false
+        var mpAdded: Boolean = false
     }
+
     @Inject
     lateinit var realm: Realm
     private lateinit var binding: ActivityMainBinding
@@ -50,7 +54,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             bottomNavigation.setOnNavigationItemSelectedListener(this@MainActivity)
             bottomNavigation.setupWithNavController(navController)
             setContentView(root)
-            button.setOnClickListener{ v -> setupMainMenu(PopupMenu(this@MainActivity, v)) }
+            button.setOnClickListener { v -> setupMainMenu(PopupMenu(this@MainActivity, v)) }
         }
 
         if (realm.where(Account::class.java).findAll().isEmpty()) {
@@ -84,6 +88,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private fun setupMainMenu(popupMenu: PopupMenu) {
         popupMenu.setOnMenuItemClickListener { item ->
             navController.popBackStack(R.id.mainFragment, false)
+
             when (item.itemId) {
                 R.id.wifi_ap_list -> {
                     navController.navigate(R.id.wifiListFragment)
@@ -102,7 +107,23 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             }
         }
         popupMenu.inflate(R.menu.top_drop_down_menu)
-        popupMenu.show()
+
+        try {
+            val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+            fieldMPopup.isAccessible = true
+            val mPopup = fieldMPopup.get(popupMenu)
+            mPopup.javaClass
+                .getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                .invoke(mPopup, true)
+        }
+
+        catch (e: Exception) {
+            Log.e("Main", "Error showing menu icons.", e)
+        }
+
+        finally {
+            popupMenu.show()
+        }
     }
 }
 

@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:layout_gravity="center"
-                        android:textColor="@color/green"
+                        android:textColor="@color/blue"
                         android:textSize="25sp"
                         android:textStyle="bold" />
 
@@ -92,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:layout_gravity="center"
-                        android:textColor="@color/green"
+                        android:textColor="@color/blue"
                         android:textSize="25sp"
                         android:textStyle="bold" />
 
