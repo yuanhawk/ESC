@@ -46,8 +46,6 @@ class SelectedAPListFragment : Fragment() {
         Observer<RealmList<Account_mAccessPoints>> {
 //            Log.d(TAG, "onResume: ${it[0]?.mac}")
             adapter.sendData(it)
-            if (adapter.wifiList.isEmpty())
-                GlobalScope.launch { pref.updateCheckAp(false) }
         }
     }
 
@@ -75,7 +73,7 @@ class SelectedAPListFragment : Fragment() {
                     .setTitle("Would you like to delete all saved entries")
                     .setPositiveButton("yes") { _, _ ->
                         viewModel.clearAp()
-//                        GlobalScope.launch { pref.updateCheckAp(false) }
+                        GlobalScope.launch { pref.updateCheckAp(false) }
                     }
                     .setNegativeButton("no") { _, _ -> }.show()
             }
@@ -88,9 +86,7 @@ class SelectedAPListFragment : Fragment() {
                         AlertDialog.Builder(context)
                             .setTitle("Would you like to delete this entry")
                             .setPositiveButton("yes") { _, _ ->
-                                val id = adapter.wifiList[position]._id
-                                Log.d(TAG, "onItemClick: $id")
-                                viewModel.deleteAp(id)
+                                Log.d(TAG, "onItemClick: $position")
                             }
                             .setNegativeButton("no") { _, _ -> }.show()
                     }

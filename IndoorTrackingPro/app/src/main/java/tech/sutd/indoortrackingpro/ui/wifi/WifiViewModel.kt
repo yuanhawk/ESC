@@ -6,7 +6,6 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
 import io.realm.RealmList
-import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.WifiWrapper
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
@@ -76,23 +75,5 @@ class WifiViewModel @Inject constructor(
         realm.executeTransaction { r ->
             r.delete(Account_mMappingPoints::class.java)
         }
-    }
-
-    fun deleteAp(id: ObjectId) {
-        realm.beginTransaction()
-        val ap = realm.where(Account_mAccessPoints::class.java)
-            .equalTo("_id", id)
-            .findFirst()
-        ap?.deleteFromRealm()
-        realm.commitTransaction()
-    }
-
-    fun deleteMp(id: ObjectId) {
-        realm.beginTransaction()
-        val mp = realm.where(Account_mMappingPoints::class.java)
-            .equalTo("_id", id)
-            .findFirst()
-        mp?.deleteFromRealm()
-        realm.commitTransaction()
     }
 }

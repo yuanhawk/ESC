@@ -6,23 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentTrackingBinding
 
 @AndroidEntryPoint
 class TrackingFragment : Fragment() {
-
     private lateinit var binding: FragmentTrackingBinding
-
-    private val viewModel: TrackingViewModel by hiltNavGraphViewModels(R.id.main)
+    val model:  TrackingViewModel by viewModels()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tracking, container, false)
 
-        viewModel.coordinates().observe(viewLifecycleOwner, {
+        model.coordinates().observe(viewLifecycleOwner, {
             with(binding) {
                 trackingMap.setImageResource(R.drawable.map)
                 trackingMap.isEnabled = true
@@ -32,7 +31,7 @@ class TrackingFragment : Fragment() {
             }
         })
         
-        viewModel.initWifiScan(this)
+        model.initWifiScan(this)
 //        with(binding){
 //            trackingMap.setImageResource(R.drawable.map)
 //            trackingMap.isEnabled = true
@@ -47,6 +46,6 @@ class TrackingFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        viewModel.cancelWifiScan(this)
+        model.cancelWifiScan(this)
     }
 }
