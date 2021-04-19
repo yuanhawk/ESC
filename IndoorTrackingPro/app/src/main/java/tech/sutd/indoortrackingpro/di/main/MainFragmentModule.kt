@@ -10,7 +10,7 @@ import tech.sutd.indoortrackingpro.ui.wifi.MpListAdapter
 
 @InstallIn(FragmentComponent::class)
 @Module
-object MainModule {
+object MainFragmentModule {
 
     @FragmentScoped
     @Provides

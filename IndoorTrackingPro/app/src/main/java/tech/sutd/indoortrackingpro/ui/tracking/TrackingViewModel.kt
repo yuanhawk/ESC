@@ -39,19 +39,27 @@ class TrackingViewModel @Inject constructor(
             .build()
     }
 
-    private var coordinates: LiveData<Coordinate> = MutableLiveData<Coordinate>(Coordinate(300.0, 300.0))
+    private var coordinates: LiveData<Coordinate> = MutableLiveData(Coordinate(300.0, 300.0))
 
     fun initWifiScan(fragment: TrackingFragment) {
         workManager.enqueue(trackingRequest)
-        broadcastReceiver = object : BroadcastReceiver(){
+        broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 val wifiData = intent.getParcelableExtra<Account_mMappingPoints>(intentKey)
-                val coordinate = algoHelper.predictCoordinate(wifiData!!, realm.where(Account::class.java).findFirst()!!, "WKNN")!!
+                val account = realm.where(Account::class.java).findFirst()
+                if (wifiData != null) {
+                    val coordinate = account?.let {
+                        algoHelper.predictCoordinate(
+                            wifiData,
+                            it,
+                            "WKNN"
+                        )
+                    }
 
-                Log.d(TAG, "receive")
-                Log.d(TAG, coordinate.longitude.toString())
-                Log.d(TAG, coordinate.latitude.toString())
-                coordinates = MutableLiveData(coordinate)
+                    Log.d(TAG, "receive")
+                    Log.d(TAG, coordinate?.longitude.toString())
+                    Log.d(TAG, coordinate?.latitude.toString())
+                    coordinates = MutableLiveData(coordinate)
 //           with(fragment.binding) {
 //               trackingMap.setImageResource(R.drawable.map)
 //               trackingMap.isEnabled = true
@@ -61,6 +69,7 @@ class TrackingViewModel @Inject constructor(
 //           }
 //                xText.text = coordinate.longitude.toString()
 //                yText.text = coordinate.latitude.toString()
+                }
             }
         }
         fragment.context?.let {

@@ -3,12 +3,7 @@ package tech.sutd.indoortrackingpro.di
 import android.content.Context
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.MediatorLiveData
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.WorkManager
 import dagger.Module
 import dagger.Provides
@@ -26,10 +21,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideHandler() = Handler(Looper.getMainLooper())
 
     @Singleton
     @Provides
@@ -58,16 +49,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideLinearLayoutManager(@ApplicationContext context: Context): LinearLayoutManager =
-        LinearLayoutManager(context)
-
-    @Singleton
-    @Provides
-    fun provideDividerItemDecoration(@ApplicationContext context: Context) =
-        DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-
-    @Singleton
-    @Provides
     fun provideTrackingHelper(): AlgoHelper = TrackingAlgo()
 
     @Singleton
@@ -79,10 +60,6 @@ object AppModule {
     @Provides
     fun provideListApt(): MediatorLiveData<List<Account_mAccessPoints>> =
         MediatorLiveData()
-
-    @Singleton
-    @Provides
-    fun provideBundle(): Bundle = Bundle()
 
     @Singleton
     @Provides

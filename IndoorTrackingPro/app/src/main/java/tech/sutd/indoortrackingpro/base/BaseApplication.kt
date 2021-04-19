@@ -10,7 +10,9 @@ import io.realm.mongodb.App
 import io.realm.mongodb.AppConfiguration
 import io.realm.mongodb.Credentials
 import io.realm.mongodb.User
+import io.realm.mongodb.sync.SyncConfiguration
 import tech.sutd.indoortrackingpro.utils.appId
+import tech.sutd.indoortrackingpro.utils.realmDb
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -26,11 +28,15 @@ class BaseApplication : Application(), Configuration.Provider {
         val app = App(AppConfiguration.Builder(appId)
             .build())
         val credentials = Credentials.anonymous()
-        var user: User? = null
         app.loginAsync(credentials) {
             if (it.isSuccess) {
                 Log.v(TAG, "Successfully authenticated anonymously.")
-                user = app.currentUser()
+                val user = app.currentUser()
+//                val config = SyncConfiguration.Builder(user, realmDb)
+//
+//                    .build()
+//
+//                val realm = Realm.getInstance(config)
             } else {
                 Log.e(TAG, it.error.toString())
             }
