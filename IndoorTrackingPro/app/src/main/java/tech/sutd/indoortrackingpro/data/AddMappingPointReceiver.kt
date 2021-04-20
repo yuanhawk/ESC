@@ -42,7 +42,7 @@ class AddMappingPointReceiver @Inject constructor(
             if (apList?.size == 0) {
                 Toast.makeText(
                     context,
-                    "Please add Wifi APs first",
+                    "Please add Access Points first!",
                     Toast.LENGTH_LONG
                 ).show()
             }

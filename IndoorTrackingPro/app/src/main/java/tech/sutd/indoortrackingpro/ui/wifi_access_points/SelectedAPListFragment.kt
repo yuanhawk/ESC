@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
@@ -71,18 +70,14 @@ class SelectedAPListFragment : Fragment() {
                 swipeRefresh.isRefreshing = false
             }
 
-            selectedApBackButton.setOnClickListener {
-                findNavController().navigate(R.id.action_selectedAPListFragment_to_mappingFragment)
-            }
-
             apClearDatabase.setOnClickListener {
                 AlertDialog.Builder(context)
-                    .setTitle("Would you like to delete all saved entries?")
-                    .setPositiveButton("Yes") { _, _ ->
+                    .setTitle("Would you like to delete all saved entries")
+                    .setPositiveButton("yes") { _, _ ->
                         viewModel.clearAp()
                         GlobalScope.launch { pref.updateCheckAp(false) }
                     }
-                    .setNegativeButton("No") { _, _ -> }.show()
+                    .setNegativeButton("no") { _, _ -> }.show()
             }
         }
 
@@ -91,14 +86,14 @@ class SelectedAPListFragment : Fragment() {
                 it, object : RvItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         AlertDialog.Builder(context)
-                            .setTitle("Would you like to delete this entry?")
-                            .setPositiveButton("Yes") { _, _ ->
+                            .setTitle("Would you like to delete this entry")
+                            .setPositiveButton("yes") { _, _ ->
                                 Log.d(TAG, "onItemClick: $position")
                                 val id = adapter.wifiList[position]._id
                                 Log.d(TAG, "onItemClick: $id")
                                 viewModel.deleteAp(id)
                             }
-                            .setNegativeButton("No") { _, _ -> }.show()
+                            .setNegativeButton("no") { _, _ -> }.show()
                     }
                 }
             )

@@ -25,7 +25,7 @@ import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
-import tech.sutd.indoortrackingpro.ui.main.MainFragment
+import tech.sutd.indoortrackingpro.ui.MainActivity
 import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
@@ -58,11 +58,8 @@ class WifiListFragment : Fragment() {
 
         with(binding){
             buttonSearchForWaps.setOnClickListener {
-                Toast.makeText(activity,"Initializing Wifi APs scan, please wait...", Toast.LENGTH_SHORT).show()
-            }
 
-            wifiBackButton.setOnClickListener {
-                findNavController().navigate(R.id.action_wifiListFragment_to_mappingFragment)
+                Toast.makeText(activity,"Initializing Wifi Scan, Please Wait...", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -90,7 +87,7 @@ class WifiListFragment : Fragment() {
 
                                 Toast.makeText(
                                     context,
-                                    "Added to Wifi AP list successfully",
+                                    "Added to WAP list successfully",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 findNavController().popBackStack(R.id.selectedAPListFragment, false)
@@ -98,7 +95,7 @@ class WifiListFragment : Fragment() {
                             } else {
                                 Toast.makeText(
                                     context,
-                                    "Unable to add Wifi APs after adding Mapping Points",
+                                    "Unable to add AP after adding MP",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
