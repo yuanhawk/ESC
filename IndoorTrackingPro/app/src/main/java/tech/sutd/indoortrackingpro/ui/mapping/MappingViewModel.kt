@@ -27,6 +27,7 @@ class MappingViewModel @Inject constructor(
         }
         val v = realm.where(Account::class.java).findFirst()!!.mMappingPoints
         v.add(mappingPt)
+
         realm.commitTransaction()
         for (i in 0 until realm.where(Account::class.java).findFirst()!!.mMappingPoints.size) {
             val mappingPointJustAdded = realm.where(Account::class.java).findFirst()!!.mMappingPoints[i]

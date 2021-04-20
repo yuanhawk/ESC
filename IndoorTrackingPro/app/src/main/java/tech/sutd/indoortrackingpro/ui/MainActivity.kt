@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
+import io.realm.mongodb.sync.SyncConfiguration
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
@@ -25,15 +26,9 @@ import javax.inject.Inject
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private val TAG = "MainActivity"
-    companion object {
-        var mpAdded : Boolean = false
-    }
-    @Inject
-    lateinit var realm: Realm
+    @Inject lateinit var realm: Realm
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-
-    private val dropDownList = arrayOf("Wifi", "Coordinates")
 
     @SuppressLint("InflateParams")
     @RequiresApi(Build.VERSION_CODES.O)

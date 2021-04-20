@@ -11,7 +11,7 @@ import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 
 @InstallIn(FragmentComponent::class)
 @Module
-object MainFragmentModule {
+object FragmentModule {
 
     @FragmentScoped
     @Provides

@@ -13,8 +13,10 @@ import java.util.*
  * @param mAccessPoints: the Wifi Aps used for mapping.
  * @param mMappingPoints: The mapping points recorded.
  */
+
 open class Account(
     @PrimaryKey var _id: ObjectId? = ObjectId(),
+    var _partition: ObjectId? = ObjectId(),
     var mAccessPoints: RealmList<Account_mAccessPoints> = RealmList(),
     var mMappingPoints: RealmList<Account_mMappingPoints> = RealmList()
 ) : RealmObject() {
