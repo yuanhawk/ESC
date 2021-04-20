@@ -36,14 +36,14 @@
     <!-- SelectedAPListFragment -->
     <fragment
         android:id="@+id/selectedAPListFragment"
-        android:name="tech.sutd.indoortrackingpro.ui.wifi_access_points.SelectedAPListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.recyclerViewList.SelectedAPListFragment"
         android:label="selectedAPListFragment"
         tools:layout="@layout/fragment_selected_ap_list" />
 
     <!-- SelectedMPListFragment -->
     <fragment
         android:id="@+id/selectedMPListFragment"
-        android:name="tech.sutd.indoortrackingpro.ui.coordinates.SelectedMPListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.recyclerViewList.SelectedMPListFragment"
         android:label="selectedMPListFragment"
         tools:layout="@layout/fragment_selected_mp_list" >
         <action
@@ -67,7 +67,22 @@
         android:id="@+id/trackingFragment"
         android:name="tech.sutd.indoortrackingpro.ui.tracking.TrackingFragment"
         android:label="TrackingFragment"
-        tools:layout="@layout/fragment_tracking"/>
+        tools:layout="@layout/fragment_tracking">
+        <action
+            android:id="@+id/action_trackingFragment_to_recordInaccuracyFragment"
+            app:destination="@id/inaccuracyFragment"/>
+    </fragment>
+
+    <!-- RecordInaccuracyFragment -->
+    <fragment
+        android:id="@+id/inaccuracyFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.tracking.RecordInaccuracyFragment"
+        android:label="RecordInaccuracyFragment"
+        tools:layout="@layout/fragment_record_inaccuracy" >
+        <action
+            android:id="@+id/action_recordInaccuracyFragment_to_trackingFragment"
+            app:destination="@id/trackingFragment"/>
+    </fragment>
 
     <!-- AddMappingFragment -->
     <dialog

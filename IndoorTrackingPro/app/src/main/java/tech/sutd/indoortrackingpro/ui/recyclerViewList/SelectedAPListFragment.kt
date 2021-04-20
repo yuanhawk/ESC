@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.ui.coordinates
+package tech.sutd.indoortrackingpro.ui.recyclerViewList
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -19,33 +19,34 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.datastore.Preferences
-import tech.sutd.indoortrackingpro.databinding.FragmentSelectedMpListBinding
-import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
-import tech.sutd.indoortrackingpro.ui.adapter.MpListAdapter
+import tech.sutd.indoortrackingpro.databinding.FragmentSelectedApListBinding
+import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
+import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SelectedMPListFragment : Fragment() {
+class SelectedAPListFragment : Fragment() {
 
-    private val TAG = "SelectedMPListFragment"
+    private val TAG = "SelectedAPListFragment"
 
     @Inject lateinit var realm: Realm
     @Inject lateinit var handler: Handler
-    @Inject lateinit var adapter: MpListAdapter
+    @Inject lateinit var adapter: ApListAdapter
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var pref: Preferences
 
-    private lateinit var binding: FragmentSelectedMpListBinding
+    private lateinit var binding: FragmentSelectedApListBinding
 
     private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
     private val observer by lazy {
-        Observer<RealmList<Account_mMappingPoints>> {
+        Observer<RealmList<Account_mAccessPoints>> {
+//            Log.d(TAG, "onResume: ${it[0]?.mac}")
             adapter.sendData(it)
-            if (adapter.mapList.isEmpty())
-                GlobalScope.launch { pref.updateCheckMp(false) }
+            if (adapter.wifiList.isEmpty())
+                GlobalScope.launch { pref.updateCheckAp(false) }
         }
     }
 
@@ -57,21 +58,23 @@ class SelectedMPListFragment : Fragment() {
 
         // Inflate layout for this fragment
         binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_selected_mp_list, container, false)
+            R.layout.fragment_selected_ap_list, container, false)
 
         with(binding){
-            selectedMpListRv.adapter = adapter
-            selectedMpListRv.layoutManager = manager
+            selectedApListRv.adapter = adapter
+            selectedApListRv.layoutManager = manager
+
             swipeRefresh.setOnRefreshListener {
                 refreshObserver()
                 swipeRefresh.isRefreshing = false
             }
-            mpClearDatabase.setOnClickListener {
+
+            apClearDatabase.setOnClickListener {
                 AlertDialog.Builder(context)
                     .setTitle("Would you like to delete all saved entries")
                     .setPositiveButton("yes") { _, _ ->
-                        viewModel.clearMp()
-                        GlobalScope.launch { pref.updateCheckMp(false) }
+                        viewModel.clearAp()
+                        GlobalScope.launch { pref.updateCheckAp(false) }
                     }
                     .setNegativeButton("no") { _, _ -> }.show()
             }
@@ -85,14 +88,15 @@ class SelectedMPListFragment : Fragment() {
                             .setTitle("Would you like to delete this entry")
                             .setPositiveButton("yes") { _, _ ->
                                 Log.d(TAG, "onItemClick: $position")
-                                val id = adapter.mapList[position]._id
-                                viewModel.deleteMp(id)
+                                val id = adapter.wifiList[position]._id
+                                Log.d(TAG, "onItemClick: $id")
+                                viewModel.deleteAp(id)
                             }
                             .setNegativeButton("no") { _, _ -> }.show()
                     }
                 }
             )
-        }?.let { binding.selectedMpListRv.addOnItemTouchListener(it) }
+        }?.let { binding.selectedApListRv.addOnItemTouchListener(it) }
 
         return binding.root
     }
@@ -105,15 +109,15 @@ class SelectedMPListFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         with(binding) {
-            selectedMpListRv.layoutManager = null
-            selectedMpListRv.adapter = null
+            selectedApListRv.layoutManager = null
+            selectedApListRv.adapter = null
         }
     }
 
     private fun refreshObserver() {
-        if (viewModel.mappingPoint()?.hasActiveObservers() == true)
-            viewModel.mappingPoint()?.removeObserver(observer)
-        viewModel.mappingPoint()?.observe(viewLifecycleOwner, observer)
+        if (viewModel.accessPoints()?.hasActiveObservers() == true)
+            viewModel.accessPoints()?.removeObserver(observer)
+        viewModel.accessPoints()?.observe(viewLifecycleOwner, observer)
     }
 
 }

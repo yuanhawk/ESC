@@ -34,12 +34,25 @@ class WifiViewModel @Inject constructor(
         Log.d(TAG, "insertAp: ${accessPoint.mac}")
     }
 
-    fun initScan(receiver: WifiSearchReceiver): LiveData<List<ScanResult>> {
-        wifiWrapper.startScan()
-        data.addSource(receiver.data, data::setValue)
-        return data
+    private fun checkDuplicate(scanResult: ScanResult): Boolean{
+        val apList = realm.where(Account::class.java).findFirst()!!.mAccessPoints
+        for (ap in apList){
+            if (ap.mac == scanResult.BSSID) return false
+        }
+        return true
     }
 
+    fun initScan(receiver: WifiSearchReceiver): LiveData<List<ScanResult>> {
+        wifiWrapper.startScan()
+        data.addSource(receiver.data) {
+            val listWithoutDuplicate = ArrayList<ScanResult>()
+            for (scanResult in it) {
+                if (checkDuplicate(scanResult)) listWithoutDuplicate.add(scanResult)
+            }
+            data.value = listWithoutDuplicate
+        }
+        return data
+    }
     fun endScan(receiver: WifiSearchReceiver) {
         data.removeSource(receiver.data)
     }

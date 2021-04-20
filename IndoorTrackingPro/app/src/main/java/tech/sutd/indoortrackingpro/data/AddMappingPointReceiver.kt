@@ -13,6 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
+import tech.sutd.indoortrackingpro.model.APInsideMP
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
@@ -30,7 +31,7 @@ class AddMappingPointReceiver @Inject constructor(
 //    private lateinit var binding: AddMappingBinding
 
     var readings: HashMap<String, ArrayList<Int>> = HashMap()
-    var done = true
+    var done = false
     var count = 0
     var apList: RealmList<Account_mAccessPoints>? =
         realm.where(Account::class.java).findFirst()?.mAccessPoints
@@ -50,7 +51,7 @@ class AddMappingPointReceiver @Inject constructor(
             for (ap in apList!!) {
                 Log.d(TAG, ap.mac)
                 mappingPoint.accessPointSignalRecorded.add(
-                    Account_mAccessPoints(ap)
+                    APInsideMP(ap)
                 )
             }
         }
@@ -77,6 +78,8 @@ class AddMappingPointReceiver @Inject constructor(
     }
 
     fun start() {
+        count = 0;
+        readings.clear()
         if (done) {
             GlobalScope.launch { pref.scanDone(false) }
             done = false

@@ -1,5 +1,6 @@
 package tech.sutd.indoortrackingpro.ui.mapping
 
+import android.accounts.Account
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Bundle
@@ -10,15 +11,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import io.realm.Realm
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentMappingBinding
-import tech.sutd.indoortrackingpro.utils.coord
+import tech.sutd.indoortrackingpro.utils.touchCoord
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MappingFragment : Fragment() {
     @Inject lateinit var bundle: Bundle
-
+    @Inject lateinit var realm: Realm
     private lateinit var location: FloatArray
 
     @SuppressLint("ClickableViewAccessibility")
@@ -37,6 +39,14 @@ class MappingFragment : Fragment() {
 
         with(binding) {
             map.setImageResource(R.drawable.map)
+            //draw all the mapping points
+            val mappingPointPositions = ArrayList<FloatArray>();
+            val mappingPointList =  realm.where(tech.sutd.indoortrackingpro.model.Account::class.java).findFirst()!!.mMappingPoints;
+            for (mappingPoint in mappingPointList){
+                mappingPointPositions.add(floatArrayOf(mappingPoint.x.toFloat(), mappingPoint.y.toFloat()))
+            }
+            map.secondPosList = mappingPointPositions
+            map.invalidate()
 
             map.setOnTouchListener(
                 object : View.OnTouchListener {
@@ -45,7 +55,7 @@ class MappingFragment : Fragment() {
                             location = floatArrayOf(event.x, event.y)
                             Log.d(ContentValues.TAG, "onCreate: ${location[0]}, ${location[1]}")
 
-                            bundle.putFloatArray(coord, location)
+                            bundle.putFloatArray(touchCoord, location)
                             findNavController().navigate(
                                 R.id.action_mappingFragment_to_addMappingDialog,
                                 bundle

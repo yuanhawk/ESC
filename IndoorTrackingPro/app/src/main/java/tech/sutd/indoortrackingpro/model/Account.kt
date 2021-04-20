@@ -16,7 +16,8 @@ import java.util.*
 open class Account(
     @PrimaryKey var _id: ObjectId? = ObjectId(),
     var mAccessPoints: RealmList<Account_mAccessPoints> = RealmList(),
-    var mMappingPoints: RealmList<Account_mMappingPoints> = RealmList()
+    var mMappingPoints: RealmList<Account_mMappingPoints> = RealmList(),
+    var Inaccuracies: RealmList<Inaccuracy> = RealmList()
 ) : RealmObject() {
 
     constructor(

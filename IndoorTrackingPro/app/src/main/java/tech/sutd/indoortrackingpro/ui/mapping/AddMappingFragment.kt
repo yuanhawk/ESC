@@ -22,7 +22,7 @@ import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
 import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
 import tech.sutd.indoortrackingpro.ui.MainActivity
-import tech.sutd.indoortrackingpro.utils.coord
+import tech.sutd.indoortrackingpro.utils.touchCoord
 import javax.inject.Inject
 
 // TODO: Requires caching
@@ -47,7 +47,7 @@ class AddMappingFragment : BottomSheetDialogFragment() {
 
         with(binding) {
 
-            val coordinate = arguments?.getFloatArray(coord)
+            val coordinate = arguments?.getFloatArray(touchCoord)
 
             backButtonAddMapping.setOnClickListener {
                 if (findNavController().previousBackStackEntry?.equals(R.id.mappingFragment) == true)
@@ -99,12 +99,14 @@ class AddMappingFragment : BottomSheetDialogFragment() {
         )
 
         pref.scanDone.asLiveData().observe(viewLifecycleOwner, {
-            binding.yesButtonAddMapping.isEnabled = true
-            Toast.makeText(
-                context,
-                "Scanning is done, press button to save the mappingPoint",
-                Toast.LENGTH_LONG
-            ).show()
+            if (wifiReceiver.done) {
+                binding.yesButtonAddMapping.isEnabled = true
+                Toast.makeText(
+                    context,
+                    "Scanning is done, press button to save the mappingPoint",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         })
 
         wifiReceiver.start()

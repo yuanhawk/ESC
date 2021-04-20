@@ -12,7 +12,7 @@ import java.util.*
 // List of ap recorded (picked), realm db -> remote db
 open class Account_mMappingPoints(
     @PrimaryKey var _id: ObjectId = ObjectId(),
-    var accessPointSignalRecorded: RealmList<Account_mAccessPoints> = RealmList(),
+    var accessPointSignalRecorded: RealmList<APInsideMP> = RealmList(),
     var x: Double = 0.0,
     var y: Double = 0.0
 ) : RealmObject(), Parcelable{
@@ -21,11 +21,11 @@ open class Account_mMappingPoints(
         _id = ObjectId()
         x = parcel.readDouble()
         y = parcel.readDouble()
-        parcel.readTypedList(accessPointSignalRecorded, Account_mAccessPoints.CREATOR)
+        parcel.readTypedList(accessPointSignalRecorded, APInsideMP.CREATOR)
     }
     constructor(scanResultList: List<ScanResult>): this(){
         for (scanResult in scanResultList){
-            accessPointSignalRecorded.add(Account_mAccessPoints(scanResult))
+            accessPointSignalRecorded.add(APInsideMP(scanResult))
         }
     }
     override fun writeToParcel(parcel: Parcel, flags: Int) {
