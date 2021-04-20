@@ -6,13 +6,20 @@
         android:orientation="vertical"
         xmlns:tools="http://schemas.android.com/tools">
 
+        <ImageButton
+            android:id="@+id/wifi_back_button"
+            android:layout_margin="10dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/ic_arrow_back" />
+
         <Button
             android:id="@+id/button_search_for_waps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="70dp"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/blue"
             android:textColor="@color/black"
             android:text="@string/search_for_waps" />
 

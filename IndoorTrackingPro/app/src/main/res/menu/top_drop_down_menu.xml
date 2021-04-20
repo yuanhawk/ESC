@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/wifi_ap_list"
+        android:icon="@drawable/ic_wifi_ap"
         android:title="@string/wifi" />
 
     <item
         android:id="@+id/selected_ap_list"
-        android:title="@string/ap_added" />
+        android:icon="@drawable/ic_selected_wifi_ap"
+        android:title="@string/ap_added"/>
 
     <item
         android:id="@+id/selected_mp_list"
+        android:icon="@drawable/ic_selected_mp"
         android:title="@string/mp_added" />
-
 </menu>

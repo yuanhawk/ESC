@@ -13,6 +13,7 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import io.realm.Realm
 import io.realm.RealmConfiguration
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
 import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
+import tech.sutd.indoortrackingpro.ui.MainActivity
 import tech.sutd.indoortrackingpro.utils.coord
 import javax.inject.Inject
 

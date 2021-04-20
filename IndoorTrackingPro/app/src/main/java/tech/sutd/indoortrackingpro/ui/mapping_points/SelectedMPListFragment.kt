@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.ui.coordinates
+package tech.sutd.indoortrackingpro.ui.mapping_points
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
@@ -66,14 +67,19 @@ class SelectedMPListFragment : Fragment() {
                 refreshObserver()
                 swipeRefresh.isRefreshing = false
             }
+
+            selectedMpBackButton.setOnClickListener {
+                findNavController().navigate(R.id.action_selectedMPListFragment_to_mappingFragment)
+            }
+
             mpClearDatabase.setOnClickListener {
                 AlertDialog.Builder(context)
-                    .setTitle("Would you like to delete all saved entries")
-                    .setPositiveButton("yes") { _, _ ->
+                    .setTitle("Would you like to delete all saved entries?")
+                    .setPositiveButton("Yes") { _, _ ->
                         viewModel.clearMp()
                         GlobalScope.launch { pref.updateCheckMp(false) }
                     }
-                    .setNegativeButton("no") { _, _ -> }.show()
+                    .setNegativeButton("No") { _, _ -> }.show()
             }
         }
 
@@ -82,13 +88,13 @@ class SelectedMPListFragment : Fragment() {
                 it, object : RvItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View, position: Int) {
                         AlertDialog.Builder(context)
-                            .setTitle("Would you like to delete this entry")
-                            .setPositiveButton("yes") { _, _ ->
+                            .setTitle("Would you like to delete this entry?")
+                            .setPositiveButton("Yes") { _, _ ->
                                 Log.d(TAG, "onItemClick: $position")
                                 val id = adapter.mapList[position]._id
                                 viewModel.deleteMp(id)
                             }
-                            .setNegativeButton("no") { _, _ -> }.show()
+                            .setNegativeButton("No") { _, _ -> }.show()
                     }
                 }
             )
