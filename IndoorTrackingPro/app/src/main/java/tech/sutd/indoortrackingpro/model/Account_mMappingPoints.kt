@@ -6,19 +6,22 @@ import android.os.Parcelable
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 import org.bson.types.ObjectId
-import java.util.*
 
 // List of ap recorded (picked), realm db -> remote db
+@RealmClass(embedded = true)
 open class Account_mMappingPoints(
-    @PrimaryKey var _id: ObjectId = ObjectId(),
+
+     var id: ObjectId = ObjectId(),
     var accessPointSignalRecorded: RealmList<APInsideMP> = RealmList(),
+
     var x: Double = 0.0,
     var y: Double = 0.0
 ) : RealmObject(), Parcelable{
 
     constructor(parcel: Parcel) : this(){
-        _id = ObjectId()
+        id = ObjectId()
         x = parcel.readDouble()
         y = parcel.readDouble()
         parcel.readTypedList(accessPointSignalRecorded, APInsideMP.CREATOR)
@@ -29,7 +32,7 @@ open class Account_mMappingPoints(
         }
     }
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(_id.toString())
+        parcel.writeString(id.toString())
         parcel.writeDouble(x)
         parcel.writeDouble(y)
     }

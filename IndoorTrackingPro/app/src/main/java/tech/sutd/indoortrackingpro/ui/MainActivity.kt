@@ -28,12 +28,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     private val TAG = "MainActivity"
 
-    companion object {
-        var mpAdded: Boolean = false
-    }
-
-    @Inject
-    lateinit var realm: Realm
+    @Inject lateinit var realm: Realm
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 

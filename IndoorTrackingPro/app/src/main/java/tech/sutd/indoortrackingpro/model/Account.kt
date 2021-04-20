@@ -14,7 +14,8 @@ import java.util.*
  * @param mMappingPoints: The mapping points recorded.
  */
 open class Account(
-    @PrimaryKey var _id: ObjectId? = ObjectId(),
+    @PrimaryKey var _id: ObjectId = ObjectId(),
+    var _partition: ObjectId? = null,
     var mAccessPoints: RealmList<Account_mAccessPoints> = RealmList(),
     var mMappingPoints: RealmList<Account_mMappingPoints> = RealmList(),
     var Inaccuracies: RealmList<Inaccuracy> = RealmList()
