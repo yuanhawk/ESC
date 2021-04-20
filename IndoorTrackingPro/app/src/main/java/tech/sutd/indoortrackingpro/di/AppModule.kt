@@ -3,6 +3,7 @@ package tech.sutd.indoortrackingpro.di
 import android.content.Context
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
+import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.work.WorkManager
 import dagger.Module
@@ -12,15 +13,22 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import io.realm.mongodb.*
+import io.realm.mongodb.sync.ClientResetRequiredError
+import io.realm.mongodb.sync.SyncConfiguration
+import io.realm.mongodb.sync.SyncSession
+import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.core.TrackingAlgo
 import tech.sutd.indoortrackingpro.data.datastore.Preferences
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
+import tech.sutd.indoortrackingpro.utils.appId
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 object AppModule {
+    private const val TAG = "AppModule"
 
     @Singleton
     @Provides
@@ -42,26 +50,75 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRealmInstance(
-        realmConfig: RealmConfiguration
-    ): Realm =
-        Realm.getInstance(realmConfig)
+    fun provideApp(): App {
+        return App(
+            AppConfiguration.Builder(appId)
+                .build()
+        )
+    }
 
     @Singleton
     @Provides
-    fun provideTrackingHelper(): AlgoHelper = TrackingAlgo()
+    fun provideCredentials(): Credentials = Credentials.anonymous()
 
-    @Singleton
-    @Provides
-    fun provideListScanResult(): MediatorLiveData<List<ScanResult>> =
-        MediatorLiveData()
+        @Singleton
+        @Provides
+        fun provideSyncConfiguration(
+            cred: Credentials,
+            app: App,
+        ): SyncConfiguration {
 
-    @Singleton
-    @Provides
-    fun provideListApt(): MediatorLiveData<List<Account_mAccessPoints>> =
-        MediatorLiveData()
+            app.loginAsync(cred) {
+                if (it.isSuccess) {
+                    Log.v("AUTH", "Successfully authenticated anonymously.")
+                } else {
+                    Log.e("AUTH", it.error.toString())
+                }
+            }
 
-    @Singleton
-    @Provides
-    fun providePreferences(@ApplicationContext context: Context): Preferences = Preferences(context)
+            return SyncConfiguration.Builder(app.currentUser(), ObjectId())
+                .allowQueriesOnUiThread(true)
+                .allowWritesOnUiThread(true)
+                .errorHandler { _, error ->
+                    if (error.errorCode == ErrorCode.CLIENT_RESET) {
+                        val clientResetError = error as ClientResetRequiredError
+                        Log.e(TAG, "Received a ClientResetRequiredError",)
+                        clientResetError.executeClientReset()
+                        Log.e(TAG, "Reset client. Backup file path: ${clientResetError.backupFile}")
+                    }
+                }
+                .build()
+        }
+
+        @Singleton
+        @Provides
+        fun provideRealmInstance(
+            syncConfig: SyncConfiguration
+        ): Realm =
+            Realm.getInstance(syncConfig)
+
+        @Singleton
+        @Provides
+        fun provideSyncSession(
+            app: App,
+            config: SyncConfiguration
+        ): SyncSession = app.sync.getOrCreateSession(config)
+
+        @Singleton
+        @Provides
+        fun provideTrackingHelper(): AlgoHelper = TrackingAlgo()
+
+        @Singleton
+        @Provides
+        fun provideListScanResult(): MediatorLiveData<List<ScanResult>> =
+            MediatorLiveData()
+
+        @Singleton
+        @Provides
+        fun provideListApt(): MediatorLiveData<List<Account_mAccessPoints>> =
+            MediatorLiveData()
+
+        @Singleton
+        @Provides
+        fun providePreferences(@ApplicationContext context: Context): Preferences = Preferences(context)
 }

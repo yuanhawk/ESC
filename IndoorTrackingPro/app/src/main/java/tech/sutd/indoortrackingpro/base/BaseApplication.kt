@@ -6,6 +6,8 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
+import io.realm.log.LogLevel
+import io.realm.log.RealmLog
 import io.realm.mongodb.App
 import io.realm.mongodb.AppConfiguration
 import io.realm.mongodb.Credentials
@@ -25,22 +27,23 @@ class BaseApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         Realm.init(this)
-        val app = App(AppConfiguration.Builder(appId)
-            .build())
-        val credentials = Credentials.anonymous()
-        app.loginAsync(credentials) {
-            if (it.isSuccess) {
-                Log.v(TAG, "Successfully authenticated anonymously.")
-                val user = app.currentUser()
+        RealmLog.setLevel(LogLevel.ALL)
+
+//        val app = App(AppConfiguration.Builder(appId)
+//            .build())
+//        val credentials = Credentials.anonymous()
+//        app.loginAsync(credentials) {
+//            if (it.isSuccess) {
+//                Log.v(TAG, "Successfully authenticated anonymously.")
+//                val user = app.currentUser()
 //                val config = SyncConfiguration.Builder(user, realmDb)
-//
 //                    .build()
 //
 //                val realm = Realm.getInstance(config)
-            } else {
-                Log.e(TAG, it.error.toString())
-            }
-        }
+//            } else {
+//                Log.e(TAG, it.error.toString())
+//            }
+//        }
     }
 
     override fun getWorkManagerConfiguration() =

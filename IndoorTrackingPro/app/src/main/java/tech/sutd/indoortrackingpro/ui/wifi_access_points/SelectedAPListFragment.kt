@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
@@ -89,7 +88,7 @@ class SelectedAPListFragment : Fragment() {
                             .setTitle("Would you like to delete this entry")
                             .setPositiveButton("yes") { _, _ ->
                                 Log.d(TAG, "onItemClick: $position")
-                                val id = adapter.wifiList[position]._id
+                                val id = adapter.wifiList[position].id
                                 Log.d(TAG, "onItemClick: $id")
                                 viewModel.deleteAp(id)
                             }

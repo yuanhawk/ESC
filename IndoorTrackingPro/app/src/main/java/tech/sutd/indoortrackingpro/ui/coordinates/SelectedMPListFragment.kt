@@ -85,7 +85,7 @@ class SelectedMPListFragment : Fragment() {
                             .setTitle("Would you like to delete this entry")
                             .setPositiveButton("yes") { _, _ ->
                                 Log.d(TAG, "onItemClick: $position")
-                                val id = adapter.mapList[position]._id
+                                val id = adapter.mapList[position].id
                                 viewModel.deleteMp(id)
                             }
                             .setNegativeButton("no") { _, _ -> }.show()

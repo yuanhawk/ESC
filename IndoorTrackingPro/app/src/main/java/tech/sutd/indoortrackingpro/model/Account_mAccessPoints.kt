@@ -4,21 +4,21 @@ import android.net.wifi.ScanResult
 import android.os.Parcel
 import android.os.Parcelable
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.utils.noSignalDefaultRssi
-import java.util.*
 
 // Signal strength, local db (realm), cache that is viewed as rv, pick some AP
+@RealmClass(embedded = true)
 open class Account_mAccessPoints(
-    @PrimaryKey var _id: ObjectId = ObjectId(),
+    var id: ObjectId = ObjectId(),
     var mac: String = "",
     var rssi: Double = noSignalDefaultRssi,
     var ssid: String = ""
 ) : RealmObject(), Parcelable{
 
     constructor(other: Account_mAccessPoints): this(){
-        this._id = ObjectId()  //this is very important!!
+        this.id = ObjectId()  //this is very important!!
         this.mac = other.mac
         this.ssid = other.ssid
         this.rssi = noSignalDefaultRssi
@@ -30,14 +30,14 @@ open class Account_mAccessPoints(
         rssi = scanResult.level.toDouble()
     }
     constructor(parcel: Parcel) : this() {
-        _id = ObjectId()
+        id = ObjectId()
         mac = parcel.readString().toString()
         ssid = parcel.readString().toString()
         rssi = parcel.readDouble()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(_id.toString())
+        parcel.writeString(id.toString())
         parcel.writeString(mac)
         parcel.writeString(ssid)
         parcel.writeDouble(rssi)
