@@ -80,7 +80,6 @@ class WifiViewModel @Inject constructor(
     fun deleteMp(id: ObjectId) {
         db.deleteMp(id)
         fStore.deleteMp(id)
-        fStore.deleteApRecord(id)
     }
 
     fun pull() {

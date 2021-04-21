@@ -56,6 +56,10 @@ class FirestoreDb @Inject constructor(
     }
 
     override fun deleteMp(id: ObjectId) {
+        fStore.collection("mAccessPointsRecorded")
+            .document(id.toString())
+            .delete()
+
         fStore.collection("mMappingPoints")
             .document(id.toString())
             .delete()
@@ -78,17 +82,6 @@ class FirestoreDb @Inject constructor(
             .add(data)
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
-    }
-
-    override fun deleteApRecord(id: ObjectId) {
-        AppExecutors.instance?.let { deleteCollection(
-            fStore.collection("mAccessPointsRecorded")
-                .document(id.toString())
-                .collection("apRecorded"), it.getDiskIO()) }
-
-        fStore.collection("mAccessPointsRecorded")
-            .document(id.toString())
-            .delete()
     }
 
     override fun clearApRecord() {
