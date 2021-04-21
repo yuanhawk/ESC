@@ -118,6 +118,18 @@ dependencies {
     testImplementation "com.google.truth:truth:1.0.1"
     testImplementation "org.mockito:mockito-core:2.21.0"
 
+    implementation 'org.parceler:parceler-api:1.1.12'
+    annotationProcessor 'org.parceler:parceler:1.1.12'
+    // https://mvnrepository.com/artifact/cglib/cglib
+    implementation group: 'cglib', name: 'cglib', version: '3.3.0'
+
+
+    testImplementation 'org.robolectric:shadows-support-v4:3.0'
+    testImplementation "org.powermock:powermock-module-junit4:1.6.5"
+    testImplementation "org.powermock:powermock-module-junit4-rule:1.6.5"
+    testImplementation "org.powermock:powermock-api-mockito:1.6.5"
+    testImplementation "org.powermock:powermock-classloading-xstream:1.6.5"
+
     // android test
     androidTestImplementation "androidx.test:core:$versions.core"
     androidTestImplementation "androidx.test:rules:$versions.runner"

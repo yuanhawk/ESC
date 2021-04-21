@@ -1,11 +1,11 @@
-package tech.sutd.indoortrackingpro.data
+package tech.sutd.indoortrackingpro.data.implementation
 
 import android.util.Log
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import io.realm.RealmList
 import org.bson.types.ObjectId
+import tech.sutd.indoortrackingpro.data.AppExecutors
 import tech.sutd.indoortrackingpro.data.helper.DbHelper
 import tech.sutd.indoortrackingpro.data.helper.FirestoreHelper
 import tech.sutd.indoortrackingpro.model.*
@@ -32,6 +32,16 @@ class FirestoreDb @Inject constructor(
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
     }
 
+    override fun deleteAp(id: ObjectId) {
+        fStore.collection("mAccessPoints")
+            .document(id.toString())
+            .delete()
+    }
+
+    override fun clearAp() {
+        AppExecutors.instance?.let { deleteCollection(fStore.collection("mAccessPoints"), it.getDiskIO()) }
+    }
+
     override fun insertMp(mappingPoint: Account_mMappingPoints) {
         val data = hashMapOf(
             "x" to mappingPoint.x,
@@ -45,7 +55,17 @@ class FirestoreDb @Inject constructor(
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
     }
 
-    override fun insertApRecord(accessPoint: Account_mAccessPoints) {
+    override fun deleteMp(id: ObjectId) {
+        fStore.collection("mMappingPoints")
+            .document(id.toString())
+            .delete()
+    }
+
+    override fun clearMp() {
+        AppExecutors.instance?.let { deleteCollection(fStore.collection("mMappingPoints"), it.getDiskIO()) }
+    }
+
+    override fun insertApRecord(id: ObjectId, accessPoint: Account_mMappingPoints_accessPointsSignalRecorded) {
         val data = hashMapOf(
             "mac" to accessPoint.mac,
             "rssi" to accessPoint.rssi,
@@ -53,10 +73,26 @@ class FirestoreDb @Inject constructor(
         )
 
         fStore.collection("mAccessPointsRecorded")
-            .document(accessPoint.id.toString())
-            .set(data)
+            .document(id.toString())
+            .collection("apRecorded")
+            .add(data)
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+    }
+
+    override fun deleteApRecord(id: ObjectId) {
+        AppExecutors.instance?.let { deleteCollection(
+            fStore.collection("mAccessPointsRecorded")
+                .document(id.toString())
+                .collection("apRecorded"), it.getDiskIO()) }
+
+        fStore.collection("mAccessPointsRecorded")
+            .document(id.toString())
+            .delete()
+    }
+
+    override fun clearApRecord() {
+        AppExecutors.instance?.let { deleteCollection(fStore.collection("mAccessPointsRecorded"), it.getDiskIO()) }
     }
 
     override fun insertInaccuracy(inaccuracy: Account_Inaccuracy) {
@@ -91,23 +127,6 @@ class FirestoreDb @Inject constructor(
     override fun pullMp() {
         val realmApList = RealmList<Account_mMappingPoints_accessPointsSignalRecorded>()
 
-        fStore.collection("mAccessPointsRecorded")
-            .get()
-            .addOnCompleteListener { apList ->
-                if (apList.isSuccessful) {
-                    for (ap in apList.result!!) {
-                        val result = ap.toObject<AccessPoints>()
-                        val realmAp = Account_mMappingPoints_accessPointsSignalRecorded(
-                            ObjectId(ap.id),
-                            result.mac,
-                            result.rssi,
-                            result.ssid
-                        )
-                        realmApList.add(realmAp)
-                    }
-                }
-            }
-
         fStore.collection("mMappingPoints")
             .get()
             .addOnCompleteListener { mpList ->
@@ -121,6 +140,29 @@ class FirestoreDb @Inject constructor(
                             result.x,
                             result.y
                         )
+
+                        fStore.collection("mAccessPointsRecorded")
+                            .document(mp.id)
+                            .collection("apRecorded")
+                            .get()
+                            .addOnCompleteListener { apList ->
+                                if (apList.isSuccessful) {
+                                    for (ap in apList.result!!) {
+                                        val recAp = ap.toObject<AccessPoints>()
+
+                                        val realmAp = Account_mMappingPoints_accessPointsSignalRecorded(
+                                            ObjectId(mp.id),
+                                            recAp.mac,
+                                            recAp.rssi,
+                                            recAp.ssid
+                                        )
+                                        Log.d(TAG, "pullMp: $recAp")
+
+                                        realmApList.add(realmAp)
+                                    }
+                                }
+                            }
+
                         db.insertMp(realmMp)
                     }
                 }

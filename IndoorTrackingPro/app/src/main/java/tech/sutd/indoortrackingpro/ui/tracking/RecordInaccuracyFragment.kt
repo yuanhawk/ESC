@@ -20,6 +20,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 @AndroidEntryPoint
 class RecordInaccuracyFragment: BottomSheetDialogFragment() {
+
     @Inject lateinit var realm: Realm
     lateinit var binding: FragmentRecordInaccuracyBinding
     override fun onCreateView(

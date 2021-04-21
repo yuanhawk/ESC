@@ -63,22 +63,30 @@ class WifiViewModel @Inject constructor(
 
     fun clearAp() {
         db.clearAp()
+        fStore.clearAp()
     }
 
     fun clearMp() {
         db.clearMp()
+        fStore.clearMp()
+        fStore.clearApRecord()
     }
 
     fun deleteAp(id: ObjectId) {
         db.deleteAp(id)
+        fStore.deleteAp(id)
     }
 
     fun deleteMp(id: ObjectId) {
         db.deleteMp(id)
+        fStore.deleteMp(id)
+        fStore.deleteApRecord(id)
     }
 
     fun pull() {
+        db.clearAp()
         fStore.pullAp()
+        db.clearMp()
         fStore.pullMp()
     }
 }

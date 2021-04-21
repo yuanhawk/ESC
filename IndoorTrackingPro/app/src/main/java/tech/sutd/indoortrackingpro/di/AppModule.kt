@@ -21,8 +21,8 @@ import io.realm.mongodb.sync.ClientResetRequiredError
 import io.realm.mongodb.sync.SyncConfiguration
 import io.realm.mongodb.sync.SyncSession
 import tech.sutd.indoortrackingpro.core.TrackingAlgo
-import tech.sutd.indoortrackingpro.data.Db
-import tech.sutd.indoortrackingpro.data.FirestoreDb
+import tech.sutd.indoortrackingpro.data.implementation.Db
+import tech.sutd.indoortrackingpro.data.implementation.FirestoreDb
 import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
 import tech.sutd.indoortrackingpro.data.helper.DbHelper

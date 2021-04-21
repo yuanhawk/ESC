@@ -57,7 +57,7 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                     findNavController().popBackStack(R.id.mappingFragment, false)
                 findNavController().navigate(R.id.action_addMappingDialog_to_mappingFragment)
             }
-
+            yesButtonAddMapping.isEnabled = false
             yesButtonAddMapping.setOnClickListener {
                 pref.apAdded.asLiveData().observe(viewLifecycleOwner, { apList ->
 //                val realm1  = Realm.getInstance(config)
@@ -83,7 +83,6 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                     }
                 })
             }
-            binding.yesButtonAddMapping.isEnabled = false
             xAddMapping.text = coordinate?.get(0).toString()
             yAddMapping.text = coordinate?.get(1).toString()
             isCancelable = false
