@@ -11,6 +11,7 @@ import io.realm.Realm
 import io.realm.RealmList
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import tech.sutd.indoortrackingpro.data.helper.FirestoreHelper
 import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints_accessPointsSignalRecorded
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
@@ -24,10 +25,9 @@ class AddMappingPointReceiver @Inject constructor(
     var handler: Handler,
     var realm: Realm,
     var wifiWrapper: WifiWrapper,
-    var pref: Preferences
+    var pref: Preferences,
+    var fStore: FirestoreHelper
 ) : BroadcastReceiver() {
-
-//    private lateinit var binding: AddMappingBinding
 
     var readings: HashMap<String, ArrayList<Int>> = HashMap()
     var done = false
@@ -52,6 +52,7 @@ class AddMappingPointReceiver @Inject constructor(
                 mappingPoint.accessPointSignalRecorded.add(
                     Account_mMappingPoints_accessPointsSignalRecorded(ap)
                 )
+                fStore.insertApRecord(ap)
             }
         }
     }

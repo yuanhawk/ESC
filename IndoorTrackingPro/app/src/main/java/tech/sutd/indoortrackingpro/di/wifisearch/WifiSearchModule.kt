@@ -13,6 +13,7 @@ import io.realm.Realm
 import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.WifiWrapper
+import tech.sutd.indoortrackingpro.data.helper.FirestoreHelper
 import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 
@@ -34,6 +35,7 @@ object WifiSearchModule {
         handler: Handler,
         realm: Realm,
         wifiWrapper: WifiWrapper,
-        pref: Preferences
-    ): AddMappingPointReceiver = AddMappingPointReceiver(context, handler, realm, wifiWrapper, pref)
+        pref: Preferences,
+        fStore: FirestoreHelper
+    ): AddMappingPointReceiver = AddMappingPointReceiver(context, handler, realm, wifiWrapper, pref, fStore)
 }

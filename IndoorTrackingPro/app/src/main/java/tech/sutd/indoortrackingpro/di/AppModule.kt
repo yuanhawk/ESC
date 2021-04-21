@@ -22,9 +22,11 @@ import io.realm.mongodb.sync.SyncConfiguration
 import io.realm.mongodb.sync.SyncSession
 import tech.sutd.indoortrackingpro.core.TrackingAlgo
 import tech.sutd.indoortrackingpro.data.Db
+import tech.sutd.indoortrackingpro.data.FirestoreDb
 import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
 import tech.sutd.indoortrackingpro.data.helper.DbHelper
+import tech.sutd.indoortrackingpro.data.helper.FirestoreHelper
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.utils.appId
 import javax.inject.Singleton
@@ -113,6 +115,13 @@ object AppModule {
     @Singleton
     @Provides
     fun provideFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Singleton
+    @Provides
+    fun provideFirestoreDb(
+        fStore: FirebaseFirestore,
+        realm: Realm
+    ): FirestoreHelper = FirestoreDb(fStore, realm)
 
     @Singleton
     @Provides

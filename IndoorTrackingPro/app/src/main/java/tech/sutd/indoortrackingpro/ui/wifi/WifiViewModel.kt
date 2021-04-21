@@ -12,6 +12,7 @@ import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.WifiWrapper
 import tech.sutd.indoortrackingpro.data.helper.DbHelper
+import tech.sutd.indoortrackingpro.data.helper.FirestoreHelper
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
@@ -22,14 +23,15 @@ class WifiViewModel @Inject constructor(
     private val wifiWrapper: WifiWrapper,
     private val data: MediatorLiveData<List<ScanResult>>,
     private val realm: Realm,
-    private val fStore: FirebaseFirestore,
-    private val db: DbHelper
+    private val db: DbHelper,
+    private val fStore: FirestoreHelper
 ) : ViewModel() {
 
     private val TAG = "WifiViewModel"
 
     fun insertAp(accessPoint: Account_mAccessPoints) {
         db.insertAp(accessPoint)
+        fStore.insertAp(accessPoint)
     }
 
     private fun checkDuplicate(scanResult: ScanResult): Boolean{

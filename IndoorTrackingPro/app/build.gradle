@@ -79,6 +79,7 @@ dependencies {
 
     // hilt
     implementation "com.google.dagger:hilt-android:$versions.hilt"
+    implementation 'com.google.firebase:firebase-firestore:22.1.2'
     kapt "com.google.dagger:hilt-android-compiler:$versions.hilt"
     kapt "androidx.hilt:hilt-compiler:$versions.hilt_compiler"
     implementation "androidx.hilt:hilt-navigation-fragment:$versions.workmanager"
