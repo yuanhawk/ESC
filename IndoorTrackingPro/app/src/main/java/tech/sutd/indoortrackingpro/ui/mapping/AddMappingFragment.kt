@@ -51,7 +51,6 @@ class AddMappingFragment : BottomSheetDialogFragment() {
         with(binding) {
 
             val coordinate = arguments?.getFloatArray(touchCoord)
-
             backButtonAddMapping.setOnClickListener {
                 if (findNavController().previousBackStackEntry?.equals(R.id.mappingFragment) == true)
                     findNavController().popBackStack(R.id.mappingFragment, false)
@@ -83,8 +82,8 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                     }
                 })
             }
-            xAddMapping.text = coordinate?.get(0).toString()
-            yAddMapping.text = coordinate?.get(1).toString()
+            xAddMapping.text = (coordinate?.get(0)?.div(20f)).toString()
+            yAddMapping.text = (coordinate?.get(1)?.div(20f)).toString()
             isCancelable = false
         }
         return binding.root

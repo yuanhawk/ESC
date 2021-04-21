@@ -32,9 +32,9 @@ class RecordInaccuracyFragment: BottomSheetDialogFragment() {
         val touchCoord = arguments?.getFloatArray(touchCoord)
         val trackingCoord = arguments?.getFloatArray(trackingCoord)
         with(binding){
-            xCoordinateRecordInaccuracy.text = touchCoord!![0].toString()
-            yCoordinateRecordInaccuracy.text = touchCoord[1].toString()
-            val distance = sqrt((touchCoord[0] - trackingCoord!![0]).pow(2) + (touchCoord[1] - trackingCoord[1]).pow(2))
+            xCoordinateRecordInaccuracy.text = (touchCoord!![0]/20f).toString()
+            yCoordinateRecordInaccuracy.text = (touchCoord[1]/20f).toString()
+            val distance = sqrt((touchCoord[0] - trackingCoord!![0]).pow(2) + (touchCoord[1] - trackingCoord[1]).pow(2))/20.0
             inaccuracy.text = distance.toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
             backButtonRecordInaccuracies.setOnClickListener{
                 if (findNavController().previousBackStackEntry?.equals(R.id.mappingFragment) == true)

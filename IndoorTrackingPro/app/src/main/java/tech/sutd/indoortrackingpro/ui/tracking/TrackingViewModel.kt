@@ -86,4 +86,5 @@ class TrackingViewModel @Inject constructor(
         db.insertInAccuracy(inaccuracy)
     }
 
+    fun getInaccuracyList() = realm.where(Account::class.java).findFirst()!!.Inaccuracy
 }

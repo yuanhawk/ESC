@@ -30,9 +30,9 @@ class InaccuracyAdapter : RecyclerView.Adapter<InaccuracyAdapter.InaccuracyViewH
 
     override fun onBindViewHolder(holder: InaccuracyViewHolder, position: Int) {
         with(holder.binding) {
-            inaccuracyListX.text = inaccuracyList[position]?.x!!.toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
-            inaccracyListY.text = inaccuracyList[position]?.y!!.toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
-            inaccracyListInaccuracy.text = inaccuracyList[position]?.inaccuracy!!.toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
+            inaccuracyListX.text = (inaccuracyList[position]?.x!!/20.0).toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
+            inaccracyListY.text = (inaccuracyList[position]?.y!!/20.0).toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
+            inaccracyListInaccuracy.text = (inaccuracyList[position]?.inaccuracy!!/20.0).toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
         }
     }
 

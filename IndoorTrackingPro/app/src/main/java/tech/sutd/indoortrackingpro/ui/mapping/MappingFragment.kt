@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
@@ -19,10 +20,10 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MappingFragment : Fragment() {
-    @Inject lateinit var bundle: Bundle
-    @Inject lateinit var realm: Realm
-    private lateinit var location: FloatArray
 
+    @Inject lateinit var bundle: Bundle
+    private lateinit var location: FloatArray
+    private val viewModel: MappingViewModel by hiltNavGraphViewModels(R.id.main)
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +41,7 @@ class MappingFragment : Fragment() {
         with(binding) {
             map.setImageResource(R.drawable.map)
             //draw all the mapping points
-            val mappingPointPositions = ArrayList<FloatArray>();
-            val mappingPointList =  realm.where(tech.sutd.indoortrackingpro.model.Account::class.java).findFirst()!!.mMappingPoints;
-            for (mappingPoint in mappingPointList){
-                mappingPointPositions.add(floatArrayOf(mappingPoint.x.toFloat(), mappingPoint.y.toFloat()))
-            }
-            map.secondPosList = mappingPointPositions
+            map.secondPosList = viewModel.getMappingPositions()
             map.invalidate()
 
             map.setOnTouchListener(

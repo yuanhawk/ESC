@@ -30,8 +30,6 @@ import javax.inject.Inject
 class SelectedAPListFragment : Fragment() {
 
     private val TAG = "SelectedAPListFragment"
-
-    @Inject lateinit var realm: Realm
     @Inject lateinit var handler: Handler
     @Inject lateinit var adapter: ApListAdapter
     @Inject lateinit var manager: LinearLayoutManager

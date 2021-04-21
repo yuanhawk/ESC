@@ -24,7 +24,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TrackingFragment : Fragment() {
-    @Inject lateinit var realm: Realm
     @Inject lateinit var bundle: Bundle
     private lateinit var binding: FragmentTrackingBinding
     val model:  TrackingViewModel by viewModels()
@@ -88,7 +87,7 @@ class TrackingFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         with(binding){
-            val inaccuracyList = realm.where(Account::class.java).findFirst()!!.Inaccuracy
+            val inaccuracyList = model.getInaccuracyList()
             trackingMap.inaccuracyList = inaccuracyList
             trackingMap.inaccuracyEnabled = true
             trackingMap.invalidate()

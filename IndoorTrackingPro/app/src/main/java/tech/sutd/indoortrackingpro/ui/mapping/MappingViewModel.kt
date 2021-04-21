@@ -34,4 +34,13 @@ class MappingViewModel @Inject constructor(
             }
         }
     }
+
+    fun getMappingPositions(): ArrayList<FloatArray>{
+        val mappingPointPositions = ArrayList<FloatArray>();
+        val mappingPointList =  realm.where(tech.sutd.indoortrackingpro.model.Account::class.java).findFirst()!!.mMappingPoints;
+        for (mappingPoint in mappingPointList){
+            mappingPointPositions.add(floatArrayOf(mappingPoint.x.toFloat(), mappingPoint.y.toFloat()))
+        }
+        return mappingPointPositions
+    }
 }

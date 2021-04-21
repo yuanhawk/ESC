@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,7 @@ import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
 import tech.sutd.indoortrackingpro.ui.adapter.InaccuracyAdapter
+import tech.sutd.indoortrackingpro.ui.tracking.TrackingViewModel
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
@@ -34,7 +36,7 @@ class InaccuracyListFragment : Fragment() {
 
     private val TAG = "SelectedAPListFragment"
 
-    @Inject lateinit var realm: Realm
+    val model: TrackingViewModel by viewModels()
     lateinit var adapter: InaccuracyAdapter
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var pref: Preferences
@@ -56,7 +58,7 @@ class InaccuracyListFragment : Fragment() {
             inaccuracyRecycler.adapter = adapter
             inaccuracyRecycler.layoutManager = manager
         }
-        adapter.sendData(realm.where(Account::class.java).findFirst()!!.Inaccuracy)
+        adapter.sendData(model.getInaccuracyList())
         return binding.root
     }
 
