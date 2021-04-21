@@ -70,6 +70,17 @@
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="0dp"
+                        android:padding="10dp"
+                        android:text="Floor: "
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -96,6 +107,16 @@
                         android:textSize="25sp"
                         android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/floor_add_mapping"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:textColor="@color/blue"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -103,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="50dp"
                 android:text="@string/confirm_selection"
                 android:textColor="@color/white"
                 android:textSize="25sp"

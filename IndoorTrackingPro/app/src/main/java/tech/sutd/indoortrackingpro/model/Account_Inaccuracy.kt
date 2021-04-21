@@ -11,14 +11,16 @@ open class Account_Inaccuracy(
     var id: ObjectId = ObjectId(),
     var x:Double = 0.0,
     var y:Double = 0.0,
+    var z:Double = 0.0,
     var inaccuracy: Double = 0.0
 ) : RealmObject() {
 
     constructor(
-        x:Double, y: Double, inaccuracy: Double
+        x:Double, y: Double, z:Double, inaccuracy: Double
     ) : this() {
         this.x = x
         this.y = y
+        this.z = z
         this.inaccuracy = inaccuracy
     }
 }

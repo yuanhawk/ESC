@@ -24,6 +24,7 @@ class MappingFragment : Fragment() {
     @Inject lateinit var bundle: Bundle
     private lateinit var location: FloatArray
     private val viewModel: MappingViewModel by hiltNavGraphViewModels(R.id.main)
+    private lateinit var binding:FragmentMappingBinding
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,24 +32,33 @@ class MappingFragment : Fragment() {
     ): View {
 
         // Inflate the layout for this fragment
-        val binding = DataBindingUtil.inflate<FragmentMappingBinding>(
+        binding = DataBindingUtil.inflate<FragmentMappingBinding>(
             inflater,
             R.layout.fragment_mapping,
             container,
             false
         )
+        viewModel.floorNumber.observe(viewLifecycleOwner, {
+            binding.map.secondPosList = viewModel.getMappingPositionsFloor(viewModel.floorNumber.value!!)
+            binding.map.invalidate()
+        })
 
         with(binding) {
             map.setImageResource(R.drawable.map)
             //draw all the mapping points
-            map.secondPosList = viewModel.getMappingPositions()
+            map.secondPosList = viewModel.getMappingPositionsFloor(viewModel.floorNumber.value!!)
             map.invalidate()
+            mappingFloor.setText(viewModel.floorNumber.value.toString())
+            mappingChangeFloorButton.setOnClickListener {
+                viewModel.floorNumber.value = mappingFloor.text.toString().toInt()
+            }
 
             map.setOnTouchListener(
                 object : View.OnTouchListener {
                     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                         if (event?.action == MotionEvent.ACTION_UP) {
-                            location = floatArrayOf(event.x, event.y)
+                            val z = mappingFloor.text.toString().toInt().toFloat()
+                            location = floatArrayOf(event.x, event.y, z)
                             Log.d(ContentValues.TAG, "onCreate: ${location[0]}, ${location[1]}")
 
                             bundle.putFloatArray(touchCoord, location)
@@ -66,6 +76,13 @@ class MappingFragment : Fragment() {
                     }
                 })
             return binding.root
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        with(binding) {
+            mappingFloor.setText(viewModel.floorNumber.value.toString())
         }
     }
 

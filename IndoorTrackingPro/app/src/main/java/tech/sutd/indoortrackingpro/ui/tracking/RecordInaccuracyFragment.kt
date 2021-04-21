@@ -36,7 +36,8 @@ class RecordInaccuracyFragment: BottomSheetDialogFragment() {
         with(binding){
             xCoordinateRecordInaccuracy.text = (touchCoord!![0]/20f).toString()
             yCoordinateRecordInaccuracy.text = (touchCoord[1]/20f).toString()
-            val distance = sqrt((touchCoord[0] - trackingCoord!![0]).pow(2) + (touchCoord[1] - trackingCoord[1]).pow(2))/20.0
+            inaccuracyFloor.text = touchCoord[2].toString()
+            val distance = sqrt((touchCoord[0] - trackingCoord!![0]).div(20).pow(2) + (touchCoord[1] - trackingCoord[1]).div(20).pow(2) + (touchCoord[2] - trackingCoord[2]).times(5).pow(2))
             inaccuracy.text = distance.toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
             backButtonRecordInaccuracies.setOnClickListener{
                 if (findNavController().previousBackStackEntry?.equals(R.id.mappingFragment) == true)
@@ -47,6 +48,7 @@ class RecordInaccuracyFragment: BottomSheetDialogFragment() {
                 val inaccuracy = Account_Inaccuracy()
                 inaccuracy.x = touchCoord[0].toDouble()
                 inaccuracy.y = touchCoord[1].toDouble()
+                inaccuracy.z = touchCoord[2].toDouble()
                 inaccuracy.inaccuracy = distance.toDouble()
                 viewModel.insertInAccuracy(inaccuracy)
 

@@ -53,18 +53,22 @@ class TrackingAlgo : AlgoHelper {
         distanceLists.sort()
         var xSum = 0.0
         var ySum = 0.0
+        var zSum = 0.0
         var weightSum = 0.0
         for (i in 0 until if (distanceLists.size < k) distanceLists.size else k) {
             val temp_x = distanceLists[i].coordinate.longitude
             val temp_y = distanceLists[i].coordinate.latitude
+            val temp_z = distanceLists[i].coordinate.z
             val weight = if (distanceLists[i].distance == 0.0) 100.0 else 1 / distanceLists[i].distance
             weightSum += weight
             xSum += temp_x * weight
             ySum += temp_y * weight
+            zSum += temp_z * weight
         }
         val x = xSum / weightSum
         val y = ySum / weightSum
-        return Coordinate(x, y)
+        val z = zSum / weightSum
+        return Coordinate(x, y, z)
     }
 
     private fun calculateDistance(mappingPoint: Account_mMappingPoints, rssiValues: List<Double>): Distance {
@@ -76,7 +80,7 @@ class TrackingAlgo : AlgoHelper {
         } catch (e: ArrayIndexOutOfBoundsException) {
             e.printStackTrace()
         }
-        return Distance(temp.pow(0.5), Coordinate(mappingPoint.x, mappingPoint.y))
+        return Distance(temp.pow(0.5), Coordinate(mappingPoint.x, mappingPoint.y, mappingPoint.z))
         //for (i in 0..rssiValues.size)
     }
 }

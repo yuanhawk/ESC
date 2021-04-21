@@ -2,6 +2,7 @@ package tech.sutd.indoortrackingpro.data.implementation
 
 import android.util.Log
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import io.realm.RealmList
 import org.bson.types.ObjectId
@@ -46,6 +47,7 @@ class FirestoreDb @Inject constructor(
         val data = hashMapOf(
             "x" to mappingPoint.x,
             "y" to mappingPoint.y,
+            "z" to mappingPoint.z
         )
 
         fStore.collection("mMappingPoints")
@@ -99,6 +101,7 @@ class FirestoreDb @Inject constructor(
         val data = hashMapOf(
             "x" to inaccuracy.x,
             "y" to inaccuracy.y,
+            "z" to inaccuracy.z,
             "inaccuracy" to inaccuracy.inaccuracy
         )
 
@@ -134,6 +137,19 @@ class FirestoreDb @Inject constructor(
             }
     }
 
+    override fun pullInaccuracy(){
+        fStore.collection("inaccuracyRecorded").get().addOnCompleteListener{task->
+            if (task.isSuccessful){
+                for (inaccracyRecord in task.result!!){
+                    val result = inaccracyRecord.toObject<Inaccuracy>()
+                    val realmInaccuracy = Account_Inaccuracy(ObjectId(inaccracyRecord.id), result.x, result.y, result.z, result.inaccuracy)
+                    db.insertInAccuracy(realmInaccuracy)
+                }
+            }
+
+        }
+    }
+
     override fun pullMp() {
         val realmApList = RealmList<Account_mMappingPoints_accessPointsSignalRecorded>()
 
@@ -148,7 +164,8 @@ class FirestoreDb @Inject constructor(
                             ObjectId(mp.id),
                             realmApList,
                             result.x,
-                            result.y
+                            result.y,
+                            result.z
                         )
 
                         fStore.collection("mAccessPointsRecorded")

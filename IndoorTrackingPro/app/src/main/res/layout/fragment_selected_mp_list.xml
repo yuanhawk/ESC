@@ -48,6 +48,18 @@
                     android:lines="1"
                     android:text="@string/y_coordinate"
                     android:textColor="@color/blue" />
+
+                <TextView
+                    android:id="@+id/selected_mp_floor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:lines="1"
+                    android:text="Floor"
+                    android:textColor="@color/blue" />
+
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

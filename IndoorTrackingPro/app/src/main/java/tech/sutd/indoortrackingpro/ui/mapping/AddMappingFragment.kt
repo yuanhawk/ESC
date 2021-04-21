@@ -84,6 +84,7 @@ class AddMappingFragment : BottomSheetDialogFragment() {
             }
             xAddMapping.text = (coordinate?.get(0)?.div(20f)).toString()
             yAddMapping.text = (coordinate?.get(1)?.div(20f)).toString()
+            floorAddMapping.text = coordinate?.get(2)?.toInt().toString()
             isCancelable = false
         }
         return binding.root

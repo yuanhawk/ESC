@@ -28,6 +28,7 @@ class MpListAdapter : RecyclerView.Adapter<MpListAdapter.MpListViewHolder>() {
             Log.d(TAG, "onBindViewHolder: ${mapList[position].x.toString()}")
             xMap.text = mapList[position].x.toString()
             yMap.text = mapList[position].y.toString()
+            floorMap.text = mapList[position].z.toInt().toString()
         }
     }
 

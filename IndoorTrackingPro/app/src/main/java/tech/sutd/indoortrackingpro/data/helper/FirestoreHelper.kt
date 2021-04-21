@@ -25,4 +25,5 @@ interface FirestoreHelper {
 
     fun pullAp()
     fun pullMp()
+    fun pullInaccuracy()
 }

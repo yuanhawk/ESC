@@ -88,5 +88,7 @@ class WifiViewModel @Inject constructor(
         fStore.pullAp()
         db.clearMp()
         fStore.pullMp()
+        db.clearInAccuracy()
+        fStore.pullInaccuracy()
     }
 }

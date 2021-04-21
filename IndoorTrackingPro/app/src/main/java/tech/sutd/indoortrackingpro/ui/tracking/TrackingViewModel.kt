@@ -48,7 +48,8 @@ class TrackingViewModel @Inject constructor(
 
     fun inaccuracy(): LiveData<RealmList<Account_Inaccuracy>>? = db.retrieveRecordInAccuracyLiveData()
 
-    private var coordinates: MutableLiveData<Coordinate> = MutableLiveData(Coordinate(300.0, 300.0))
+    var floorNumber = MutableLiveData<Int>(1)
+    private var coordinates: MutableLiveData<Coordinate> = MutableLiveData(Coordinate(300.0, 300.0, 1.0))
 
     fun initWifiScan(fragment: TrackingFragment) {
         workManager.enqueue(trackingRequest)
@@ -68,6 +69,7 @@ class TrackingViewModel @Inject constructor(
                     Log.d(TAG, "receive")
                     Log.d(TAG, coordinate?.longitude.toString())
                     Log.d(TAG, coordinate?.latitude.toString())
+                    Log.d(TAG, coordinate?.z.toString())
                     coordinates.value = coordinate
                 }
             }
@@ -95,6 +97,16 @@ class TrackingViewModel @Inject constructor(
 
 
     fun getInaccuracyList() = realm.where(Account::class.java).findFirst()!!.Inaccuracy
+
+    fun getInaccuracyListFloor(floor: Int): RealmList<Account_Inaccuracy>{
+        val res:RealmList<Account_Inaccuracy> = RealmList()
+        for (inaccuracyRecord in getInaccuracyList()){
+            if (inaccuracyRecord.z.toInt() == floor){
+                res.add(inaccuracyRecord)
+            }
+        }
+        return res
+    }
 
     fun deleteInAccuracy(id: ObjectId) {
         db.deleteInAccuracy(id)

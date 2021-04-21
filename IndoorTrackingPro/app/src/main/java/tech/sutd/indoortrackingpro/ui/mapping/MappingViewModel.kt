@@ -1,6 +1,7 @@
 package tech.sutd.indoortrackingpro.ui.mapping
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +12,7 @@ import tech.sutd.indoortrackingpro.data.helper.FirestoreHelper
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Account_Inaccuracy
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
+import tech.sutd.indoortrackingpro.model.Coordinate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,10 +24,12 @@ class MappingViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val TAG = "mappingViewModel"
+    var floorNumber: MutableLiveData<Int> = MutableLiveData(1)
 
     fun insertMp(coord: FloatArray, mappingPt: Account_mMappingPoints) {
         mappingPt.x = coord[0].toDouble()
         mappingPt.y = coord[1].toDouble()
+        mappingPt.z = coord[2].toDouble()
         db.insertMp(mappingPt)
         fStore.insertMp(mappingPt)
 
@@ -42,6 +46,15 @@ class MappingViewModel @Inject constructor(
         val mappingPointList =  realm.where(tech.sutd.indoortrackingpro.model.Account::class.java).findFirst()!!.mMappingPoints;
         for (mappingPoint in mappingPointList){
             mappingPointPositions.add(floatArrayOf(mappingPoint.x.toFloat(), mappingPoint.y.toFloat()))
+        }
+        return mappingPointPositions
+    }
+
+    fun getMappingPositionsFloor(floor: Int): ArrayList<FloatArray>{
+        val mappingPointPositions = ArrayList<FloatArray>();
+        val mappingPointList =  realm.where(tech.sutd.indoortrackingpro.model.Account::class.java).findFirst()!!.mMappingPoints;
+        for (mappingPoint in mappingPointList){
+            if (mappingPoint.z.toInt() == floor) mappingPointPositions.add(floatArrayOf(mappingPoint.x.toFloat(), mappingPoint.y.toFloat()))
         }
         return mappingPointPositions
     }

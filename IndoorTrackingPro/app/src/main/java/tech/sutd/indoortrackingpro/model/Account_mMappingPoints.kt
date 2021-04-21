@@ -14,7 +14,8 @@ open class Account_mMappingPoints(
     var id: ObjectId = ObjectId(),
     var accessPointSignalRecorded: RealmList<Account_mMappingPoints_accessPointsSignalRecorded> = RealmList(),
     var x: Double = 0.0,
-    var y: Double = 0.0
+    var y: Double = 0.0,
+    var z: Double = 0.0
 ) : RealmObject(), Parcelable{
 
     constructor(parcel: Parcel) : this(){

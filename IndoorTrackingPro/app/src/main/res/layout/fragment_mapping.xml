@@ -64,6 +64,33 @@
                     app:verticalPanEnabled="true"
                     app:zoomEnabled="true" />
             </com.otaliastudios.zoom.ZoomLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/sapphire_blue">
+                <Button
+                    android:id="@+id/mapping_change_floor_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Yes"
+                    />
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Floor: "
+                    />
+                <EditText
+                android:id="@+id/mapping_floor"
+                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:inputType="number"
+                android:gravity="center"
+                android:text="1" />
+            </LinearLayout>
+
+
 
         </RelativeLayout>
     </FrameLayout>

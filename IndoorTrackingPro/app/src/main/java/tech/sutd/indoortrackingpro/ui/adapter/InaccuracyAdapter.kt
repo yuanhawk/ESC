@@ -32,7 +32,8 @@ class InaccuracyAdapter : RecyclerView.Adapter<InaccuracyAdapter.InaccuracyViewH
         with(holder.binding) {
             inaccuracyListX.text = (inaccuracyList[position]?.x!!/20.0).toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
             inaccracyListY.text = (inaccuracyList[position]?.y!!/20.0).toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
-            inaccracyListInaccuracy.text = (inaccuracyList[position]?.inaccuracy!!/20.0).toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
+            inaccracyListFloor.text = inaccuracyList[position]?.z!!.toInt().toString()
+            inaccracyListInaccuracy.text = inaccuracyList[position]?.inaccuracy!!.toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
         }
     }
 
