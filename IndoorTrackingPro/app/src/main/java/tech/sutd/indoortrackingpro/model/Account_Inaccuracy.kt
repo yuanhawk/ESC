@@ -3,10 +3,12 @@ package tech.sutd.indoortrackingpro.model
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 import org.bson.types.ObjectId
 
-open class Inaccuracy(
-    @PrimaryKey var _id: ObjectId? = ObjectId(),
+@RealmClass(embedded = true)
+open class Account_Inaccuracy(
+    var id: ObjectId = ObjectId(),
     var x:Double = 0.0,
     var y:Double = 0.0,
     var inaccuracy: Double = 0.0

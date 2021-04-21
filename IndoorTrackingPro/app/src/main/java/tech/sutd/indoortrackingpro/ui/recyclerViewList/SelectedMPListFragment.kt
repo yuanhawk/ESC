@@ -18,7 +18,7 @@ import io.realm.RealmList
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
-import tech.sutd.indoortrackingpro.data.datastore.Preferences
+import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.FragmentSelectedMpListBinding
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import tech.sutd.indoortrackingpro.ui.adapter.MpListAdapter

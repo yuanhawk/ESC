@@ -6,6 +6,9 @@ import android.net.wifi.WifiManager
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
 import androidx.work.WorkManager
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,10 +20,11 @@ import io.realm.mongodb.*
 import io.realm.mongodb.sync.ClientResetRequiredError
 import io.realm.mongodb.sync.SyncConfiguration
 import io.realm.mongodb.sync.SyncSession
-import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.core.TrackingAlgo
-import tech.sutd.indoortrackingpro.data.datastore.Preferences
+import tech.sutd.indoortrackingpro.data.Db
+import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
+import tech.sutd.indoortrackingpro.data.helper.DbHelper
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.utils.appId
 import javax.inject.Singleton
@@ -46,6 +50,8 @@ object AppModule {
         RealmConfiguration.Builder()
             .allowQueriesOnUiThread(true)
             .allowWritesOnUiThread(true)
+            .compactOnLaunch()
+            .deleteRealmIfMigrationNeeded()
             .build()
 
     @Singleton
@@ -61,64 +67,75 @@ object AppModule {
     @Provides
     fun provideCredentials(): Credentials = Credentials.anonymous()
 
-        @Singleton
-        @Provides
-        fun provideSyncConfiguration(
-            cred: Credentials,
-            app: App,
-        ): SyncConfiguration {
+    @Singleton
+    @Provides
+    fun provideSyncConfiguration(
+        cred: Credentials,
+        app: App,
+    ): SyncConfiguration {
 
-            app.loginAsync(cred) {
-                if (it.isSuccess) {
-                    Log.v("AUTH", "Successfully authenticated anonymously.")
-                } else {
-                    Log.e("AUTH", it.error.toString())
-                }
+        app.loginAsync(cred) {
+            if (it.isSuccess) {
+                Log.v("AUTH", "Successfully authenticated anonymously.")
+            } else {
+                Log.e("AUTH", it.error.toString())
             }
-
-            return SyncConfiguration.Builder(app.currentUser(), ObjectId())
-                .allowQueriesOnUiThread(true)
-                .allowWritesOnUiThread(true)
-                .errorHandler { _, error ->
-                    if (error.errorCode == ErrorCode.CLIENT_RESET) {
-                        val clientResetError = error as ClientResetRequiredError
-                        Log.e(TAG, "Received a ClientResetRequiredError",)
-                        clientResetError.executeClientReset()
-                        Log.e(TAG, "Reset client. Backup file path: ${clientResetError.backupFile}")
-                    }
-                }
-                .build()
         }
 
-        @Singleton
-        @Provides
-        fun provideRealmInstance(
-            syncConfig: SyncConfiguration
-        ): Realm =
-            Realm.getInstance(syncConfig)
+        return SyncConfiguration.Builder(app.currentUser(), appId)
+            .allowQueriesOnUiThread(true)
+            .allowWritesOnUiThread(true)
+            .errorHandler { _, error ->
+                if (error.errorCode == ErrorCode.CLIENT_RESET) {
+                    val clientResetError = error as ClientResetRequiredError
+                    Log.e(TAG, "Received a ClientResetRequiredError")
+                    clientResetError.executeClientReset()
+                    Log.e(TAG, "Reset client. Backup file path: ${clientResetError.backupFile}")
+                }
+            }
+            .build()
+    }
 
-        @Singleton
-        @Provides
-        fun provideSyncSession(
-            app: App,
-            config: SyncConfiguration
-        ): SyncSession = app.sync.getOrCreateSession(config)
+    @Singleton
+    @Provides
+    fun provideRealmInstance(
+        syncConfig: RealmConfiguration
+    ): Realm =
+        Realm.getInstance(syncConfig)
 
-        @Singleton
-        @Provides
-        fun provideTrackingHelper(): AlgoHelper = TrackingAlgo()
+    @Singleton
+    @Provides
+    fun provideSyncSession(
+        app: App,
+        config: SyncConfiguration
+    ): SyncSession = app.sync.getOrCreateSession(config)
 
-        @Singleton
-        @Provides
-        fun provideListScanResult(): MediatorLiveData<List<ScanResult>> =
-            MediatorLiveData()
+    @Singleton
+    @Provides
+    fun provideFirestore(): FirebaseFirestore = Firebase.firestore
 
-        @Singleton
-        @Provides
-        fun provideListApt(): MediatorLiveData<List<Account_mAccessPoints>> =
-            MediatorLiveData()
+    @Singleton
+    @Provides
+    fun provideDb(
+        realm: Realm,
+        pref: Preferences
+    ): DbHelper = Db(realm, pref)
 
-        @Singleton
-        @Provides
-        fun providePreferences(@ApplicationContext context: Context): Preferences = Preferences(context)
+    @Singleton
+    @Provides
+    fun provideTrackingHelper(): AlgoHelper = TrackingAlgo()
+
+    @Singleton
+    @Provides
+    fun provideListScanResult(): MediatorLiveData<List<ScanResult>> =
+        MediatorLiveData()
+
+    @Singleton
+    @Provides
+    fun provideListApt(): MediatorLiveData<List<Account_mAccessPoints>> =
+        MediatorLiveData()
+
+    @Singleton
+    @Provides
+    fun providePreferences(@ApplicationContext context: Context): Preferences = Preferences(context)
 }

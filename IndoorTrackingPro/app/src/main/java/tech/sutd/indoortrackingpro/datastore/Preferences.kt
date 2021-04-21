@@ -1,4 +1,4 @@
-package tech.sutd.indoortrackingpro.data.datastore
+package tech.sutd.indoortrackingpro.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore

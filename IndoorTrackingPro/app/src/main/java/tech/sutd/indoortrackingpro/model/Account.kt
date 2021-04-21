@@ -4,7 +4,6 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import org.bson.types.ObjectId
-import java.util.*
 
 /**
  * Each map has a corresponding account in the database (Right now we assume there is only a single account.
@@ -15,10 +14,10 @@ import java.util.*
  */
 open class Account(
     @PrimaryKey var _id: ObjectId = ObjectId(),
-    var _partition: ObjectId? = null,
+    var _partition: String? = null,
     var mAccessPoints: RealmList<Account_mAccessPoints> = RealmList(),
     var mMappingPoints: RealmList<Account_mMappingPoints> = RealmList(),
-    var Inaccuracies: RealmList<Inaccuracy> = RealmList()
+    var Inaccuracy: RealmList<Account_Inaccuracy> = RealmList()
 ) : RealmObject() {
 
     constructor(

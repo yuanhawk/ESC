@@ -4,20 +4,20 @@ import android.net.wifi.ScanResult
 import android.os.Parcel
 import android.os.Parcelable
 import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.utils.noSignalDefaultRssi
-import java.util.*
 
 // Signal strength, local db (realm), cache that is viewed as rv, pick some AP
-open class APInsideMP (
-    @PrimaryKey var _id: ObjectId = ObjectId(),
+@RealmClass(embedded = true)
+open class Account_mMappingPoints_accessPointsSignalRecorded (
+    var _id: ObjectId = ObjectId(),
     var mac: String = "",
     var rssi: Double = noSignalDefaultRssi,
     var ssid: String = ""
 ) : RealmObject(), Parcelable{
 
-    constructor(other: APInsideMP): this(){
+    constructor(other: Account_mMappingPoints_accessPointsSignalRecorded): this(){
         this._id = ObjectId()  //this is very important!!
         this.mac = other.mac
         this.ssid = other.ssid
@@ -54,12 +54,12 @@ open class APInsideMP (
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<APInsideMP  > {
-        override fun createFromParcel(parcel: Parcel): APInsideMP   {
-            return APInsideMP  (parcel)
+    companion object CREATOR : Parcelable.Creator<Account_mMappingPoints_accessPointsSignalRecorded  > {
+        override fun createFromParcel(parcel: Parcel): Account_mMappingPoints_accessPointsSignalRecorded   {
+            return Account_mMappingPoints_accessPointsSignalRecorded  (parcel)
         }
 
-        override fun newArray(size: Int): Array<APInsideMP  ?> {
+        override fun newArray(size: Int): Array<Account_mMappingPoints_accessPointsSignalRecorded  ?> {
             return arrayOfNulls(size)
         }
     }

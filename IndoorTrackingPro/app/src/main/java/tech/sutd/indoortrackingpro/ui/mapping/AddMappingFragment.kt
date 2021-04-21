@@ -19,7 +19,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
-import tech.sutd.indoortrackingpro.data.datastore.Preferences
+import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
 import tech.sutd.indoortrackingpro.ui.MainActivity
 import tech.sutd.indoortrackingpro.utils.touchCoord
@@ -32,9 +32,12 @@ class AddMappingFragment : BottomSheetDialogFragment() {
 
     private val viewModel: MappingViewModel by hiltNavGraphViewModels(R.id.main)
     lateinit var binding: AddMappingBinding
-    @Inject lateinit var config: RealmConfiguration
-    @Inject lateinit var wifiReceiver: AddMappingPointReceiver
-    @Inject lateinit var pref: Preferences
+    @Inject
+    lateinit var config: RealmConfiguration
+    @Inject
+    lateinit var wifiReceiver: AddMappingPointReceiver
+    @Inject
+    lateinit var pref: Preferences
     val TAG = "addMapping"
 
     override fun onCreateView(
@@ -55,8 +58,8 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                 findNavController().navigate(R.id.action_addMappingDialog_to_mappingFragment)
             }
 
-            pref.apAdded.asLiveData().observe(viewLifecycleOwner, { apList ->
-                yesButtonAddMapping.setOnClickListener {
+            yesButtonAddMapping.setOnClickListener {
+                pref.apAdded.asLiveData().observe(viewLifecycleOwner, { apList ->
 //                val realm1  = Realm.getInstance(config)
 //                var apList: RealmList<AccessPoint> = realm1.where(Account::class.java).findFirst()?.mAccessPoints!!
 
@@ -76,14 +79,11 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                         viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
                         Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT).show()
 
-                        GlobalScope.launch { pref.updateCheckMp(true) }
-
                         findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
                     }
-                }
-            })
+                })
+            }
 
-            yesButtonAddMapping.isEnabled = false
             xAddMapping.text = coordinate?.get(0).toString()
             yAddMapping.text = coordinate?.get(1).toString()
             isCancelable = false

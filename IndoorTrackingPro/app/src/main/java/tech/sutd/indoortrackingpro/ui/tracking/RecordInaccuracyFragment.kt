@@ -9,10 +9,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import tech.sutd.indoortrackingpro.R
-import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
 import tech.sutd.indoortrackingpro.databinding.FragmentRecordInaccuracyBinding
 import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.model.Inaccuracy
+import tech.sutd.indoortrackingpro.model.Account_Inaccuracy
 import tech.sutd.indoortrackingpro.utils.touchCoord
 import tech.sutd.indoortrackingpro.utils.trackingCoord
 import java.math.RoundingMode
@@ -43,11 +42,11 @@ class RecordInaccuracyFragment: BottomSheetDialogFragment() {
             }
             yesButtonAddRecording.setOnClickListener{
                 realm.beginTransaction()
-                val inaccuracy = Inaccuracy()
+                val inaccuracy = Account_Inaccuracy()
                 inaccuracy.x = touchCoord[0].toDouble()
                 inaccuracy.y = touchCoord[1].toDouble()
                 inaccuracy.inaccuracy = distance.toDouble()
-                realm.where(Account::class.java).findFirst()!!.Inaccuracies.add(inaccuracy)
+                realm.where(Account::class.java).findFirst()!!.Inaccuracy.add(inaccuracy)
                 realm.commitTransaction()
             }
         }

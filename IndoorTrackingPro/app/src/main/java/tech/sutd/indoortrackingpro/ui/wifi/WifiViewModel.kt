@@ -1,16 +1,19 @@
 package tech.sutd.indoortrackingpro.ui.wifi
 
 import android.net.wifi.ScanResult
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.ViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
 import io.realm.RealmList
 import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.WifiWrapper
-import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
+import tech.sutd.indoortrackingpro.data.helper.DbHelper
 import tech.sutd.indoortrackingpro.model.Account
+import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import javax.inject.Inject
 
@@ -18,20 +21,15 @@ import javax.inject.Inject
 class WifiViewModel @Inject constructor(
     private val wifiWrapper: WifiWrapper,
     private val data: MediatorLiveData<List<ScanResult>>,
-    private val realm: Realm
+    private val realm: Realm,
+    private val fStore: FirebaseFirestore,
+    private val db: DbHelper
 ) : ViewModel() {
 
     private val TAG = "WifiViewModel"
 
-    var account: LiveData<RealmList<Account_mAccessPoints>>? = MutableLiveData()
-    var mapping: LiveData<RealmList<Account_mMappingPoints>>? = MutableLiveData()
-
     fun insertAp(accessPoint: Account_mAccessPoints) {
-        realm.beginTransaction()
-        val account = realm.where(Account::class.java).findFirst()
-        account?.mAccessPoints?.add(accessPoint)
-        realm.commitTransaction()
-        Log.d(TAG, "insertAp: ${accessPoint.mac}")
+        db.insertAp(accessPoint)
     }
 
     private fun checkDuplicate(scanResult: ScanResult): Boolean{
@@ -53,59 +51,28 @@ class WifiViewModel @Inject constructor(
         }
         return data
     }
+
     fun endScan(receiver: WifiSearchReceiver) {
         data.removeSource(receiver.data)
     }
 
-    fun accessPoints(): LiveData<RealmList<Account_mAccessPoints>>? {
-        realm.executeTransaction { transactionRealm ->
-            val wifiResults =
-                transactionRealm.where(Account::class.java).findFirst()
-            account = wifiResults?.mAccessPoints?.asFlowable()
-                ?.onBackpressureBuffer()
-                ?.toLiveData()
-        }
-        return account
-    }
+    fun accessPoints(): LiveData<RealmList<Account_mAccessPoints>>? = db.retrieveApLiveData()
 
-    fun mappingPoint(): LiveData<RealmList<Account_mMappingPoints>>? {
-        realm.executeTransaction { transactionRealm ->
-            val wifiResults =
-                transactionRealm.where(Account::class.java).findFirst()
-            mapping = wifiResults?.mMappingPoints?.asFlowable()
-                ?.onBackpressureBuffer()
-                ?.toLiveData()
-        }
-        return mapping
-    }
+    fun mappingPoint(): LiveData<RealmList<Account_mMappingPoints>>? = db.retrieveMpLiveData()
 
     fun clearAp() {
-        realm.executeTransaction { r ->
-            r.delete(Account_mAccessPoints::class.java)
-        }
+        db.clearAp()
     }
 
     fun clearMp() {
-        realm.executeTransaction { r ->
-            r.delete(Account_mMappingPoints::class.java)
-        }
+        db.clearMp()
     }
 
     fun deleteAp(id: ObjectId) {
-        realm.beginTransaction()
-        val ap = realm.where(Account_mAccessPoints::class.java)
-            .equalTo("_id", id)
-            .findFirst()
-        ap?.deleteFromRealm()
-        realm.commitTransaction()
+        db.deleteAp(id)
     }
 
     fun deleteMp(id: ObjectId) {
-        realm.beginTransaction()
-        val mp = realm.where(Account_mMappingPoints::class.java)
-            .equalTo("_id", id)
-            .findFirst()
-        mp?.deleteFromRealm()
-        realm.commitTransaction()
+        db.deleteMp(id)
     }
 }

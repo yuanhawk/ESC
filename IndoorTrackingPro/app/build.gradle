@@ -59,6 +59,7 @@ dependencies {
     // firebase
     implementation "com.google.firebase:firebase-crashlytics-ktx:$versions.crashlytics"
     implementation "com.google.firebase:firebase-analytics-ktx:$versions.analytics"
+    implementation "com.google.firebase:firebase-firestore-ktx:$versions.firestore"
 
     // android supports
     implementation "com.google.android.material:material:$versions.material"
@@ -113,7 +114,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$versions.runner"
 
     // assertions
-    androidTestImplementation "androidx.test.ext:junit:$versions.junit_android"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$versions.junit_android"
     androidTestImplementation "androidx.test.ext:truth:$versions.runner"
 
     androidTestImplementation "androidx.arch.core:core-testing:$versions.core_test"
@@ -127,6 +128,7 @@ dependencies {
 
     // mockito
     testImplementation "io.mockk:mockk:$versions.mockk"
+    testImplementation "org.mockito:mockito-core:2.19.0"
 
     // espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
@@ -144,7 +146,4 @@ dependencies {
 
     // navigation-test
     androidTestImplementation "androidx.navigation:navigation-testing:$versions.navigation"
-
-    // paging 3
-    testImplementation "androidx.paging:paging-common-ktx:$versions.paging"
 }

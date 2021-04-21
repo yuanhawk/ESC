@@ -10,12 +10,10 @@ import dagger.hilt.android.components.FragmentComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.FragmentScoped
 import io.realm.Realm
-import io.realm.RealmConfiguration
 import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.WifiWrapper
-import tech.sutd.indoortrackingpro.data.datastore.Preferences
-import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
+import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 
 @InstallIn(FragmentComponent::class)

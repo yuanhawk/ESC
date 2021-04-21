@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.datastore.dataStore
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.asLiveData
@@ -22,10 +21,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
-import tech.sutd.indoortrackingpro.data.datastore.Preferences
+import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
-import tech.sutd.indoortrackingpro.ui.MainActivity
 import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
@@ -80,10 +78,6 @@ class WifiListFragment : Fragment() {
                                 Log.d(TAG, "onItemClick: ${accessPoint.mac}")
 
                                 viewModel.insertAp(accessPoint)
-
-                                GlobalScope.launch {
-                                    pref.updateCheckAp(true)
-                                }
 
                                 Toast.makeText(
                                     context,
