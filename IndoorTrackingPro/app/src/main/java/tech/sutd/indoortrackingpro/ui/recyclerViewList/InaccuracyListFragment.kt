@@ -36,13 +36,14 @@ class InaccuracyListFragment : Fragment() {
 
     private val TAG = "SelectedAPListFragment"
 
-    val model: TrackingViewModel by viewModels()
+
+    private val viewModel by hiltNavGraphViewModels<TrackingViewModel>(R.id.main)
+
+
     lateinit var adapter: InaccuracyAdapter
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var pref: Preferences
     private lateinit var binding: FragmentInaccuracyListBinding
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,8 +58,12 @@ class InaccuracyListFragment : Fragment() {
         with(binding){
             inaccuracyRecycler.adapter = adapter
             inaccuracyRecycler.layoutManager = manager
+
+            apClearDatabase.setOnClickListener{
+
+            }
         }
-        adapter.sendData(model.getInaccuracyList())
+        adapter.sendData(viewModel.getInaccuracyList())
         return binding.root
     }
 

@@ -11,9 +11,11 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
+import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.data.TrackingWorker
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
 import tech.sutd.indoortrackingpro.data.helper.DbHelper
+import tech.sutd.indoortrackingpro.data.helper.FirestoreHelper
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Account_Inaccuracy
 import tech.sutd.indoortrackingpro.model.Coordinate
@@ -29,7 +31,8 @@ class TrackingViewModel @Inject constructor(
     private val workManager: WorkManager,
     private val algoHelper: AlgoHelper,
     private val realm: Realm,
-    private val db: DbHelper
+    private val db: DbHelper,
+    private val fStore: FirestoreHelper
 ) : ViewModel() {
 
     private val TAG = "TrackingViewModel"
@@ -84,7 +87,20 @@ class TrackingViewModel @Inject constructor(
 
     fun insertInAccuracy(inaccuracy: Account_Inaccuracy) {
         db.insertInAccuracy(inaccuracy)
+        fStore.insertInaccuracy(inaccuracy)
     }
 
+
     fun getInaccuracyList() = realm.where(Account::class.java).findFirst()!!.Inaccuracy
+
+    fun deleteInAccuracy(id: ObjectId) {
+        db.deleteInAccuracy(id)
+        fStore.deleteInaccuracy(id)
+    }
+
+    fun clearInAccuracy() {
+        db.clearInAccuracy()
+        fStore.clearInaccuracy()
+
+    }
 }
