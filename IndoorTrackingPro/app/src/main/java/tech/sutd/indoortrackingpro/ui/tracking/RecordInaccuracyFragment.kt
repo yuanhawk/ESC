@@ -48,6 +48,7 @@ class RecordInaccuracyFragment: BottomSheetDialogFragment() {
                 inaccuracy.inaccuracy = distance.toDouble()
                 realm.where(Account::class.java).findFirst()!!.Inaccuracy.add(inaccuracy)
                 realm.commitTransaction()
+                findNavController().navigate(R.id.action_recordInaccuracyFragment_to_trackingFragment)
             }
         }
         return binding.root

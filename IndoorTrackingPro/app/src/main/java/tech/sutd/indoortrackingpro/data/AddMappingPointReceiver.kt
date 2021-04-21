@@ -80,14 +80,14 @@ class AddMappingPointReceiver @Inject constructor(
     fun start() {
         count = 0
         readings.clear()
-        if (done) {
-            GlobalScope.launch { pref.scanDone(false) }
-            done = false
-            startScan()
-        }
+        GlobalScope.launch { pref.scanDone(false) }
+        done = false
+        startScan()
+
     }
 
     private fun startScan() {
+        Log.d(TAG+"1", "start")
         handler.postDelayed({
             wifiWrapper.startScan()
             if (count < scanBatch) startScan()

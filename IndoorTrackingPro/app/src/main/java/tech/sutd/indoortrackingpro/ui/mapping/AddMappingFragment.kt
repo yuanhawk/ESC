@@ -83,7 +83,7 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                     }
                 })
             }
-
+            binding.yesButtonAddMapping.isEnabled = false
             xAddMapping.text = coordinate?.get(0).toString()
             yAddMapping.text = coordinate?.get(1).toString()
             isCancelable = false

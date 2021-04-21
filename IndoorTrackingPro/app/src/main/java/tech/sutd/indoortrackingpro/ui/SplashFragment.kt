@@ -11,7 +11,7 @@ import tech.sutd.indoortrackingpro.R
 class SplashFragment: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_splash)
+        //setContentView(R.layout.fragment_splash)
 
         Handler().postDelayed({
             val intent = Intent(this@SplashFragment, MainActivity::class.java)

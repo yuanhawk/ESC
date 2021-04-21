@@ -14,14 +14,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import io.realm.Realm
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentTrackingBinding
+import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.utils.touchCoord
 import tech.sutd.indoortrackingpro.utils.trackingCoord
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class TrackingFragment : Fragment() {
+    @Inject lateinit var realm: Realm
     @Inject lateinit var bundle: Bundle
     private lateinit var binding: FragmentTrackingBinding
     val model:  TrackingViewModel by viewModels()
@@ -38,6 +41,7 @@ class TrackingFragment : Fragment() {
                 trackingMap.pos[0] = it.longitude.toFloat()
                 trackingMap.pos[1] = it.latitude.toFloat()
                 trackingMap.invalidate()
+                Log.d("prediction", "" + trackingMap.pos[0] + "   " + trackingMap.pos[1])
             }
         })
 
@@ -66,6 +70,7 @@ class TrackingFragment : Fragment() {
                         return false
                     }
                 })
+
         }
         model.initWifiScan(this)
 //        with(binding){
@@ -80,6 +85,15 @@ class TrackingFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        with(binding){
+            val inaccuracyList = realm.where(Account::class.java).findFirst()!!.Inaccuracy
+            trackingMap.inaccuracyList = inaccuracyList
+            trackingMap.inaccuracyEnabled = true
+            trackingMap.invalidate()
+        }
+    }
     override fun onPause() {
         super.onPause()
         model.cancelWifiScan(this)

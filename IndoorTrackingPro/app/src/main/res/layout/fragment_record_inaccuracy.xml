@@ -4,7 +4,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="420dp"
+        android:layout_height="520dp"
         android:background="@color/dark_blue"
         android:padding="5dp"
         android:layout_gravity="bottom|center_horizontal">
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:text="Confirm?"
                 android:textColor="@color/white"
                 android:textSize="25sp"
