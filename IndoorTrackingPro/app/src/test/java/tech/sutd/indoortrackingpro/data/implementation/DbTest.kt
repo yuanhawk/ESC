@@ -3,8 +3,8 @@ package tech.sutd.indoortrackingpro.data.implementation
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.jraska.livedata.TestLifecycle
 import com.jraska.livedata.TestObserver
+
 import io.realm.RealmList
 import org.bson.types.ObjectId
 import org.junit.After
@@ -12,11 +12,16 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
+import org.robolectric.TestLifecycle
 import tech.sutd.indoortrackingpro.data.helper.DbHelper
 import tech.sutd.indoortrackingpro.model.Account_Inaccuracy
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 
+/**
+ * Attempted to mock database functions but failed, realm database had no unit testing capabilities
+ *
+ */
 class DbTest : DbHelper {
 
     @get:Rule
@@ -102,17 +107,17 @@ class DbTest : DbHelper {
     private lateinit var testApObserver: TestObserver<List<Account_mAccessPoints>>
     private lateinit var testMpObserver: TestObserver<List<Account_mMappingPoints>>
     private lateinit var testInaccuracyObserver: TestObserver<List<Account_Inaccuracy>>
-    private lateinit var testLifecycle: TestLifecycle
+    private lateinit var testLifecycle: com.jraska.livedata.TestLifecycle
     private lateinit var apList: Account_mAccessPoints
     private lateinit var mpList: Account_mMappingPoints
     private lateinit var inaccuracy: Account_Inaccuracy
 
     @Before
     fun init() {
-        testApObserver = TestObserver.create()
-        testMpObserver = TestObserver.create()
-        testInaccuracyObserver = TestObserver.create()
-        testLifecycle = TestLifecycle.initialized()
+        testApObserver = com.jraska.livedata.TestObserver.create()
+        testMpObserver = com.jraska.livedata.TestObserver.create()
+        testInaccuracyObserver = com.jraska.livedata.TestObserver.create()
+        testLifecycle = com.jraska.livedata.TestLifecycle.initialized()
         apList = Account_mAccessPoints(ObjectId(), "", 0.0, "")
         mpList = Account_mMappingPoints(ObjectId(), RealmList(), 0.0, 0.0)
         inaccuracy = Account_Inaccuracy(ObjectId(), 0.0, 0.0, 0.0)

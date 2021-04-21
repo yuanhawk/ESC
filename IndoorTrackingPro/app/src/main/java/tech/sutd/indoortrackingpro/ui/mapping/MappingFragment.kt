@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +24,7 @@ class MappingFragment : Fragment() {
 
     @Inject lateinit var bundle: Bundle
     private lateinit var location: FloatArray
-    private val viewModel: MappingViewModel by hiltNavGraphViewModels(R.id.main)
+    private val viewModel: MappingViewModel by viewModels()
     private lateinit var binding:FragmentMappingBinding
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(

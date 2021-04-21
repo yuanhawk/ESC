@@ -22,7 +22,7 @@ android {
         versionName versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunner "tech.sutd.indoortrackingpro.CustomTestRunner"
+        testInstrumentationRunner "tech.sutd.indoortrackingpro.HiltTestRunner"
     }
 
     packagingOptions {
@@ -166,4 +166,9 @@ dependencies {
 
     // navigation-test
     androidTestImplementation "androidx.navigation:navigation-testing:$versions.navigation"
+
+    // mockito
+    androidTestImplementation 'org.mockito:mockito-android:2.+'
+    implementation "org.mockito:mockito-core:2.+"
+
 }

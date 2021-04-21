@@ -16,13 +16,10 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import io.realm.RealmConfiguration
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
-import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.FragmentWifiListBinding
+import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.ui.adapter.WifiListAdapter
 import tech.sutd.indoortrackingpro.utils.RvItemClickListener
@@ -37,7 +34,6 @@ class WifiListFragment : Fragment() {
     @Inject lateinit var adapter: WifiListAdapter
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var wifiReceiver: WifiSearchReceiver
-    @Inject lateinit var config: RealmConfiguration
     @Inject lateinit var pref: Preferences
     lateinit var binding: FragmentWifiListBinding
 
