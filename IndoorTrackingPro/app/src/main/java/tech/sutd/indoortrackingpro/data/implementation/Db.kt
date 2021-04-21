@@ -66,6 +66,12 @@ class Db @Inject constructor(
         }
     }
 
+    override fun clearInAccuracy() {
+        realm.executeTransaction { r ->
+            r.delete(Account_Inaccuracy::class.java)
+        }
+    }
+
     override fun deleteMp(id: ObjectId) {
         realm.beginTransaction()
         val mp = realm.where(Account_mMappingPoints::class.java)
@@ -81,6 +87,15 @@ class Db @Inject constructor(
             .equalTo("id", id)
             .findFirst()
         ap?.deleteFromRealm()
+        realm.commitTransaction()
+    }
+
+    override fun deleteInAccuracy(id: ObjectId) {
+        realm.beginTransaction()
+        val inaccuracy = realm.where(Account_Inaccuracy::class.java)
+            .equalTo("id", id)
+            .findFirst()
+        inaccuracy?.deleteFromRealm()
         realm.commitTransaction()
     }
 

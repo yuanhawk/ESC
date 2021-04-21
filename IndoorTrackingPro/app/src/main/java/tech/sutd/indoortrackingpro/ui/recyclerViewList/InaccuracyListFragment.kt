@@ -25,6 +25,7 @@ import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
 import tech.sutd.indoortrackingpro.ui.adapter.InaccuracyAdapter
+import tech.sutd.indoortrackingpro.ui.tracking.TrackingViewModel
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
@@ -34,13 +35,13 @@ class InaccuracyListFragment : Fragment() {
 
     private val TAG = "SelectedAPListFragment"
 
+    private val viewModel by hiltNavGraphViewModels<TrackingViewModel>(R.id.main)
+
     @Inject lateinit var realm: Realm
     lateinit var adapter: InaccuracyAdapter
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var pref: Preferences
     private lateinit var binding: FragmentInaccuracyListBinding
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +56,10 @@ class InaccuracyListFragment : Fragment() {
         with(binding){
             inaccuracyRecycler.adapter = adapter
             inaccuracyRecycler.layoutManager = manager
+
+            apClearDatabase.setOnClickListener{
+
+            }
         }
         adapter.sendData(realm.where(Account::class.java).findFirst()!!.Inaccuracy)
         return binding.root

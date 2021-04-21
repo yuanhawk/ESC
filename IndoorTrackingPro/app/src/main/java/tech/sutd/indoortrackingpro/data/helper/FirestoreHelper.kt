@@ -16,10 +16,12 @@ interface FirestoreHelper {
     fun deleteAp(id: ObjectId)
     fun deleteMp(id: ObjectId)
     fun deleteApRecord(id: ObjectId)
+    fun deleteInaccuracy(id: ObjectId)
 
     fun clearAp()
     fun clearMp()
     fun clearApRecord()
+    fun clearInaccuracy()
 
     fun pullAp()
     fun pullMp()

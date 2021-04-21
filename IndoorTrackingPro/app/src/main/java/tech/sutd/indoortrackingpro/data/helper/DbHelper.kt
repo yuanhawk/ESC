@@ -9,16 +9,17 @@ import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 
 interface DbHelper {
 
-    fun insertInAccuracy(inaccuracy: Account_Inaccuracy)
-
     fun insertAp(accessPoint: Account_mAccessPoints)
     fun insertMp(mappingPoint: Account_mMappingPoints)
+    fun insertInAccuracy(inaccuracy: Account_Inaccuracy)
 
     fun clearAp()
     fun clearMp()
+    fun clearInAccuracy()
 
     fun deleteAp(id: ObjectId)
     fun deleteMp(id: ObjectId)
+    fun deleteInAccuracy(id: ObjectId)
 
     fun retrieveApLiveData(): LiveData<RealmList<Account_mAccessPoints>>?
     fun retrieveMpLiveData(): LiveData<RealmList<Account_mMappingPoints>>?

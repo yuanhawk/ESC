@@ -4,25 +4,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import io.realm.Realm
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentRecordInaccuracyBinding
-import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.model.Account_Inaccuracy
+import tech.sutd.indoortrackingpro.ui.mapping.MappingViewModel
 import tech.sutd.indoortrackingpro.utils.touchCoord
 import tech.sutd.indoortrackingpro.utils.trackingCoord
 import java.math.RoundingMode
-import javax.inject.Inject
 import kotlin.math.pow
 import kotlin.math.sqrt
+
 @AndroidEntryPoint
 class RecordInaccuracyFragment: BottomSheetDialogFragment() {
 
-    @Inject lateinit var realm: Realm
-    lateinit var binding: FragmentRecordInaccuracyBinding
+    private val viewModel by hiltNavGraphViewModels<TrackingViewModel>(R.id.main)
+
+    private lateinit var binding: FragmentRecordInaccuracyBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,13 +44,12 @@ class RecordInaccuracyFragment: BottomSheetDialogFragment() {
                 else findNavController().navigate(R.id.action_recordInaccuracyFragment_to_trackingFragment)
             }
             yesButtonAddRecording.setOnClickListener{
-                realm.beginTransaction()
                 val inaccuracy = Account_Inaccuracy()
                 inaccuracy.x = touchCoord[0].toDouble()
                 inaccuracy.y = touchCoord[1].toDouble()
                 inaccuracy.inaccuracy = distance.toDouble()
-                realm.where(Account::class.java).findFirst()!!.Inaccuracy.add(inaccuracy)
-                realm.commitTransaction()
+                viewModel.insertInAccuracy(inaccuracy)
+
                 findNavController().navigate(R.id.action_recordInaccuracyFragment_to_trackingFragment)
             }
         }

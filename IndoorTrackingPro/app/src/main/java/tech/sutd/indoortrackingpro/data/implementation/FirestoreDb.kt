@@ -109,6 +109,16 @@ class FirestoreDb @Inject constructor(
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
     }
 
+    override fun deleteInaccuracy(id: ObjectId) {
+        fStore.collection("inaccuracyRecorded")
+            .document(id.toString())
+            .delete()
+    }
+
+    override fun clearInaccuracy() {
+        AppExecutors.instance?.let { deleteCollection(fStore.collection("inaccuracyRecorded"), it.getDiskIO()) }
+    }
+
     override fun pullAp() {
         fStore.collection("mAccessPoints")
             .get()

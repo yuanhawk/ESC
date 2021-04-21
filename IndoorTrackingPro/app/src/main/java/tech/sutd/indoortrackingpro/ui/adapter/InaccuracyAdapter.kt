@@ -18,7 +18,7 @@ class InaccuracyAdapter : RecyclerView.Adapter<InaccuracyAdapter.InaccuracyViewH
 
     private val TAG = "MpListAdapter"
 
-    private var inaccuracyList: RealmList<Account_Inaccuracy> = RealmList()
+    var inaccuracyList: RealmList<Account_Inaccuracy> = RealmList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InaccuracyViewHolder {
         val binding = DataBindingUtil.inflate<InaccuracyListBinding>(
