@@ -107,6 +107,7 @@ class WifiListFragment : Fragment() {
         activity?.registerReceiver(wifiReceiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
         viewModel.initScan(wifiReceiver).observe(viewLifecycleOwner, {
             adapter.sendData(it)
+            Toast.makeText(activity,"Scan finish", Toast.LENGTH_SHORT).show()
         })
     }
 
