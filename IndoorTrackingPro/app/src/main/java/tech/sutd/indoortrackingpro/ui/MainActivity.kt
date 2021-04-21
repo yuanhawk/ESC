@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.PopupMenu
 import androidx.navigation.NavController
@@ -18,6 +19,7 @@ import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
 import tech.sutd.indoortrackingpro.model.Account
+import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
 import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
 import java.util.*
 import javax.inject.Inject
@@ -31,8 +33,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     @Inject lateinit var realm: Realm
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-
-    private val dropDownList = arrayOf("Wifi", "Coordinates")
 
     @SuppressLint("InflateParams")
     @RequiresApi(Build.VERSION_CODES.O)

@@ -16,11 +16,12 @@ class CustomZoomImageView(
     private var border = Paint(Paint.ANTI_ALIAS_FLAG)
     //the bullet point for mapping points
     private var secondPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private var secondBorder = Paint(Paint.ANTI_ALIAS_FLAG);
+    private var secondBorder = Paint(Paint.ANTI_ALIAS_FLAG)
+
     //the position where the user taps
     var pos = floatArrayOf(0f, 0f)
     //list of positions for mapping points
-    var secondPosList = listOf<FloatArray>(floatArrayOf(0f, 0f))
+    var secondPosList = listOf(floatArrayOf(0f, 0f))
 
     init {
         paint.color = Color.GRAY

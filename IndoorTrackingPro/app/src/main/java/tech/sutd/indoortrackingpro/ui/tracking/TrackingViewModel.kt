@@ -13,7 +13,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
 import tech.sutd.indoortrackingpro.data.TrackingWorker
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
+import tech.sutd.indoortrackingpro.data.helper.DbHelper
 import tech.sutd.indoortrackingpro.model.Account
+import tech.sutd.indoortrackingpro.model.Account_Inaccuracy
 import tech.sutd.indoortrackingpro.model.Coordinate
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import tech.sutd.indoortrackingpro.utils.intentFilter
@@ -26,7 +28,8 @@ class TrackingViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val workManager: WorkManager,
     private val algoHelper: AlgoHelper,
-    private val realm: Realm
+    private val realm: Realm,
+    private val db: DbHelper
 ) : ViewModel() {
 
     private val TAG = "TrackingViewModel"
@@ -60,15 +63,6 @@ class TrackingViewModel @Inject constructor(
                     Log.d(TAG, coordinate?.longitude.toString())
                     Log.d(TAG, coordinate?.latitude.toString())
                     coordinates = MutableLiveData(coordinate)
-//           with(fragment.binding) {
-//               trackingMap.setImageResource(R.drawable.map)
-//               trackingMap.isEnabled = true
-//               trackingMap.pos[0] = coordinate.longitude.toFloat()
-//               trackingMap.pos[1] = coordinate.latitude.toFloat()
-//               trackingMap.invalidate()
-//           }
-//                xText.text = coordinate.longitude.toString()
-//                yText.text = coordinate.latitude.toString()
                 }
             }
         }
@@ -87,5 +81,9 @@ class TrackingViewModel @Inject constructor(
     }
 
     fun coordinates(): LiveData<Coordinate> = coordinates
+
+    fun insertInAccuracy(inaccuracy: Account_Inaccuracy) {
+        db.insertInAccuracy(inaccuracy)
+    }
 
 }

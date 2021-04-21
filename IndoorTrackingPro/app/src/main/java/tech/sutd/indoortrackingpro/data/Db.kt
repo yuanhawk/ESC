@@ -12,6 +12,7 @@ import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.data.helper.DbHelper
 import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.model.Account
+import tech.sutd.indoortrackingpro.model.Account_Inaccuracy
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import javax.inject.Inject
@@ -25,6 +26,13 @@ class Db @Inject constructor(
 
     var account: LiveData<RealmList<Account_mAccessPoints>>? = MutableLiveData()
     var mapping: LiveData<RealmList<Account_mMappingPoints>>? = MutableLiveData()
+
+    override fun insertInAccuracy(inaccuracy: Account_Inaccuracy) {
+        realm.beginTransaction()
+        val account = realm.where(Account::class.java).findFirst()
+        account?.Inaccuracy?.add(inaccuracy)
+        realm.commitTransaction()
+    }
 
     override fun insertAp(accessPoint: Account_mAccessPoints) {
         realm.beginTransaction()

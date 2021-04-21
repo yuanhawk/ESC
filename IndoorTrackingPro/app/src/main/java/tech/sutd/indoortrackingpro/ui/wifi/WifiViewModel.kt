@@ -4,7 +4,6 @@ import android.net.wifi.ScanResult
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
 import io.realm.RealmList
@@ -76,5 +75,10 @@ class WifiViewModel @Inject constructor(
 
     fun deleteMp(id: ObjectId) {
         db.deleteMp(id)
+    }
+
+    fun pull() {
+        fStore.pullAp()
+        fStore.pullMp()
     }
 }

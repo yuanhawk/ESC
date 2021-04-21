@@ -120,8 +120,8 @@ object AppModule {
     @Provides
     fun provideFirestoreDb(
         fStore: FirebaseFirestore,
-        realm: Realm
-    ): FirestoreHelper = FirestoreDb(fStore, realm)
+        db: DbHelper
+    ): FirestoreHelper = FirestoreDb(fStore, db)
 
     @Singleton
     @Provides
