@@ -44,7 +44,11 @@ class TrackingAlgo : AlgoHelper {
             val distance: Distance = calculateDistance(mappingPoint, rssiValues)
             distanceLists.add(distance)
             Log.d("Tracking Algo", "mapping point ${mappingPoint.x} ${mappingPoint.y}" + " spotted\n Distance: ${distance.distance}")
-            Log.d("Tracking Algo", "${mappingPoint.accessPointSignalRecorded[0]!!.rssi}")
+            try {
+                Log.d("Tracking Algo", "${mappingPoint.accessPointSignalRecorded[0]?.rssi}")
+            } catch (e: ArrayIndexOutOfBoundsException) {
+                e.printStackTrace()
+            }
         }
         distanceLists.sort()
         var xSum = 0.0
@@ -65,8 +69,12 @@ class TrackingAlgo : AlgoHelper {
 
     private fun calculateDistance(mappingPoint: Account_mMappingPoints, rssiValues: List<Double>): Distance {
         var temp = 0.0 //distance square
-        for (i in rssiValues.indices) {
-            temp += ((mappingPoint.accessPointSignalRecorded[i]?.rssi)!! - rssiValues[i]).pow(2.0)
+        try {
+            for (i in rssiValues.indices) {
+                temp += ((mappingPoint.accessPointSignalRecorded[i]?.rssi)!! - rssiValues[i]).pow(2.0)
+            }
+        } catch (e: ArrayIndexOutOfBoundsException) {
+            e.printStackTrace()
         }
         return Distance(temp.pow(0.5), Coordinate(mappingPoint.x, mappingPoint.y))
         //for (i in 0..rssiValues.size)
