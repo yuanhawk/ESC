@@ -84,6 +84,15 @@
             app:destination="@id/trackingFragment"/>
     </fragment>
 
+    <!-- InaccuracyListFragment -->
+    <fragment
+        android:id="@+id/inaccuracyListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.recyclerViewList.InaccuracyListFragment"
+        android:label="InaccuracyListFragment"
+        tools:layout="@layout/fragment_inaccuracy_list" >
+    </fragment>
+
+
     <!-- AddMappingFragment -->
     <dialog
         android:id="@+id/addMappingDialog"

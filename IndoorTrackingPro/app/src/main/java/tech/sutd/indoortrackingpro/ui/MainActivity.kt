@@ -97,7 +97,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                     navController.navigate(R.id.selectedMPListFragment)
                     return@setOnMenuItemClickListener true
                 }
-
+                R.id.inaccuracy_list -> {
+                    navController.navigate(R.id.inaccuracyListFragment)
+                    return@setOnMenuItemClickListener true
+                }
                 else -> false
             }
         }

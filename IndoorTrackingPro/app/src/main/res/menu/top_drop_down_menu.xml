@@ -14,4 +14,8 @@
         android:id="@+id/selected_mp_list"
         android:icon="@drawable/ic_selected_mp"
         android:title="@string/mp_added" />
+
+    <item
+        android:id="@+id/inaccuracy_list"
+        android:title="Inaccuracy List" />
 </menu>
