@@ -11,6 +11,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
+import io.realm.RealmList
 import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.data.TrackingWorker
 import tech.sutd.indoortrackingpro.data.helper.AlgoHelper
@@ -44,6 +45,8 @@ class TrackingViewModel @Inject constructor(
             .setInitialDelay(5, TimeUnit.SECONDS)
             .build()
     }
+
+    fun inaccuracy(): LiveData<RealmList<Account_Inaccuracy>>? = db.retrieveRecordInAccuracyLiveData()
 
     private var coordinates: MutableLiveData<Coordinate> = MutableLiveData(Coordinate(300.0, 300.0))
 
@@ -101,6 +104,6 @@ class TrackingViewModel @Inject constructor(
     fun clearInAccuracy() {
         db.clearInAccuracy()
         fStore.clearInaccuracy()
-
     }
+
 }

@@ -23,7 +23,9 @@ import tech.sutd.indoortrackingpro.databinding.FragmentInaccuracyListBinding
 import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.FragmentSelectedApListBinding
 import tech.sutd.indoortrackingpro.model.Account
+import tech.sutd.indoortrackingpro.model.Account_Inaccuracy
 import tech.sutd.indoortrackingpro.model.Account_mAccessPoints
+import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
 import tech.sutd.indoortrackingpro.ui.adapter.ApListAdapter
 import tech.sutd.indoortrackingpro.ui.adapter.InaccuracyAdapter
 import tech.sutd.indoortrackingpro.ui.tracking.TrackingViewModel
@@ -36,14 +38,17 @@ class InaccuracyListFragment : Fragment() {
 
     private val TAG = "SelectedAPListFragment"
 
-
     private val viewModel by hiltNavGraphViewModels<TrackingViewModel>(R.id.main)
-
-
     lateinit var adapter: InaccuracyAdapter
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var pref: Preferences
     private lateinit var binding: FragmentInaccuracyListBinding
+
+    private val observer by lazy {
+        Observer<RealmList<Account_Inaccuracy>> {
+            adapter.sendData(it)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,11 +65,46 @@ class InaccuracyListFragment : Fragment() {
             inaccuracyRecycler.layoutManager = manager
 
             apClearDatabase.setOnClickListener{
-
+                AlertDialog.Builder(context)
+                    .setTitle("Would you like to delete all saved entries")
+                    .setPositiveButton("yes") { _, _ ->
+                        viewModel.clearInAccuracy()
+                        GlobalScope.launch { pref.updateCheckMp(false) }
+                    }
+                    .setNegativeButton("no") { _, _ -> }.show()
             }
+
+            swipeRefresh.setOnRefreshListener {
+                refreshObserver()
+                swipeRefresh.isRefreshing = false
+            }
+
+            activity?.applicationContext?.let {
+                RvItemClickListener(
+                    it, object : RvItemClickListener.OnItemClickListener{
+                    override fun onItemClick(view: View, position: Int) {
+                        AlertDialog.Builder(context)
+                            .setTitle("Would you like to delete this entry")
+                            .setPositiveButton("yes") { _, _ ->
+                                Log.d(TAG, "onItemClick: $position")
+                                val id = adapter.inaccuracyList[position]?.id
+                                Log.d(TAG, "onItemClick: $id")
+                                if (id != null) {
+                                    viewModel.deleteInAccuracy(id)
+                                }
+                            }
+                            .setNegativeButton("no") { _, _ -> }.show()
+                    }
+                })
+            }?.let { inaccuracyRecycler.addOnItemTouchListener(it) }
         }
         adapter.sendData(viewModel.getInaccuracyList())
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refreshObserver()
     }
 
 
@@ -76,6 +116,9 @@ class InaccuracyListFragment : Fragment() {
         }
     }
 
-
-
+    private fun refreshObserver() {
+        if (viewModel.inaccuracy()?.hasActiveObservers() == true)
+            viewModel.inaccuracy()?.removeObserver(observer)
+        viewModel.inaccuracy()?.observe(viewLifecycleOwner, observer)
+    }
 }

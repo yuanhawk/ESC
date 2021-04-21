@@ -26,6 +26,7 @@ class Db @Inject constructor(
 
     var account: LiveData<RealmList<Account_mAccessPoints>>? = MutableLiveData()
     var mapping: LiveData<RealmList<Account_mMappingPoints>>? = MutableLiveData()
+    var inaccuracy: LiveData<RealmList<Account_Inaccuracy>>? = MutableLiveData()
 
     override fun insertInAccuracy(inaccuracy: Account_Inaccuracy) {
         realm.beginTransaction()
@@ -119,5 +120,16 @@ class Db @Inject constructor(
                 ?.toLiveData()
         }
         return mapping
+    }
+
+    override fun retrieveRecordInAccuracyLiveData(): LiveData<RealmList<Account_Inaccuracy>>? {
+        realm.executeTransaction { transactionRealm ->
+            val wifiResults =
+                transactionRealm.where(Account::class.java).findFirst()
+            inaccuracy = wifiResults?.Inaccuracy?.asFlowable()
+                ?.onBackpressureBuffer()
+                ?.toLiveData()
+        }
+        return inaccuracy
     }
 }

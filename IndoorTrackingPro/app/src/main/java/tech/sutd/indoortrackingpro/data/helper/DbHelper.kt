@@ -23,4 +23,5 @@ interface DbHelper {
 
     fun retrieveApLiveData(): LiveData<RealmList<Account_mAccessPoints>>?
     fun retrieveMpLiveData(): LiveData<RealmList<Account_mMappingPoints>>?
+    fun retrieveRecordInAccuracyLiveData(): LiveData<RealmList<Account_Inaccuracy>>?
 }
