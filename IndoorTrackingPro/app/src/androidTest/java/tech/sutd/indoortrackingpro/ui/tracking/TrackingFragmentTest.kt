@@ -35,7 +35,7 @@ class TrackingFragmentTest {
 
     @Test
     fun check_layout_display() {
-        onView(withId(R.id.trackingFragment))
+        onView(withId(R.id.tracking_fragment))
             .check(matches(isDisplayed()))
     }
 
@@ -44,10 +44,6 @@ class TrackingFragmentTest {
         onView(withId(R.id.fragment_tracking_map)).check(matches(isDisplayed()))
     }
 
-    @Test
-    fun check_map_displayed(){
-        onView(withId(R.id.tracking_map)).check(matches(isDisplayed()))
-    }
 
     @Test
     fun check_change_floor_button_displayed(){

@@ -27,14 +27,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AddMappingFragment : BottomSheetDialogFragment() {
 
-    private val viewModel: MappingViewModel by hiltNavGraphViewModels(R.id.main)
     lateinit var binding: AddMappingBinding
 
-    @Inject
-    lateinit var config: RealmConfiguration
 
-    @Inject
-    lateinit var wifiReceiver: AddMappingPointReceiver
+
 
     @Inject
     lateinit var pref: Preferences
@@ -81,7 +77,6 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                         if (!doubleTap) {
 
                             findNavController().popBackStack(R.id.mainFragment, false)
-                            viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
                             Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT)
                                 .show()
 
@@ -104,27 +99,15 @@ class AddMappingFragment : BottomSheetDialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        requireActivity().registerReceiver(
-            wifiReceiver,
-            IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
-        )
 
-        pref.scanDone.asLiveData().observe(viewLifecycleOwner, {
-            if (wifiReceiver.done) {
-                binding.yesButtonAddMapping.isEnabled = true
-                Toast.makeText(
-                    context,
-                    "Scanning is done, press button to save the mappingPoint",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        })
 
-        wifiReceiver.start()
+
+
+
     }
 
     override fun onPause() {
         super.onPause()
-        requireActivity().unregisterReceiver(wifiReceiver)
+
     }
 }

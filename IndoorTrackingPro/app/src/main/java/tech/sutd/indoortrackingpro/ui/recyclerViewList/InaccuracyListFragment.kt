@@ -38,10 +38,11 @@ class InaccuracyListFragment : Fragment() {
 
     private val TAG = "SelectedAPListFragment"
 
-    private val viewModel by hiltNavGraphViewModels<TrackingViewModel>(R.id.main)
     lateinit var adapter: InaccuracyAdapter
-    @Inject lateinit var manager: LinearLayoutManager
-    @Inject lateinit var pref: Preferences
+    @Inject
+    lateinit var manager: LinearLayoutManager
+    @Inject
+    lateinit var pref: Preferences
     private lateinit var binding: FragmentInaccuracyListBinding
 
     private val observer by lazy {
@@ -57,54 +58,51 @@ class InaccuracyListFragment : Fragment() {
     ): View {
         adapter = InaccuracyAdapter()
         // Inflate layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_inaccuracy_list, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_inaccuracy_list, container, false
+        )
 
-        with(binding){
+        with(binding) {
             inaccuracyRecycler.adapter = adapter
             inaccuracyRecycler.layoutManager = manager
 
-            apClearDatabase.setOnClickListener{
+            apClearDatabase.setOnClickListener {
                 AlertDialog.Builder(context)
                     .setTitle("Would you like to delete all saved entries")
                     .setPositiveButton("yes") { _, _ ->
-                        viewModel.clearInAccuracy()
                         GlobalScope.launch { pref.updateCheckMp(false) }
                     }
                     .setNegativeButton("no") { _, _ -> }.show()
             }
 
             swipeRefresh.setOnRefreshListener {
-                refreshObserver()
                 swipeRefresh.isRefreshing = false
             }
 
             activity?.applicationContext?.let {
                 RvItemClickListener(
-                    it, object : RvItemClickListener.OnItemClickListener{
-                    override fun onItemClick(view: View, position: Int) {
-                        AlertDialog.Builder(context)
-                            .setTitle("Would you like to delete this entry")
-                            .setPositiveButton("yes") { _, _ ->
-                                Log.d(TAG, "onItemClick: $position")
-                                val id = adapter.inaccuracyList[position]?.id
-                                Log.d(TAG, "onItemClick: $id")
-                                if (id != null) {
-                                    viewModel.deleteInAccuracy(id)
+                    it, object : RvItemClickListener.OnItemClickListener {
+                        override fun onItemClick(view: View, position: Int) {
+                            AlertDialog.Builder(context)
+                                .setTitle("Would you like to delete this entry")
+                                .setPositiveButton("yes") { _, _ ->
+                                    Log.d(TAG, "onItemClick: $position")
+                                    val id = adapter.inaccuracyList[position]?.id
+                                    Log.d(TAG, "onItemClick: $id")
+                                    if (id != null) {
+                                    }
                                 }
-                            }
-                            .setNegativeButton("no") { _, _ -> }.show()
-                    }
-                })
+                                .setNegativeButton("no") { _, _ -> }.show()
+                        }
+                    })
             }?.let { inaccuracyRecycler.addOnItemTouchListener(it) }
         }
-        viewModel.getInaccuracyList()?.let { adapter.sendData(it) }
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        refreshObserver()
     }
 
 
@@ -115,10 +113,5 @@ class InaccuracyListFragment : Fragment() {
             inaccuracyRecycler.adapter = null
         }
     }
-
-    private fun refreshObserver() {
-        if (viewModel.inaccuracy()?.hasActiveObservers() == true)
-            viewModel.inaccuracy()?.removeObserver(observer)
-        viewModel.inaccuracy()?.observe(viewLifecycleOwner, observer)
-    }
 }
+

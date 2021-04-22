@@ -21,7 +21,6 @@ import kotlin.math.sqrt
 @AndroidEntryPoint
 class RecordInaccuracyFragment: BottomSheetDialogFragment() {
 
-    private val viewModel by hiltNavGraphViewModels<TrackingViewModel>(R.id.main)
 
     private lateinit var binding: FragmentRecordInaccuracyBinding
 
@@ -50,7 +49,6 @@ class RecordInaccuracyFragment: BottomSheetDialogFragment() {
                 inaccuracy.y = touchCoord[1].toDouble()
                 inaccuracy.z = touchCoord[2].toDouble()
                 inaccuracy.inaccuracy = distance.toDouble()
-                viewModel.insertInAccuracy(inaccuracy)
 
                 findNavController().navigate(R.id.action_recordInaccuracyFragment_to_trackingFragment)
             }

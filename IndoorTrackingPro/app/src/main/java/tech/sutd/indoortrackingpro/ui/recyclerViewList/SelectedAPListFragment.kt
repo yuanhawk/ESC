@@ -37,7 +37,6 @@ class SelectedAPListFragment : Fragment() {
 
     private lateinit var binding: FragmentSelectedApListBinding
 
-    private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
     private val observer by lazy {
         Observer<RealmList<Account_mAccessPoints>> {
@@ -63,7 +62,6 @@ class SelectedAPListFragment : Fragment() {
             selectedApListRv.layoutManager = manager
 
             swipeRefresh.setOnRefreshListener {
-                refreshObserver()
                 swipeRefresh.isRefreshing = false
             }
 
@@ -71,7 +69,6 @@ class SelectedAPListFragment : Fragment() {
                 AlertDialog.Builder(context)
                     .setTitle("Would you like to delete all saved entries")
                     .setPositiveButton("yes") { _, _ ->
-                        viewModel.clearAp()
                         GlobalScope.launch { pref.updateCheckAp(false) }
                     }
                     .setNegativeButton("no") { _, _ -> }.show()
@@ -88,7 +85,6 @@ class SelectedAPListFragment : Fragment() {
                                 Log.d(TAG, "onItemClick: $position")
                                 val id = adapter.wifiList[position].id
                                 Log.d(TAG, "onItemClick: $id")
-                                viewModel.deleteAp(id)
                             }
                             .setNegativeButton("no") { _, _ -> }.show()
                     }
@@ -101,7 +97,6 @@ class SelectedAPListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        refreshObserver()
     }
 
     override fun onPause() {
@@ -112,10 +107,6 @@ class SelectedAPListFragment : Fragment() {
         }
     }
 
-    private fun refreshObserver() {
-        if (viewModel.accessPoints()?.hasActiveObservers() == true)
-            viewModel.accessPoints()?.removeObserver(observer)
-        viewModel.accessPoints()?.observe(viewLifecycleOwner, observer)
-    }
+
 
 }

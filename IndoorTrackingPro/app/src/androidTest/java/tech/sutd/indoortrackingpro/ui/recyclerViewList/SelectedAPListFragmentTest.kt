@@ -47,6 +47,11 @@ class SelectedAPListFragmentTest {
     }
 
     @Test
+    fun check_button_displayed(){
+        onView(withId(R.id.ap_clear_database)).check(matches(isDisplayed()))
+    }
+
+    @Test
     fun check_button_clickable(){
         onView(withId(R.id.ap_clear_database)).check(matches(isClickable()))
     }

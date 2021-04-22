@@ -29,34 +29,13 @@ import kotlin.math.roundToInt
 class TrackingFragment : Fragment() {
     @Inject lateinit var bundle: Bundle
     private lateinit var binding: FragmentTrackingBinding
-    val model:  TrackingViewModel by hiltNavGraphViewModels(R.id.main)
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tracking, container, false)
 
-        model.coordinates().observe(viewLifecycleOwner, {
-            with(binding) {
-                trackingMap.setImageResource(R.drawable.map)
-                trackingMap.isEnabled = true
-                trackingMap.pos[0] = it.longitude.toFloat()
-                trackingMap.pos[1] = it.latitude.toFloat()
-                trackingPredictedFloor.text = it.z.roundToInt().toString()
-                trackingMap.invalidate()
-                Log.d("prediction", "" + trackingMap.pos[0] + "   " + trackingMap.pos[1])
-            }
-        })
 
-        model.floorNumber.observe(viewLifecycleOwner, {
-            binding.trackingMap.inaccuracyList = model.getInaccuracyListFloor(model.floorNumber.value!!)
-            binding.trackingMap.inaccuracyEnabled = true
-            binding.trackingMap.invalidate()
-        })
-        binding.trackingChangeFloorButton.setOnClickListener {
-            model.floorNumber.value =  binding.trackingRealFloor.text.toString().toInt()
-        }
-        binding.trackingMap.inaccuracyList = model.getInaccuracyListFloor(model.floorNumber.value!!)
         with(binding){
             trackingMap.setOnTouchListener(
                 object : View.OnTouchListener {
@@ -84,17 +63,14 @@ class TrackingFragment : Fragment() {
                 })
 
         }
-        model.initWifiScan(this)
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
 
-        binding.trackingRealFloor.setText(model.floorNumber.value!!.toString())
     }
     override fun onPause() {
         super.onPause()
-        model.cancelWifiScan(this)
     }
 }

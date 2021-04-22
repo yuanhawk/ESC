@@ -24,7 +24,6 @@ class MappingFragment : Fragment() {
 
     @Inject lateinit var bundle: Bundle
     private lateinit var location: FloatArray
-    private val viewModel: MappingViewModel by viewModels()
     private lateinit var binding:FragmentMappingBinding
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -39,20 +38,13 @@ class MappingFragment : Fragment() {
             container,
             false
         )
-        viewModel.floorNumber.observe(viewLifecycleOwner, {
-            binding.map.secondPosList = viewModel.getMappingPositionsFloor(viewModel.floorNumber.value!!)
-            binding.map.invalidate()
-        })
+
 
         with(binding) {
             map.setImageResource(R.drawable.map)
             //draw all the mapping points
-            map.secondPosList = viewModel.getMappingPositionsFloor(viewModel.floorNumber.value!!)
             map.invalidate()
-            mappingFloor.setText(viewModel.floorNumber.value.toString())
-            mappingChangeFloorButton.setOnClickListener {
-                viewModel.floorNumber.value = mappingFloor.text.toString().toInt()
-            }
+
 
             map.setOnTouchListener(
                 object : View.OnTouchListener {
@@ -82,9 +74,7 @@ class MappingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        with(binding) {
-            mappingFloor.setText(viewModel.floorNumber.value.toString())
-        }
+
     }
 
 }

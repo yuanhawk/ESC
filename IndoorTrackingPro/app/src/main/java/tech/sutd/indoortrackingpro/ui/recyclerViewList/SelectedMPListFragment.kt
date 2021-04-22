@@ -31,7 +31,6 @@ class SelectedMPListFragment : Fragment() {
 
     private val TAG = "SelectedMPListFragment"
 
-    @Inject lateinit var realm: Realm
     @Inject lateinit var handler: Handler
     @Inject lateinit var adapter: MpListAdapter
     @Inject lateinit var manager: LinearLayoutManager
@@ -39,7 +38,6 @@ class SelectedMPListFragment : Fragment() {
 
     private lateinit var binding: FragmentSelectedMpListBinding
 
-    private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
 
     private val observer by lazy {
         Observer<RealmList<Account_mMappingPoints>> {
@@ -63,14 +61,12 @@ class SelectedMPListFragment : Fragment() {
             selectedMpListRv.adapter = adapter
             selectedMpListRv.layoutManager = manager
             swipeRefresh.setOnRefreshListener {
-                refreshObserver()
                 swipeRefresh.isRefreshing = false
             }
             mpClearDatabase.setOnClickListener {
                 AlertDialog.Builder(context)
                     .setTitle("Would you like to delete all saved entries")
                     .setPositiveButton("yes") { _, _ ->
-                        viewModel.clearMp()
                         GlobalScope.launch { pref.updateCheckMp(false) }
                     }
                     .setNegativeButton("no") { _, _ -> }.show()
@@ -86,7 +82,6 @@ class SelectedMPListFragment : Fragment() {
                             .setPositiveButton("yes") { _, _ ->
                                 Log.d(TAG, "onItemClick: $position")
                                 val id = adapter.mapList[position].id
-                                viewModel.deleteMp(id)
                             }
                             .setNegativeButton("no") { _, _ -> }.show()
                     }
@@ -99,7 +94,6 @@ class SelectedMPListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        refreshObserver()
     }
 
     override fun onPause() {
@@ -110,10 +104,6 @@ class SelectedMPListFragment : Fragment() {
         }
     }
 
-    private fun refreshObserver() {
-        if (viewModel.mappingPoint()?.hasActiveObservers() == true)
-            viewModel.mappingPoint()?.removeObserver(observer)
-        viewModel.mappingPoint()?.observe(viewLifecycleOwner, observer)
-    }
+
 
 }
