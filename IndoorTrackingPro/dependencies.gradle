@@ -1,26 +1,41 @@
 ext.versions = [
-        minSdk               : 24,
+        minSdk               : 23,
         compileSdk           : 30,
         versionCode          : 1,
         versionName          : '1.0.0',
 
         // gradle plugins
-        gradle_build         : '4.1.2',
+        gradle_build         : '4.1.3',
 
         // support library
-        material      : '1.2.1',
+        material      : '1.3.0',
+        swipe         : '1.1.0',
         constraint    : '2.0.4',
         kotlin        : '1.3.2',
-        appcompat     : '1.2.0',
-        google        : '4.3.4',
+        appcompat     : '1.3.0-rc01',
+        google        : '4.3.5',
+        zoom          : '1.8.0',
+        crash_gradle  : '2.5.2',
+
+        // firebase
+        crashlytics   : '17.4.1',
+        analytics     : '18.0.3',
+        firestore     : '22.1.2',
 
         // fragment
-        fragment      : '1.2.5',
+        fragment      : '1.3.2',
 
         // db
+        realm         : '10.4.0',
 
         // hilt
-        hilt          : '2.30.1-alpha',
+        hilt          : '2.33-beta',
+
+        // paging
+        paging        : '3.0.0-beta03',
+
+        // navigation
+        navigation    : '2.3.5',
 
         // hilt_compiler
         hilt_compiler : '1.0.0-alpha03',
@@ -29,19 +44,27 @@ ext.versions = [
         viewmodel     : '1.0.0-alpha03',
 
         // workmanager
-        workmanager   : '1.0.0-alpha03',
+        workmanager   : '1.0.0-beta01',
 
         // lifecycle
-        lifecycle     : '2.2.0',
+        lifecycle     : '2.3.1',
+
+        // datastore
+        datastore     : '1.0.0-alpha08',
+        javalite      : '3.10.0',
 
         // work
         work          : '2.5.0',
 
         // test
-        junit         : '4.13.1',
-        junit_android : '1.1.2',
-        core_test     : '2.1.0',
+        core          : '1.3.0',
         runner        : '1.3.0',
+        junit         : '4.13.2',
+
+        // assertion
+        junit_android : '1.1.2',
+
+        core_test     : '2.1.0',
         coroutine     : '1.4.1',
 
         espresso      : '3.3.0',

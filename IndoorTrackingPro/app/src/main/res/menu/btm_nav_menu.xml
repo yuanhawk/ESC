@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mappingFragment"
+        android:icon="@drawable/ic_mapping_black"
+        android:title="Mapping" />
+
+    <item
+        android:id="@+id/trackingFragment"
+        android:icon="@drawable/ic_tracking_black"
+        android:title="Tracking" />
+</menu>

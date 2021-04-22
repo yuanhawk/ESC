@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.example.norman_lee.myapplication.MainActivity">
+
+        <item
+            android:id="@+id/wifiListFragment"
+            android:orderInCategory="100"
+            android:title="List of WiFi Access Points"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/selectedMPListFragment"
+            android:orderInCategory="100"
+            android:title="List of Reference Points"
+            app:showAsAction="never" />
+        <!-- we are in res/menu/menu_main.xml -->
+    </menu>
+

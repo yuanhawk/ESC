@@ -2,13 +2,21 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'realm-android'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.gms.google-services'
 }
 
 apply from: "$rootDir/dependencies.gradle"
 
 android {
+    ext.kotlin_version = "1.4.32"
     compileSdkVersion versions.compileSdk
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
+    }
 
     defaultConfig {
         applicationId "tech.sutd.indoortrackingpro"
@@ -18,6 +26,7 @@ android {
         versionName versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "tech.sutd.indoortrackingpro.HiltTestRunner"
     }
 
     packagingOptions {
@@ -38,17 +47,31 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-
     buildFeatures {
         dataBinding true
+    }
+    hilt {
+        enableTransformForLocalTests = true
+    }
+    realm {
+        syncEnabled true
     }
 }
 
 dependencies {
 
+    // firebase
+    implementation "com.google.firebase:firebase-crashlytics-ktx:$versions.crashlytics"
+    implementation "com.google.firebase:firebase-analytics-ktx:$versions.analytics"
+    implementation "com.google.firebase:firebase-firestore-ktx:$versions.firestore"
+
     // android supports
     implementation "com.google.android.material:material:$versions.material"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$versions.swipe"
     implementation "androidx.constraintlayout:constraintlayout:$versions.constraint"
+
+    // zoom layout
+    implementation "com.otaliastudios:zoomlayout:$versions.zoom"
 
     // core
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -60,41 +83,94 @@ dependencies {
 
     // hilt
     implementation "com.google.dagger:hilt-android:$versions.hilt"
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.firebase:firebase-firestore:22.1.2'
     kapt "com.google.dagger:hilt-android-compiler:$versions.hilt"
     kapt "androidx.hilt:hilt-compiler:$versions.hilt_compiler"
+    implementation "androidx.hilt:hilt-navigation-fragment:$versions.workmanager"
 
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    // navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 
     // viewmodel
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.viewmodel"
 
+    // paging
+    implementation "androidx.paging:paging-runtime-ktx:$versions.paging"
+    implementation "androidx.paging:paging-rxjava2-ktx:$versions.paging"
+
     // workmanager
     implementation "androidx.hilt:hilt-work:$versions.workmanager"
     implementation "androidx.work:work-runtime-ktx:$versions.work"
+    kapt "androidx.hilt:hilt-compiler:$versions.workmanager"
 
     // lifecycle
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$versions.lifecycle"
 
+    // datastore
+    implementation "androidx.datastore:datastore-preferences:$versions.datastore"
+
     // test
+    testImplementation 'org.assertj:assertj-core:3.19.0'
+    testImplementation 'com.jraska.livedata:testing-ktx:1.1.2'
     testImplementation "junit:junit:$versions.junit"
-    androidTestImplementation "androidx.test.ext:junit:$versions.junit_android"
-    androidTestImplementation "androidx.arch.core:core-testing:$versions.core_test"
+    implementation "androidx.test:core:1.3.0"
+    testImplementation "org.hamcrest:hamcrest-all:1.3"
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.robolectric:robolectric:4.3.1"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.1"
+    testImplementation "com.google.truth:truth:1.0.1"
+    testImplementation "org.mockito:mockito-core:2.28.2"
+    testImplementation "org.powermock:powermock-module-junit4:1.6.5"
+    testImplementation "org.powermock:powermock-module-junit4-rule:1.6.5"
+    testImplementation "org.powermock:powermock-api-mockito:1.6.5"
+    testImplementation "org.powermock:powermock-classloading-xstream:1.6.5"
+    testImplementation 'org.robolectric:shadows-support-v4:3.0'
+
+    implementation 'org.parceler:parceler-api:1.1.12'
+    annotationProcessor 'org.parceler:parceler:1.1.12'
+    // https://mvnrepository.com/artifact/cglib/cglib
+    implementation group: 'cglib', name: 'cglib', version: '3.3.0'
+
+
+    // android test
+    androidTestImplementation "androidx.test:core:$versions.core"
+    androidTestImplementation "androidx.test:rules:$versions.runner"
     androidTestImplementation "androidx.test:runner:$versions.runner"
+
+    // assertions
+    androidTestImplementation "androidx.test.ext:junit-ktx:$versions.junit_android"
+    androidTestImplementation "androidx.test.ext:truth:$versions.runner"
+
+    androidTestImplementation "androidx.arch.core:core-testing:$versions.core_test"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutine"
 
-    // mockito
-    testImplementation "io.mockk:mockk:$versions.mockk"
+    // fragment-test
+    // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
+    debugImplementation("androidx.fragment:fragment-testing:$versions.fragment") {
+        exclude group: 'androidx.test', module: 'monitor'
+    }
 
     // espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-accessibility:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso:espresso-web:$versions.espresso"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$versions.espresso"
 
     // hilt-test
     testImplementation "com.google.dagger:hilt-android-testing:$versions.hilt"
     kaptTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.hilt"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$versions.hilt"
+
+    // navigation-test
+    androidTestImplementation "androidx.navigation:navigation-testing:$versions.navigation"
+
+    // mockito
+    androidTestImplementation 'org.mockito:mockito-android:2.+'
+
 }

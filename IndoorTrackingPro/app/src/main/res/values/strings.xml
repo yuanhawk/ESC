@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">Indoor Tracking Pro</string>
+    <string name="home_fragment">Home</string>
+    <string name="tracking_fragment">Tracking</string>
+    <string name="mapping_fragment">Mapping</string>
+
+    <string name="ssid">SSID</string>
+    <string name="mac">MAC</string>
+    <string name="rssi">RSSI</string>
+    <string name="select">Select</string>
+
+    <string name="ssid_text">SSID:</string>
+    <string name="mac_text">MAC:</string>
+
+    <string name="X">X</string>
+    <string name="x_coordinate">X Coordinate: </string>
+    <string name="y_coordinate">Y Coordinate:</string>
+    <string name="adding_coordinates">Adding Coordinates:</string>
+    <string name="confirm_selection">Confirm Selection?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="wifi">Wifi APs</string>
+    <string name="add_coordinates">Add Coordinates</string>
+    <string name="ap_added">Selected Wifi APs</string>
+    <string name="mp_added">Selected Map Points</string>
+    <string name="search_for_waps">Search for WAPs</string>
+    <string name="x_val">X val</string>
+    <string name="y_val">Y val</string>
+    <string name="clear_database">Clear Database</string>
+    <string name="inaccuracy_list">Inaccuracy List</string>
+    <string name="recording_inaccuracies">Recording Inaccuracies:</string>
+    <string name="inaccuracy">Inaccuracy:</string>
+    <string name="floor">Floor:</string>
+    <string name="inaccuracy_recorded">Inaccuracy Recorded</string>
+    <string name="x">X</string>
+    <string name="y">Y</string>
+    <string name="logo">logo</string>
+    <string name="flr">Floor</string>
+
 </resources>

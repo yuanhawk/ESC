@@ -3,11 +3,108 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    app:startDestination="@id/mapFragment">
+    app:startDestination="@id/mainFragment">
 
+    <!-- MainFragment -->
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="tech.sutd.indoortrackingpro.ui.MapFragment"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        android:id="@+id/mainFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_wifiListFragment"
+            app:destination="@id/wifiListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_selectedAPListFragment"
+            app:destination="@+id/selectedAPListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_selectedMPListFragment"
+            app:destination="@+id/selectedMPListFragment" />
+    </fragment>
+
+    <!-- WifiListFragment -->
+    <fragment
+        android:id="@+id/wifiListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.wifi.WifiListFragment"
+        android:label="WifiListFragment"
+        tools:layout="@layout/fragment_wifi_list">
+        <action
+            android:id="@+id/action_wifiListFragment_to_selectedAPListFragment"
+            app:destination="@+id/selectedAPListFragment" />
+    </fragment>
+
+    <!-- SelectedAPListFragment -->
+    <fragment
+        android:id="@+id/selectedAPListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.recyclerViewList.SelectedAPListFragment"
+        android:label="selectedAPListFragment"
+        tools:layout="@layout/fragment_selected_ap_list" />
+
+    <!-- SelectedMPListFragment -->
+    <fragment
+        android:id="@+id/selectedMPListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.recyclerViewList.SelectedMPListFragment"
+        android:label="selectedMPListFragment"
+        tools:layout="@layout/fragment_selected_mp_list" >
+        <action
+            android:id="@+id/action_selectedMPListFragment_to_wifiListFragment"
+            app:destination="@id/wifiListFragment"/>
+    </fragment>
+
+    <!-- MappingFragment -->
+    <fragment
+        android:id="@+id/mappingFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.mapping.MappingFragment"
+        android:label="MappingFragment"
+        tools:layout="@layout/fragment_mapping">
+        <action
+            android:id="@+id/action_mappingFragment_to_addMappingDialog"
+            app:destination="@id/addMappingDialog" />
+    </fragment>
+
+    <!-- TrackingFragment -->
+    <fragment
+        android:id="@+id/trackingFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.tracking.TrackingFragment"
+        android:label="TrackingFragment"
+        tools:layout="@layout/fragment_tracking">
+        <action
+            android:id="@+id/action_trackingFragment_to_recordInaccuracyFragment"
+            app:destination="@id/inaccuracyFragment"/>
+    </fragment>
+
+    <!-- RecordInaccuracyFragment -->
+    <dialog
+        android:id="@+id/inaccuracyFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.tracking.RecordInaccuracyFragment"
+        android:label="RecordInaccuracyFragment"
+        tools:layout="@layout/fragment_record_inaccuracy" >
+        <action
+            android:id="@+id/action_recordInaccuracyFragment_to_trackingFragment"
+            app:destination="@id/trackingFragment"/>
+    </dialog>
+
+    <!-- InaccuracyListFragment -->
+    <fragment
+        android:id="@+id/inaccuracyListFragment"
+        android:name="tech.sutd.indoortrackingpro.ui.recyclerViewList.InaccuracyListFragment"
+        android:label="InaccuracyListFragment"
+        tools:layout="@layout/fragment_inaccuracy_list" >
+    </fragment>
+
+
+    <!-- AddMappingFragment -->
+    <dialog
+        android:id="@+id/addMappingDialog"
+        android:name="tech.sutd.indoortrackingpro.ui.mapping.AddMappingFragment"
+        android:label="AddMappingDialog"
+        tools:layout="@layout/add_mapping">
+        <action
+            android:id="@+id/action_addMappingDialog_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_addMappingDialog_to_mappingFragment"
+            app:destination="@id/mappingFragment" />
+    </dialog>
+
 </navigation>
