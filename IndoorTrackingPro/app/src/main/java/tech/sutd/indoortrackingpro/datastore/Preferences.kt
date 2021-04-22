@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -21,6 +22,7 @@ class Preferences (
         val AP_ADDED = booleanPreferencesKey("ap_added")
         val MP_ADDED = booleanPreferencesKey("mp_added")
         val SCAN_DONE = booleanPreferencesKey("scan_done")
+        val MAP_NUM = intPreferencesKey("map_num")
     }
 
     suspend fun updateCheckAp(checkAp: Boolean) {
@@ -41,6 +43,12 @@ class Preferences (
         }
     }
 
+    suspend fun floorNum(mapNum: Int) {
+        dataStore.edit {
+            it[MAP_NUM] = mapNum
+        }
+    }
+
     val apAdded: Flow<Boolean?> = dataStore.data.map {
         it[AP_ADDED]
     }
@@ -51,5 +59,9 @@ class Preferences (
 
     val scanDone: Flow<Boolean?> = dataStore.data.map {
         it[SCAN_DONE]
+    }
+
+    val floorNum: Flow<Int?> = dataStore.data.map {
+        it[MAP_NUM]
     }
 }

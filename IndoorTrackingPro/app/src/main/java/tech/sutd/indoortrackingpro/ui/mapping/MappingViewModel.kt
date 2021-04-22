@@ -42,8 +42,8 @@ class MappingViewModel @Inject constructor(
     }
 
     fun getMappingPositions(): ArrayList<FloatArray>{
-        val mappingPointPositions = ArrayList<FloatArray>();
-        val mappingPointList =  realm.where(tech.sutd.indoortrackingpro.model.Account::class.java).findFirst()!!.mMappingPoints;
+        val mappingPointPositions = ArrayList<FloatArray>()
+        val mappingPointList =  realm.where(Account::class.java).findFirst()!!.mMappingPoints
         for (mappingPoint in mappingPointList){
             mappingPointPositions.add(floatArrayOf(mappingPoint.x.toFloat(), mappingPoint.y.toFloat()))
         }
@@ -51,10 +51,12 @@ class MappingViewModel @Inject constructor(
     }
 
     fun getMappingPositionsFloor(floor: Int): ArrayList<FloatArray>{
-        val mappingPointPositions = ArrayList<FloatArray>();
-        val mappingPointList =  realm.where(tech.sutd.indoortrackingpro.model.Account::class.java).findFirst()!!.mMappingPoints;
-        for (mappingPoint in mappingPointList){
-            if (mappingPoint.z.toInt() == floor) mappingPointPositions.add(floatArrayOf(mappingPoint.x.toFloat(), mappingPoint.y.toFloat()))
+        val mappingPointPositions = ArrayList<FloatArray>()
+        val mappingPointList =  realm.where(Account::class.java).findFirst()?.mMappingPoints
+        if (mappingPointList != null) {
+            for (mappingPoint in mappingPointList){
+                if (mappingPoint.z.toInt() == floor) mappingPointPositions.add(floatArrayOf(mappingPoint.x.toFloat(), mappingPoint.y.toFloat()))
+            }
         }
         return mappingPointPositions
     }

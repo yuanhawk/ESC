@@ -20,6 +20,7 @@ import tech.sutd.indoortrackingpro.base.BaseActivity
 import tech.sutd.indoortrackingpro.databinding.ActivityMainBinding
 import tech.sutd.indoortrackingpro.model.Account
 import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
+import tech.sutd.indoortrackingpro.utils.applyFullScreenWindow
 import tech.sutd.indoortrackingpro.utils.retrieveGpsPermission
 import java.util.*
 import javax.inject.Inject
@@ -38,6 +39,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        applyFullScreenWindow()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         retrieveGpsPermission(this)

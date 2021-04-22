@@ -98,7 +98,7 @@ class InaccuracyListFragment : Fragment() {
                 })
             }?.let { inaccuracyRecycler.addOnItemTouchListener(it) }
         }
-        adapter.sendData(viewModel.getInaccuracyList())
+        viewModel.getInaccuracyList()?.let { adapter.sendData(it) }
         return binding.root
     }
 

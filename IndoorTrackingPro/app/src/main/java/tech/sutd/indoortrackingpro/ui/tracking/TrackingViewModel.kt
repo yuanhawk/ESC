@@ -96,16 +96,19 @@ class TrackingViewModel @Inject constructor(
     }
 
 
-    fun getInaccuracyList() = realm.where(Account::class.java).findFirst()!!.Inaccuracy
+    fun getInaccuracyList() = realm.where(Account::class.java).findFirst()?.Inaccuracy
 
-    fun getInaccuracyListFloor(floor: Int): RealmList<Account_Inaccuracy>{
+    fun getInaccuracyListFloor(floor: Int): RealmList<Account_Inaccuracy> {
         val res:RealmList<Account_Inaccuracy> = RealmList()
-        for (inaccuracyRecord in getInaccuracyList()){
-            if (inaccuracyRecord.z.toInt() == floor){
-                res.add(inaccuracyRecord)
+        if (getInaccuracyList() != null) {
+            for (inaccuracyRecord in getInaccuracyList()!!) {
+                if (inaccuracyRecord.z.toInt() == floor) {
+                    res.add(inaccuracyRecord)
+                }
             }
+            return res
         }
-        return res
+        return RealmList()
     }
 
     fun deleteInAccuracy(id: ObjectId) {

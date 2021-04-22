@@ -3,6 +3,7 @@ package tech.sutd.indoortrackingpro.ui.mapping
 import android.content.IntentFilter
 import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +14,11 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import io.realm.Realm
 import io.realm.RealmConfiguration
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.data.AddMappingPointReceiver
-import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.databinding.AddMappingBinding
-import tech.sutd.indoortrackingpro.ui.MainActivity
+import tech.sutd.indoortrackingpro.datastore.Preferences
 import tech.sutd.indoortrackingpro.utils.touchCoord
 import javax.inject.Inject
 
@@ -32,12 +29,19 @@ class AddMappingFragment : BottomSheetDialogFragment() {
 
     private val viewModel: MappingViewModel by hiltNavGraphViewModels(R.id.main)
     lateinit var binding: AddMappingBinding
+
     @Inject
     lateinit var config: RealmConfiguration
+
     @Inject
     lateinit var wifiReceiver: AddMappingPointReceiver
+
     @Inject
     lateinit var pref: Preferences
+
+    @Inject
+    lateinit var handler: Handler
+
     val TAG = "addMapping"
 
     override fun onCreateView(
@@ -56,11 +60,11 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                     findNavController().popBackStack(R.id.mappingFragment, false)
                 findNavController().navigate(R.id.action_addMappingDialog_to_mappingFragment)
             }
+
+            var doubleTap = false
             yesButtonAddMapping.isEnabled = false
             yesButtonAddMapping.setOnClickListener {
                 pref.apAdded.asLiveData().observe(viewLifecycleOwner, { apList ->
-//                val realm1  = Realm.getInstance(config)
-//                var apList: RealmList<AccessPoint> = realm1.where(Account::class.java).findFirst()?.mAccessPoints!!
 
                     if (apList == null || apList == false) {
 //                    findNavController().popBackStack(R.id.mainFragment, false)
@@ -74,11 +78,19 @@ class AddMappingFragment : BottomSheetDialogFragment() {
 //                            startActivity(intent)
 
                     } else {
-                        findNavController().popBackStack(R.id.mainFragment, false)
-                        viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
-                        Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT).show()
+                        if (!doubleTap) {
 
-                        findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
+                            findNavController().popBackStack(R.id.mainFragment, false)
+                            viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
+                            Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT)
+                                .show()
+
+                            findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
+                            doubleTap = true
+                        }
+                        handler.postDelayed({
+                            doubleTap = false
+                        }, 1500)
                     }
                 })
             }

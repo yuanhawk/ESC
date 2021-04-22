@@ -58,9 +58,10 @@ class FirestoreDb @Inject constructor(
     }
 
     override fun deleteMp(id: ObjectId) {
-        fStore.collection("mAccessPointsRecorded")
+        AppExecutors.instance?.let { deleteCollection(
+            fStore.collection("mAccessPointsRecorded")
             .document(id.toString())
-            .delete()
+            .collection("apRecorded"), it.getDiskIO()) }
 
         fStore.collection("mMappingPoints")
             .document(id.toString())
