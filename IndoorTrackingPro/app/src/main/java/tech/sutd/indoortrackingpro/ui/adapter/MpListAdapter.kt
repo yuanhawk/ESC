@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.SelectedMpListBinding
 import tech.sutd.indoortrackingpro.model.Account_mMappingPoints
+import java.math.RoundingMode
 
 class MpListAdapter : RecyclerView.Adapter<MpListAdapter.MpListViewHolder>() {
 
@@ -26,8 +27,8 @@ class MpListAdapter : RecyclerView.Adapter<MpListAdapter.MpListViewHolder>() {
     override fun onBindViewHolder(holder: MpListViewHolder, position: Int) {
         with(holder.binding) {
             Log.d(TAG, "onBindViewHolder: ${mapList[position].x.toString()}")
-            xMap.text = mapList[position].x.div(20).toString()
-            yMap.text = mapList[position].y.div(20).toString()
+            xMap.text = mapList[position].x.div(20).toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
+            yMap.text = mapList[position].y.div(20).toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
             floorMap.text = mapList[position].z.toInt().toString()
         }
     }

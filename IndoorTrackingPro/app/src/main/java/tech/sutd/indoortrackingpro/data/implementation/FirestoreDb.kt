@@ -157,7 +157,7 @@ class FirestoreDb @Inject constructor(
 
 
                         val realmApList = RealmList<Account_mMappingPoints_accessPointsSignalRecorded>()
-                        fStore.collection("mAccessPointsRecorded")
+                        val apList = fStore.collection("mAccessPointsRecorded")
                             .document(mp.id)
                             .collection("apRecorded")
                             .get()
@@ -176,19 +176,21 @@ class FirestoreDb @Inject constructor(
 
                                         realmApList.add(realmAp)
                                     }
+
                                 }
+                                val result = mp.toObject<MappingPoints>()
+                                val realmMp = Account_mMappingPoints(
+                                    ObjectId(mp.id),
+                                    realmApList,
+                                    result.x,
+                                    result.y,
+                                    result.z
+                                )
+                                realmMp.accessPointSignalRecorded = realmApList
+                                Log.d("Db1", realmApList.size.toString())
+                                db.insertMp(realmMp)
                             }
-                        val result = mp.toObject<MappingPoints>()
-                        val realmMp = Account_mMappingPoints(
-                            ObjectId(mp.id),
-                            realmApList,
-                            result.x,
-                            result.y,
-                            result.z
-                        )
-                        realmMp.accessPointSignalRecorded = realmApList
-                        Log.d("Db1", realmApList.size.toString())
-                        db.insertMp(realmMp)
+
                     }
                 }
             }
