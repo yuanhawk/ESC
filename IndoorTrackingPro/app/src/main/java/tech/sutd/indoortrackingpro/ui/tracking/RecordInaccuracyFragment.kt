@@ -43,8 +43,8 @@ class RecordInaccuracyFragment: BottomSheetDialogFragment() {
                 inaccuracy.text =
                     distance.toBigDecimal().setScale(2, RoundingMode.UP).toDouble().toString()
                 backButtonRecordInaccuracies.setOnClickListener {
-                    if (findNavController().previousBackStackEntry?.equals(R.id.mappingFragment) == true)
-                        findNavController().popBackStack(R.id.mappingFragment, false)
+                    if (findNavController().previousBackStackEntry?.equals(R.id.trackingFragment) == true)
+                        findNavController().popBackStack(R.id.trackingFragment, false)
                     else findNavController().navigate(R.id.action_recordInaccuracyFragment_to_trackingFragment)
                 }
                 yesButtonAddRecording.setOnClickListener {

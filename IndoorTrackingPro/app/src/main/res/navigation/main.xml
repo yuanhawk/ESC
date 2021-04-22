@@ -74,7 +74,7 @@
     </fragment>
 
     <!-- RecordInaccuracyFragment -->
-    <fragment
+    <dialog
         android:id="@+id/inaccuracyFragment"
         android:name="tech.sutd.indoortrackingpro.ui.tracking.RecordInaccuracyFragment"
         android:label="RecordInaccuracyFragment"
@@ -82,7 +82,7 @@
         <action
             android:id="@+id/action_recordInaccuracyFragment_to_trackingFragment"
             app:destination="@id/trackingFragment"/>
-    </fragment>
+    </dialog>
 
     <!-- InaccuracyListFragment -->
     <fragment

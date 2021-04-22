@@ -61,7 +61,7 @@ class Preferences (
         it[SCAN_DONE]
     }
 
-    val floorNum: Flow<Int?> = dataStore.data.map {
-        it[MAP_NUM]
+    val floorNum: Flow<Int> = dataStore.data.map {
+        it[MAP_NUM] ?: 1
     }
 }
