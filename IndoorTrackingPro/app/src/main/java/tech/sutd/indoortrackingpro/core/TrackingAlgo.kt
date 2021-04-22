@@ -35,7 +35,7 @@ class TrackingAlgo : AlgoHelper {
     }
 
     // unweighted KNN
-    private fun knnPredict(
+    fun knnPredict(
         mappingPointsList: RealmList<Account_mMappingPoints>,
         rssiValues: List<Double>
     ): Coordinate {
@@ -71,7 +71,7 @@ class TrackingAlgo : AlgoHelper {
         return Coordinate(x, y, z)
     }
 
-    private fun calculateDistance(mappingPoint: Account_mMappingPoints, rssiValues: List<Double>): Distance {
+    fun calculateDistance(mappingPoint: Account_mMappingPoints, rssiValues: List<Double>): Distance {
         var temp = 0.0 //distance square
         try {
             for (i in rssiValues.indices) {
