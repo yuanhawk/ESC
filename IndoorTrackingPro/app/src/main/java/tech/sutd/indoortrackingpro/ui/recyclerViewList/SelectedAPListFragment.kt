@@ -7,10 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
@@ -67,34 +69,38 @@ class SelectedAPListFragment : Fragment() {
                 swipeRefresh.isRefreshing = false
             }
 
-            apClearDatabase.setOnClickListener {
-                AlertDialog.Builder(context)
-                    .setTitle("Would you like to delete all saved entries")
-                    .setPositiveButton("yes") { _, _ ->
-                        viewModel.clearAp()
-                        GlobalScope.launch { pref.updateCheckAp(false) }
-                    }
-                    .setNegativeButton("no") { _, _ -> }.show()
-            }
-        }
-
-        activity?.applicationContext?.let {
-            RvItemClickListener(
-                it, object : RvItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
+            pref.mpAdded.asLiveData().observe(viewLifecycleOwner, { mpAdded ->
+                if (mpAdded != true) {
+                    apClearDatabase.setOnClickListener {
                         AlertDialog.Builder(context)
-                            .setTitle("Would you like to delete this entry")
+                            .setTitle("Would you like to delete all saved entries")
                             .setPositiveButton("yes") { _, _ ->
-                                Log.d(TAG, "onItemClick: $position")
-                                val id = adapter.wifiList[position].id
-                                Log.d(TAG, "onItemClick: $id")
-                                viewModel.deleteAp(id)
+                                viewModel.clearAp()
+                                GlobalScope.launch { pref.updateCheckAp(false) }
                             }
                             .setNegativeButton("no") { _, _ -> }.show()
                     }
-                }
-            )
-        }?.let { binding.selectedApListRv.addOnItemTouchListener(it) }
+
+                    activity?.applicationContext?.let {
+                        RvItemClickListener(
+                            it, object : RvItemClickListener.OnItemClickListener {
+                                override fun onItemClick(view: View, position: Int) {
+                                    AlertDialog.Builder(context)
+                                        .setTitle("Would you like to delete this entry")
+                                        .setPositiveButton("yes") { _, _ ->
+                                            Log.d(TAG, "onItemClick: $position")
+                                            val id = adapter.wifiList[position].id
+                                            Log.d(TAG, "onItemClick: $id")
+                                            viewModel.deleteAp(id)
+                                        }
+                                        .setNegativeButton("no") { _, _ -> }.show()
+                                }
+                            }
+                        )
+                    }?.let { selectedApListRv.addOnItemTouchListener(it) }
+                } else Toast.makeText(context, "Please remove all your mapping points before adding APs", Toast.LENGTH_SHORT).show()
+            })
+        }
 
         return binding.root
     }
