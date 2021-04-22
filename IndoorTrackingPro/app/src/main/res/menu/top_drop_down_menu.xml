@@ -17,5 +17,6 @@
 
     <item
         android:id="@+id/inaccuracy_list"
-        android:title="Inaccuracy List" />
+        android:icon="@drawable/ic_inaccuracy_list"
+        android:title="@string/inaccuracy_list" />
 </menu>

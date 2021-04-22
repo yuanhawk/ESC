@@ -1,63 +1,94 @@
 package tech.sutd.indoortrackingpro.ui.tracking
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import io.realm.Realm
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import tech.sutd.indoortrackingpro.R
 import tech.sutd.indoortrackingpro.databinding.FragmentTrackingBinding
-import tech.sutd.indoortrackingpro.model.Account
-import tech.sutd.indoortrackingpro.ui.wifi.WifiViewModel
+import tech.sutd.indoortrackingpro.datastore.Preferences
+import tech.sutd.indoortrackingpro.utils.hideKeyboardFrom
 import tech.sutd.indoortrackingpro.utils.touchCoord
 import tech.sutd.indoortrackingpro.utils.trackingCoord
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
+
 @AndroidEntryPoint
 class TrackingFragment : Fragment() {
+
+    private val TAG = "TrackingFragment"
+
     @Inject lateinit var bundle: Bundle
+    @Inject lateinit var pref: Preferences
+
     private lateinit var binding: FragmentTrackingBinding
     val model:  TrackingViewModel by hiltNavGraphViewModels(R.id.main)
+
     @SuppressLint("ClickableViewAccessibility")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tracking, container, false)
 
-        model.coordinates().observe(viewLifecycleOwner, {
-            with(binding) {
-                trackingMap.setImageResource(R.drawable.map)
-                trackingMap.isEnabled = true
-                trackingMap.pos[0] = it.longitude.toFloat()
-                trackingMap.pos[1] = it.latitude.toFloat()
-                trackingPredictedFloor.text = it.z.roundToInt().toString()
-                trackingMap.invalidate()
-                Log.d("prediction", "" + trackingMap.pos[0] + "   " + trackingMap.pos[1])
-            }
-        })
+        with(binding) {
+
+            pref.floorNum.asLiveData().observe(viewLifecycleOwner, { floorNum ->
+                trackingRealFloor.setText(floorNum.toString())
+
+                if (floorNum == 1) {
+                    model.coordinates().observe(viewLifecycleOwner, {
+                        trackingMap.setImageResource(R.drawable.map)
+                        trackingMap.isEnabled = true
+                        trackingMap.pos[0] = it.longitude.toFloat()
+                        trackingMap.pos[1] = it.latitude.toFloat()
+                        if (it.z.isNaN()) trackingPredictedFloor.text = 0.toString()
+                        else trackingPredictedFloor.text = it.z.roundToInt().toString()
+                        trackingMap.invalidate()
+                        Log.d("prediction", "" + trackingMap.pos[0] + "   " + trackingMap.pos[1])
+                    })
+                } else if (floorNum == 2) {
+                    model.coordinates().observe(viewLifecycleOwner, {
+                        trackingMap.setImageResource(R.drawable.map_2)
+                        trackingMap.isEnabled = true
+                        trackingMap.pos[0] = it.longitude.toFloat()
+                        trackingMap.pos[1] = it.latitude.toFloat()
+                        if (it.z.isNaN()) trackingPredictedFloor.text = 0.toString()
+                        else trackingPredictedFloor.text = it.z.roundToInt().toString()
+                        trackingMap.invalidate()
+                        Log.d("prediction", "" + trackingMap.pos[0] + "   " + trackingMap.pos[1])
+                    })
+                }
+            })
+        }
 
         model.floorNumber.observe(viewLifecycleOwner, {
-            binding.trackingMap.inaccuracyList = model.getInaccuracyListFloor(model.floorNumber.value!!)
+            binding.trackingMap.inaccuracyList =
+                model.getInaccuracyListFloor(model.floorNumber.value!!)
             binding.trackingMap.inaccuracyEnabled = true
             binding.trackingMap.invalidate()
         })
-        binding.trackingChangeFloorButton.setOnClickListener {
-            model.floorNumber.value =  binding.trackingRealFloor.text.toString().toInt()
-        }
-        binding.trackingMap.inaccuracyList = model.getInaccuracyListFloor(model.floorNumber.value!!)
         with(binding){
+
+            trackingChangeFloorButton.setOnClickListener {
+                model.floorNumber.value =  binding.trackingRealFloor.text.toString().toInt()
+            }
+
+            trackingMap.inaccuracyList = model.getInaccuracyListFloor(model.floorNumber.value!!)
+
             trackingMap.setOnTouchListener(
                 object : View.OnTouchListener {
                     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -65,7 +96,11 @@ class TrackingFragment : Fragment() {
                             val z = trackingRealFloor.text.toString().toInt().toFloat()
                             val location = floatArrayOf(event.x, event.y, z)
                             //Log.d(ContentValues.TAG, "onCreate: ${location[0]}, ${location[1]}")
-                            val trackingLocation = floatArrayOf(trackingMap.pos[0], trackingMap.pos[1], trackingPredictedFloor.text.toString().toFloat())
+                            val trackingLocation = floatArrayOf(
+                                trackingMap.pos[0],
+                                trackingMap.pos[1],
+                                trackingPredictedFloor.text.toString().toFloat()
+                            )
 
                             bundle.putFloatArray(touchCoord, location)
                             bundle.putFloatArray(trackingCoord, trackingLocation)
@@ -90,11 +125,20 @@ class TrackingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
-        binding.trackingRealFloor.setText(model.floorNumber.value!!.toString())
+        with(binding) {
+            trackingChangeFloorButton.setOnClickListener {
+                val int = trackingRealFloor.text.toString().toInt()
+                Log.d(TAG, "onCreateView: ${trackingRealFloor.text}")
+                if (int == 1 || int == 2)
+                    GlobalScope.launch { pref.floorNum(int) }
+                view?.let { it1 -> context?.let { it2 -> hideKeyboardFrom(it2, it1) } }
+            }
+        }
     }
+
     override fun onPause() {
         super.onPause()
         model.cancelWifiScan(this)
     }
+
 }

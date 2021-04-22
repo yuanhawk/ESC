@@ -27,5 +27,6 @@
     <string name="x_val">X val</string>
     <string name="y_val">Y val</string>
     <string name="clear_database">Clear Database</string>
+    <string name="inaccuracy_list">Inaccuracy List</string>
 
 </resources>
