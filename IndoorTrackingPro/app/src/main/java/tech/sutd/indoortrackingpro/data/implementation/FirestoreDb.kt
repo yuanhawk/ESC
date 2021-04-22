@@ -55,6 +55,9 @@ class FirestoreDb @Inject constructor(
             .set(data)
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
+        for (ap in mappingPoint.accessPointSignalRecorded){
+            insertApRecord(mappingPoint.id, ap)
+        }
     }
 
     override fun deleteMp(id: ObjectId) {
@@ -78,7 +81,7 @@ class FirestoreDb @Inject constructor(
             "rssi" to accessPoint.rssi,
             "ssid" to accessPoint.ssid
         )
-
+        //Log.d("Db Insert AP Record", accessPoint.mac + " " + accessPoint.rssi)
         fStore.collection("mAccessPointsRecorded")
             .document(id.toString())
             .collection("apRecorded")
@@ -145,23 +148,15 @@ class FirestoreDb @Inject constructor(
     }
 
     override fun pullMp() {
-        val realmApList = RealmList<Account_mMappingPoints_accessPointsSignalRecorded>()
 
         fStore.collection("mMappingPoints")
             .get()
             .addOnCompleteListener { mpList ->
                 if (mpList.isSuccessful) {
                     for (mp in mpList.result!!) {
-                        val result = mp.toObject<MappingPoints>()
 
-                        val realmMp = Account_mMappingPoints(
-                            ObjectId(mp.id),
-                            realmApList,
-                            result.x,
-                            result.y,
-                            result.z
-                        )
 
+                        val realmApList = RealmList<Account_mMappingPoints_accessPointsSignalRecorded>()
                         fStore.collection("mAccessPointsRecorded")
                             .document(mp.id)
                             .collection("apRecorded")
@@ -183,7 +178,16 @@ class FirestoreDb @Inject constructor(
                                     }
                                 }
                             }
-
+                        val result = mp.toObject<MappingPoints>()
+                        val realmMp = Account_mMappingPoints(
+                            ObjectId(mp.id),
+                            realmApList,
+                            result.x,
+                            result.y,
+                            result.z
+                        )
+                        realmMp.accessPointSignalRecorded = realmApList
+                        Log.d("Db1", realmApList.size.toString())
                         db.insertMp(realmMp)
                     }
                 }

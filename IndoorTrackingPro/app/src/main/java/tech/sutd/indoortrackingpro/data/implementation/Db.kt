@@ -45,6 +45,7 @@ class Db @Inject constructor(
     }
 
     override fun insertMp(mappingPoint: Account_mMappingPoints) {
+        Log.d( TAG+1, "Inserting MP")
         realm.beginTransaction()
         for (ap in mappingPoint.accessPointSignalRecorded){
             Log.d( TAG+1, "${ap.mac} ${ap.rssi}")

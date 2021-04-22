@@ -33,11 +33,9 @@ class MappingViewModel @Inject constructor(
         db.insertMp(mappingPt)
         fStore.insertMp(mappingPt)
 
-        for (i in 0 until realm.where(Account::class.java).findFirst()!!.mMappingPoints.size) {
-            val mappingPointJustAdded = realm.where(Account::class.java).findFirst()!!.mMappingPoints[i]
-            for (ap in mappingPointJustAdded!!.accessPointSignalRecorded) {
-                Log.d(TAG + 2, "${ap.mac} ${ap.rssi}")
-            }
+
+        for (ap in mappingPt.accessPointSignalRecorded) {
+            Log.d(TAG + 2, "${ap.mac} ${ap.rssi}")
         }
     }
 

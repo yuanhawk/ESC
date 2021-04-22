@@ -26,8 +26,8 @@ class MpListAdapter : RecyclerView.Adapter<MpListAdapter.MpListViewHolder>() {
     override fun onBindViewHolder(holder: MpListViewHolder, position: Int) {
         with(holder.binding) {
             Log.d(TAG, "onBindViewHolder: ${mapList[position].x.toString()}")
-            xMap.text = mapList[position].x.toString()
-            yMap.text = mapList[position].y.toString()
+            xMap.text = mapList[position].x.div(20).toString()
+            yMap.text = mapList[position].y.div(20).toString()
             floorMap.text = mapList[position].z.toInt().toString()
         }
     }

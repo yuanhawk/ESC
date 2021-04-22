@@ -51,7 +51,6 @@ class AddMappingPointReceiver @Inject constructor(
                 Log.d(TAG, ap.mac)
                 val apRecorded = Account_mMappingPoints_accessPointsSignalRecorded(ap)
                 mappingPoint.accessPointSignalRecorded.add(apRecorded)
-                fStore.insertApRecord(mappingPoint.id, apRecorded)
             }
         }
     }
