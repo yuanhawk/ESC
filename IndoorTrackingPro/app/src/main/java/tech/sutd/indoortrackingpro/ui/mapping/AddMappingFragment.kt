@@ -61,7 +61,6 @@ class AddMappingFragment : BottomSheetDialogFragment() {
                 findNavController().navigate(R.id.action_addMappingDialog_to_mappingFragment)
             }
 
-            var doubleTap = false
             yesButtonAddMapping.isEnabled = false
             yesButtonAddMapping.setOnClickListener {
                 pref.apAdded.asLiveData().observe(viewLifecycleOwner, { apList ->
@@ -78,19 +77,13 @@ class AddMappingFragment : BottomSheetDialogFragment() {
 //                            startActivity(intent)
 
                     } else {
-                        if (!doubleTap) {
 
-                            findNavController().popBackStack(R.id.mainFragment, false)
-                            viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
-                            Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT)
-                                .show()
+                        findNavController().popBackStack(R.id.mainFragment, false)
+                        viewModel.insertMp(coordinate!!, wifiReceiver.mappingPoint)
+                        Toast.makeText(activity, "Coordinates added!", Toast.LENGTH_SHORT)
+                            .show()
 
-                            findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
-                            doubleTap = true
-                        }
-                        handler.postDelayed({
-                            doubleTap = false
-                        }, 1500)
+                        findNavController().navigate(R.id.action_mainFragment_to_selectedMPListFragment)
                     }
                 })
             }

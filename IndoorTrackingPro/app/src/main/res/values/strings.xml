@@ -28,5 +28,13 @@
     <string name="y_val">Y val</string>
     <string name="clear_database">Clear Database</string>
     <string name="inaccuracy_list">Inaccuracy List</string>
+    <string name="recording_inaccuracies">Recording Inaccuracies:</string>
+    <string name="inaccuracy">Inaccuracy:</string>
+    <string name="floor">Floor:</string>
+    <string name="inaccuracy_recorded">Inaccuracy Recorded</string>
+    <string name="x">X</string>
+    <string name="y">Y</string>
+    <string name="logo">logo</string>
+    <string name="flr">Floor</string>
 
 </resources>

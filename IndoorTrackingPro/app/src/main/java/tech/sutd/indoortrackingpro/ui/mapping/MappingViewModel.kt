@@ -33,7 +33,6 @@ class MappingViewModel @Inject constructor(
         db.insertMp(mappingPt)
         fStore.insertMp(mappingPt)
 
-
         for (ap in mappingPt.accessPointSignalRecorded) {
             Log.d(TAG + 2, "${ap.mac} ${ap.rssi}")
         }

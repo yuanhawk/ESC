@@ -63,6 +63,7 @@ class SelectedMPListFragment : Fragment() {
             selectedMpListRv.adapter = adapter
             selectedMpListRv.layoutManager = manager
             swipeRefresh.setOnRefreshListener {
+                viewModel.pull()
                 refreshObserver()
                 swipeRefresh.isRefreshing = false
             }

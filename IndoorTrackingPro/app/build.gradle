@@ -15,6 +15,7 @@ android {
     compileSdkVersion versions.compileSdk
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
     }
 
     defaultConfig {
@@ -121,19 +122,18 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.3.1"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.1"
     testImplementation "com.google.truth:truth:1.0.1"
-    testImplementation "org.mockito:mockito-core:2.21.0"
+    testImplementation "org.mockito:mockito-core:2.28.2"
+    testImplementation "org.powermock:powermock-module-junit4:1.6.5"
+    testImplementation "org.powermock:powermock-module-junit4-rule:1.6.5"
+    testImplementation "org.powermock:powermock-api-mockito:1.6.5"
+    testImplementation "org.powermock:powermock-classloading-xstream:1.6.5"
+    testImplementation 'org.robolectric:shadows-support-v4:3.0'
 
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
     // https://mvnrepository.com/artifact/cglib/cglib
     implementation group: 'cglib', name: 'cglib', version: '3.3.0'
 
-
-    testImplementation 'org.robolectric:shadows-support-v4:3.0'
-    testImplementation "org.powermock:powermock-module-junit4:1.6.5"
-    testImplementation "org.powermock:powermock-module-junit4-rule:1.6.5"
-    testImplementation "org.powermock:powermock-api-mockito:1.6.5"
-    testImplementation "org.powermock:powermock-classloading-xstream:1.6.5"
 
     // android test
     androidTestImplementation "androidx.test:core:$versions.core"
@@ -172,6 +172,5 @@ dependencies {
 
     // mockito
     androidTestImplementation 'org.mockito:mockito-android:2.+'
-    implementation "org.mockito:mockito-core:2.+"
 
 }

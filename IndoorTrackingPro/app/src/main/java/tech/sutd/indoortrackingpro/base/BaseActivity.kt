@@ -27,6 +27,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.pull()
     }
 }

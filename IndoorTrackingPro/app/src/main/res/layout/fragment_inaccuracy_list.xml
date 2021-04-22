@@ -8,7 +8,7 @@
 
         <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -16,8 +16,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="70dp"
-                android:text="Inaccuracy Recorded"
+                android:layout_marginTop="80dp"
+                android:text="@string/inaccuracy_recorded"
                 android:textColor="@color/blue"
                 android:textSize="20sp" />
 
@@ -34,7 +34,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:lines="1"
-                    android:text="X"
+                    android:text="@string/x"
                     android:textColor="@color/blue" />
 
 
@@ -46,7 +46,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:lines="1"
-                    android:text="Y"
+                    android:text="@string/y"
                     android:textColor="@color/blue" />
 
                 <TextView
@@ -57,7 +57,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:lines="1"
-                    android:text="Floor"
+                    android:text="@string/floor"
                     android:textColor="@color/blue" />
 
                 <TextView
@@ -68,27 +68,29 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:lines="1"
-                    android:text="Inaccuracy"
+                    android:text="@string/inaccuracy"
                     android:textColor="@color/blue" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/inaccuracy_recycler"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="350dp"
                 android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
                 tools:listitem="@layout/inaccuracy_list" />
 
             <Button
                 android:id="@+id/ap_clear_database"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
                 android:layout_gravity="center"
-                android:textStyle="bold"
+                android:layout_marginBottom="80dp"
                 android:backgroundTint="@color/blue"
+                android:text="@string/clear_database"
+                android:textAlignment="center"
                 android:textColor="@color/black"
-                android:text="@string/clear_database">
+                android:textStyle="bold">
 
 
             </Button>

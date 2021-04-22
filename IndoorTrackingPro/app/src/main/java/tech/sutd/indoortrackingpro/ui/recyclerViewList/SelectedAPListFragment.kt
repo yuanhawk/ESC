@@ -65,6 +65,7 @@ class SelectedAPListFragment : Fragment() {
             selectedApListRv.layoutManager = manager
 
             swipeRefresh.setOnRefreshListener {
+                viewModel.pull()
                 refreshObserver()
                 swipeRefresh.isRefreshing = false
             }

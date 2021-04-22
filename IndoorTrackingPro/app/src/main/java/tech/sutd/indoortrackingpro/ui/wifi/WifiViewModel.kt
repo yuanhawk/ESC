@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.realm.Realm
 import io.realm.RealmList
+import kotlinx.coroutines.runBlocking
 import org.bson.types.ObjectId
 import tech.sutd.indoortrackingpro.data.WifiSearchReceiver
 import tech.sutd.indoortrackingpro.data.WifiWrapper
@@ -82,7 +83,7 @@ class WifiViewModel @Inject constructor(
         fStore.deleteMp(id)
     }
 
-    fun pull() {
+    fun pull() = runBlocking {
         db.clearAp()
         fStore.pullAp()
         db.clearMp()
