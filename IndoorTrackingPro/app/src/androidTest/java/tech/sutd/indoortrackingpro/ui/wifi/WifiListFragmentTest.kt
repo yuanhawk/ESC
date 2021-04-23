@@ -1,4 +1,5 @@
 package tech.sutd.indoortrackingpro.ui.wifi
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
@@ -22,6 +23,7 @@ import tech.sutd.indoortrackingpro.ui.mapping.MappingFragment
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
 class WifiListFragmentTest {
+
 
     @get: Rule
     var hiltRule = HiltAndroidRule(this)

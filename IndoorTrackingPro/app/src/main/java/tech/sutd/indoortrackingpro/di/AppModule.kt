@@ -147,4 +147,6 @@ object AppModule {
     @Singleton
     @Provides
     fun providePreferences(@ApplicationContext context: Context): Preferences = Preferences(context)
+
+
 }

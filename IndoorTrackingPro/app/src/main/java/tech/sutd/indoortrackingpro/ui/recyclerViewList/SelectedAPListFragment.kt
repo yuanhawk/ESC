@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.api.Distribution
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import io.realm.RealmList
@@ -27,13 +28,13 @@ import tech.sutd.indoortrackingpro.utils.RvItemClickListener
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SelectedAPListFragment : Fragment() {
+class SelectedAPListFragment @Inject constructor( val adapter: ApListAdapter)
+: Fragment() {
 
     private val TAG = "SelectedAPListFragment"
-    @Inject lateinit var handler: Handler
-    @Inject lateinit var adapter: ApListAdapter
-    @Inject lateinit var manager: LinearLayoutManager
-    @Inject lateinit var pref: Preferences
+//    @Inject lateinit var handler: Handler
+//    @Inject lateinit var manager: LinearLayoutManager
+//    @Inject lateinit var pref: Preferences
 
     private lateinit var binding: FragmentSelectedApListBinding
 
@@ -42,8 +43,8 @@ class SelectedAPListFragment : Fragment() {
         Observer<RealmList<Account_mAccessPoints>> {
 //            Log.d(TAG, "onResume: ${it[0]?.mac}")
             adapter.sendData(it)
-            if (adapter.wifiList.isEmpty())
-                GlobalScope.launch { pref.updateCheckAp(false) }
+//            if (adapter.wifiList.isEmpty())
+//                GlobalScope.launch { pref.updateCheckAp(false) }
         }
     }
 
@@ -59,7 +60,7 @@ class SelectedAPListFragment : Fragment() {
 
         with(binding){
             selectedApListRv.adapter = adapter
-            selectedApListRv.layoutManager = manager
+            selectedApListRv.layoutManager = LinearLayoutManager(context)
 
             swipeRefresh.setOnRefreshListener {
                 swipeRefresh.isRefreshing = false
@@ -69,7 +70,7 @@ class SelectedAPListFragment : Fragment() {
                 AlertDialog.Builder(context)
                     .setTitle("Would you like to delete all saved entries")
                     .setPositiveButton("yes") { _, _ ->
-                        GlobalScope.launch { pref.updateCheckAp(false) }
+//                        GlobalScope.launch { pref.updateCheckAp(false) }
                     }
                     .setNegativeButton("no") { _, _ -> }.show()
             }

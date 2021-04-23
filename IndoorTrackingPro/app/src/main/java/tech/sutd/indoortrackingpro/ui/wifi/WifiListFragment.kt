@@ -29,15 +29,14 @@ import javax.inject.Inject
 class WifiListFragment : Fragment() {
 
     private val TAG = "WifiListFragment"
-
-    @Inject lateinit var handler: Handler
     @Inject lateinit var adapter: WifiListAdapter
+    @Inject lateinit var handler: Handler
     @Inject lateinit var manager: LinearLayoutManager
     @Inject lateinit var wifiReceiver: WifiSearchReceiver
     @Inject lateinit var pref: Preferences
     lateinit var binding: FragmentWifiListBinding
 
-    private val viewModel: WifiViewModel by hiltNavGraphViewModels(R.id.main)
+
 
     val data = arrayListOf<ArrayList<String>>()
 
@@ -73,7 +72,6 @@ class WifiListFragment : Fragment() {
                                 accessPoint.ssid = adapter.wifiList[position].SSID
                                 Log.d(TAG, "onItemClick: ${accessPoint.mac}")
 
-                                viewModel.insertAp(accessPoint)
 
                                 Toast.makeText(
                                     context,
@@ -100,16 +98,11 @@ class WifiListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity?.registerReceiver(wifiReceiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
-        viewModel.initScan(wifiReceiver).observe(viewLifecycleOwner, {
-            adapter.sendData(it)
-            Toast.makeText(activity,"Scan finish", Toast.LENGTH_SHORT).show()
-        })
-    }
+        activity?.registerReceiver(wifiReceiver, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))}
 
     override fun onPause() {
         super.onPause()
-        viewModel.endScan(wifiReceiver)
+
         with(binding) {
             wifiListRv.layoutManager = null
             wifiListRv.adapter = null
